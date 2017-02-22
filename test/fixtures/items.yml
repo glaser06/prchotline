@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  description: MyString
+  rails: MyString
+  g: MyString
+  scaffold: MyString
+  County: MyString
+  name: MyString
+  description: MyString
+
+two:
+  name: MyString
+  description: MyString
+  rails: MyString
+  g: MyString
+  scaffold: MyString
+  County: MyString
+  name: MyString
+  description: MyString
