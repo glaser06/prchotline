@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :counties
   resources :item_counties
   resources :item_locations
   resources :items
