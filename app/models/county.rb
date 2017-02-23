@@ -8,4 +8,5 @@ class County < ApplicationRecord
 
   # Scopes
   scope :alphabetical, -> { order('name') }
+  
 end
