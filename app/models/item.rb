@@ -1,7 +1,7 @@
 class Item < ApplicationRecord
   
   # Relationships
-  has_many :item_locations
-  has_many :item_counties
+  has_many :counties, through: :item_counties
+  has_many :locations, through: :item_locations
 
 end
