@@ -9,8 +9,16 @@
   </head>
 
   <body>
-    <%= yield %>
 
+
+    <%= form_tag(items_path, :method => "get", id: "search-form") do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Item" %>
+      <%= text_field_tag :search, params[:search], placeholder: "County" %>
+      <%= text_field_tag :search, params[:search], placeholder: "Zip" %>
+      <%= submit_tag "Search", :name => nil %>
+    <% end %>
+
+    <%= yield %>
     <%= link_to 'Counties', counties_path %>
     <%= link_to 'Items', items_path %>
     <%= link_to 'Locations', locations_path %>
