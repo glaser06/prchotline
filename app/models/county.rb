@@ -9,5 +9,6 @@ class County < ApplicationRecord
 
   # Scopes
   scope :alphabetical, -> { order('name') }
+  scope :for_name, -> (name) { where('name=?') }
 
 end

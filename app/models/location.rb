@@ -9,7 +9,7 @@ class Location < ApplicationRecord
   scope :alphabetical , -> { order('name') }
   scope :active , -> { where(active: true) }
   scope :inactive , -> { where(active: false) }
-  scope :search_zipcode, -> (zip) { where("zip=?", zip ) }
+  scope :for_zipcode, -> (zip) { where("zip=?", zip ) }
 
   scope :by_zipcode, -> { order('zipcode') }
 

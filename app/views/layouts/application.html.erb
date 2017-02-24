@@ -7,8 +7,12 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
+  <%= form_tag(items_path, :method => "get", id: "search-form") do %>
+      <%= text_field_tag :search, params[:item], placeholder: "Search Items" %>
+      <%= submit_tag "Search", :name => nil %>
+  <% end %>
   <body>
+
     <%= yield %>
   </body>
 </html>
