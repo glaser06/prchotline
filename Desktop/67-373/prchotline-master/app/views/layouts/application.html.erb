@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Prchotline</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= yield %>
+    <!-- <%= form_tag(counties_path, :method => "get", id: "search-form") do %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search Item" %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search County" %>
+      <%= text_field_tag :search, params[:search], placeholder: "Search Zip" %>
+
+    <%= submit_tag "Search", :name => nil %>
+<% end %> -->
+  </body>
+</html>

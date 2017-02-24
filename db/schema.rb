@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20170223061006) do
+=======
+ActiveRecord::Schema.define(version: 20170223232523) do
+>>>>>>> f457293c802993d7ca1dca5bcf83fbbeb6304511
 
   create_table "counties", force: :cascade do |t|
     t.string   "name"
@@ -30,6 +34,14 @@ ActiveRecord::Schema.define(version: 20170223061006) do
     t.text     "context"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+<<<<<<< HEAD
+=======
+    t.integer  "item_id"
+    t.integer  "location_id"
+    t.text     "reason"
+    t.index ["item_id"], name: "index_item_locations_on_item_id"
+    t.index ["location_id"], name: "index_item_locations_on_location_id"
+>>>>>>> f457293c802993d7ca1dca5bcf83fbbeb6304511
   end
 
   create_table "items", force: :cascade do |t|

@@ -1,0 +1,32 @@
+<%= form_for(item_location) do |f| %>
+  <% if item_location.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(item_location.errors.count, "error") %> prohibited this item_location from being saved:</h2>
+
+      <ul>
+      <% item_location.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+  </div>
+
+  <div class="field">
+    <%= f.label :verified %>
+    <%= f.date_select :verified %>
+  </div>
+
+  <div class="field">
+    <%= f.label :context %>
+    <%= f.text_area :context %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
