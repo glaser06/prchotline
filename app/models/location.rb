@@ -4,7 +4,7 @@ class Location < ApplicationRecord
   has_many :items, through: :item_locations
 
   validates :name, :address, :city, :zipcode, :state, presence: true
-  validates :phone, format: { with: /\d{3}-\d{3}-\d{4}/, message: "bad format" }
+  
 
   scope :alphabetical , -> { order('name') }
   scope :active , -> { where(active: true) }

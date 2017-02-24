@@ -9,9 +9,9 @@
   </head>
 
   <%= form_tag(items_path, :method => "get", id: "search-form") do %>
-    <%= text_field_tag :search, params[:search], placeholder: "Item" %>
-    <%= text_field_tag :search, params[:search], placeholder: "County" %>
-    <%= text_field_tag :search, params[:search], placeholder: "Zip" %>
+    <%= text_field_tag :item, params[:item], placeholder: "Search Item" %>
+    <%= text_field_tag :county, params[:county], placeholder: "Search County" %>
+    <%= text_field_tag :zip, params[:zip], placeholder: "Search Zip" %>
     <%= submit_tag "Search", :name => nil %>
   <% end %>
   <body>
