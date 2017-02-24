@@ -1,0 +1,22 @@
+<%= form_for(item_county) do |f| %>
+  <% if item_county.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(item_county.errors.count, "error") %> prohibited this item_county from being saved:</h2>
+
+      <ul>
+      <% item_county.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
