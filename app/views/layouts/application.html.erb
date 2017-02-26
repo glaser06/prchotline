@@ -1,26 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Prchotline</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
-
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
-  <%= form_tag(items_path, :method => "get", id: "search-form") do %>
-    <%= text_field_tag :item, params[:item], placeholder: "Search Item" %>
-    <%= text_field_tag :county, params[:county], placeholder: "Search County" %>
-    <%= text_field_tag :zip, params[:zip], placeholder: "Search Zip" %>
-    <%= submit_tag "Search", :name => nil %>
-  <% end %>
   <body>
 
+    <div class="row">
+      <div class="small-8 columns">
+        <%= render 'layouts/partials/header' %>
+      </div>
 
-    <%= yield %>
-    <!-- HI -->
-    <%= link_to 'Counties', counties_path %>
-    <%= link_to 'Items', items_path %>
-    <%= link_to 'Locations', locations_path %>
+      <div class="small-1 columns">
+        &nbsp;
+      </div>
+
+      <div class="small-3 columns">
+        <%= render 'layouts/partials/sidebar' %>
+      </div>
+    </div>
+
+    <footer>
+      <div class="row">
+        <div class="small-6 large-centered columns">
+          <%= render 'layouts/partials/footer' %>
+        </div>
+      </div>
+    </footer>
+
+    <div id="wrap">
+      <div style="clear:both;"></div>
+        <div id="body">
+        <p style="color: green" id="notice"><%= flash[:notice] %></p>
+        <%= yield %>
+      </div>
+
+    </div>
   </body>
+
 </html>
