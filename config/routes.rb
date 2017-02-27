@@ -1,6 +1,12 @@
 Rails.application.routes.draw do
 
-  root 'items#index'
+  get 'main/index'
+
+
+
+
+
+  root 'main#index'
   resources :items
   resources :counties
   resources :item_counties
