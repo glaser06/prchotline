@@ -1,4 +1,4 @@
-<%= form_for(county) do |f| %>
+<%= simple_form_for @county do |f| %>
   <% if county.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(county.errors.count, "error") %> prohibited this county from being saved:</h2>
@@ -11,12 +11,6 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= f.input :name, input_html: { maxlength: 30 } %>
+  <%= f.button :submit%>
 <% end %>
