@@ -15,20 +15,7 @@ class Item < ApplicationRecord
   scope :inactive,     -> { where(active: false) }
   scope :for_name, -> (name) { where("name==?", name) }
 
-  def self.search(item1,county,zip)
-    item = Item.for_name(item1)
-    print "-------", item.count, "\n"
-    if item.blank?
-      return [],[],[]
-    end
-    locs = item[0].locations.for_zipcode(zip).alphabetical
-    contexts = []
-    locs.each do |loc|
-      context = ItemLocation.active.for_item(item[0].id).for_location(loc.id)
-      contexts.push(context)
-    end
-    return item,locs,contexts
-  end
+
 
 
 

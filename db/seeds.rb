@@ -134,7 +134,7 @@ County.all.each do |c|
   county = c.name
   zipcodes = countyZip[county]
   if countyZip.key?(county)
-
+    count = 1
     zipcodes.each do |zipCity|
       rand(3).times do |tmp|
 
@@ -142,8 +142,9 @@ County.all.each do |c|
         address = "#{Faker::Address.street_address} Ave."
         phone = (Faker::PhoneNumber.phone_number).split('x')[0]
 
-        @loc1 = Location.create(name: "#{county} Recycling Facility in #{zipCity[1]}", address: address, city: zipCity[1], phone: phone, website: 'www.example.com', zipcode: zipCity[0], state: 'PA', counties_id: c.id)
+        @loc1 = Location.create(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", address: address, city: zipCity[1], phone: phone, website: 'www.example.com', zipcode: zipCity[0], state: 'PA', counties_id: c.id, active: true)
         Rails.logger.info(@loc1.errors.inspect)
+        count += 1
       end
     end
   end
@@ -158,7 +159,7 @@ items.each do |item|
   if ["Paper", "Televisions","Mobile Phones","Cardboard"].include?(item.name)
     locs.each do |loc|
 
-      ItemLocation.create(item_id: item.id, location_id: loc.id, context: "This is an example context. We don't know much beyond this.")
+      ItemLocation.create(item_id: item.id, location_id: loc.id, context: "This is an example context. We don't know much beyond this.",active: true)
 
     end
   end
