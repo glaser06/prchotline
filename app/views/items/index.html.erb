@@ -1,6 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Items</h1>
+<%= link_to 'New Item', new_item_path %>
+
 <% if @items.blank? %>
   <h4> No item available.</h4>
 <% else %>
@@ -26,9 +28,7 @@
         </tr>
       <% end %>
     </tbody>
-    
+
   </table>
 <% end %>
 <br>
-
-<%= link_to 'New Item', new_item_path %>
