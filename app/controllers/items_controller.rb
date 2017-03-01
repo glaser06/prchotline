@@ -6,8 +6,8 @@ class ItemsController < ApplicationController
   def index
     @items = Item.all
     @locations = []
-    
-    if params[:county] and params[:item] and params[:zip]
+
+    if params[:county] && params[:item] && params[:zip]
       i,l,c = Item.search(params[:item],params[:county],params[:zip])
       @locations = l
       @context = c

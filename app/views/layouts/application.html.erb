@@ -22,7 +22,24 @@
         <%= render 'layouts/partials/sidebar' %>
       </div>
     </div>
+    <%= form_tag("", :method => "get", id: "search-form") do %>
+        <%= text_field_tag :item, params[:item], placeholder: "Search Items" %>
+        <%= text_field_tag :county, params[:county], placeholder: "Search Counties" %>
+        <%= text_field_tag :zip, params[:zip], placeholder: "Search Zipcodes" %>
+        <%= submit_tag "Search", :name => nil %>
+    <% end %>
 
+
+    <div id="wrap">
+      <div style="clear:both;"></div>
+
+      <div id="body">
+        <p style="color: green" id="notice"><%= flash[:notice] %></p>
+
+        <%= yield %>
+      </div>
+
+    </div>
     <footer>
       <div class="row">
         <div class="small-6 large-centered columns">
@@ -30,15 +47,6 @@
         </div>
       </div>
     </footer>
-
-    <div id="wrap">
-      <div style="clear:both;"></div>
-        <div id="body">
-        <p style="color: green" id="notice"><%= flash[:notice] %></p>
-        <%= yield %>
-      </div>
-
-    </div>
   </body>
 
 </html>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170223232523) do
+ActiveRecord::Schema.define(version: 20170227162831) do
 
   create_table "counties", force: :cascade do |t|
     t.string   "name"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20170223232523) do
     t.integer  "item_id"
     t.integer  "location_id"
     t.text     "reason"
+    t.boolean  "active"
     t.index ["item_id"], name: "index_item_locations_on_item_id"
     t.index ["location_id"], name: "index_item_locations_on_location_id"
   end
@@ -53,8 +54,11 @@ ActiveRecord::Schema.define(version: 20170223232523) do
     t.string   "city"
     t.string   "zipcode"
     t.string   "state"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "counties_id"
+    t.boolean  "active"
+    t.index ["counties_id"], name: "index_locations_on_counties_id"
   end
 
 end

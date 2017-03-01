@@ -9,9 +9,9 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>Address</th>
-        <th>Phone</th>
-        <th>Website</th>
+        <th>Description</th>
+        <th>Active</th>
+
         <th colspan="3"></th>
       </tr>
     </thead>
@@ -26,18 +26,7 @@
         </tr>
       <% end %>
     </tbody>
-    <tbody>
-
-        <% @items.each do |item| %>
-          <tr>
-            <td><%= item.name %></td>
-            <td><%= item.address %></td>
-            <td><%= item.phone %></td>
-            <td><%= item.website %></td>
-          </tr>
-        <% end %>
-
-    </tbody>
+    
   </table>
 <% end %>
 <br>
