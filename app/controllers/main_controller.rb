@@ -7,6 +7,7 @@ class MainController < ApplicationController
 
     if params[:county] && params[:item]
       @errors = ""
+
       qCounty = params[:county]
       qItem = params[:item]
       county = County.for_name(qCounty)
@@ -30,7 +31,6 @@ class MainController < ApplicationController
 
       else
 
-        # i,l,c = search(params[:item],params[:county], "")
 
         @locations = @item.locations.active.for_county(@county.id).alphabetical
 
