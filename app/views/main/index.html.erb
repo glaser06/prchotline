@@ -1,5 +1,11 @@
 <p id="notice"><%= notice %></p>
 
+    <%= form_tag("", :method => "get", id: "search-form") do %>
+        <%= text_field_tag :item, params[:item], placeholder: "Search Items" %>
+        <%= text_field_tag :county, params[:county], placeholder: "Search Counties" %>
+        <%= text_field_tag :zip, params[:zip], placeholder: "Search Zipcodes", maxlength: 5, class: 'input-small' %>
+        <%= submit_tag "Search", :name => nil %>
+    <% end %>
 
 <% if @errors != "" %>
   <h4> <%= @errors %> </h4>
