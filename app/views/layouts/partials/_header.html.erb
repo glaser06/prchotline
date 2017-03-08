@@ -1,38 +1,12 @@
-<!-- <div id="header">
-  <%= link_to(image_tag('logo.png', :size => '80x80'), items_path) %>
-  <div class="contain-to-grid">
-    <nav class="top-bar" data-topbar>
-      <ul class="title-area">
-        <li class="name">
-          <h1><%= link_to "PRC Hotline", items_path %></h1>
-        </li>
-      </ul>
-      <section class="top-bar-section">
-        <ul class="left">
-          <li><%= link_to "Item", items_path %></li>
-          <li class="has-dropdown">
-            <a href="#">Counties</a>
-            <ul class="dropdown">
-              <li><%= link_to "List Counties", counties_path %></li>
-              <li><%= link_to "Add an County", new_county_path %></li>
-            </ul>
-          </li>
-        </ul>
-      </section>
-    </nav>
-  </div>
-</div> -->
-<!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet"> -->
-
 <header class="header">
   <h1 class="main-header">PRC Hotline</h1>
-  <!-- <%= link_to(image_tag('logo.png', :size => '80x80'), items_path) %> -->
 
   <ul class="header-subnav">
+    <li><%= link_to "Search", search_path %></li>
     <li><%= link_to "Counties", counties_path %></li>
     <li><%= link_to "Items", items_path %></li>
     <li><%= link_to "Locations", locations_path %></li>
-    <li><%= link_to "Validations", locations_path %></li>
+    <li><%= link_to "Validations", validations_path %></li>
 
   </ul>
 </header>
