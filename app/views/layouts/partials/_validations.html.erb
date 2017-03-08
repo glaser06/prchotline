@@ -51,7 +51,7 @@
                   <div class="row">
 
                     <% @item_locations.for_location(location.id).each do |il| %>
-                      <input id= <%= location.name %> type="checkbox"><label for=<%= location.name %>><b><%= il.item.name %></b></label>
+                      <input id= "<%= il.location.id %><%= il.item.id %>" type="checkbox"><label><b><%= il.item.name %></b></label>
 
                     <% end %>
 
