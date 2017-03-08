@@ -1,3 +1,4 @@
+
 <div class="row">
   <div class="small-7 columns">
     <h2><em>Validations</em></h2>
@@ -10,6 +11,8 @@
 
     <% if @locations != [] %>
         <%= render 'layouts/partials/validationsPartial' %>
+    <% else %>
+        <!-- <p id="notice"><%= @notice %></p> -->
     <% end %>
 
   </div>

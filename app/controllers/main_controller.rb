@@ -52,6 +52,7 @@ class MainController < ApplicationController
     @items = Item.all
     @counties = County.all
     @item_locations = ItemLocation.all
+
     if params[:county]
       countyId = params[:county]
       @countyName = County.find(countyId).name
