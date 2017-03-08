@@ -13,7 +13,7 @@ class Item < ApplicationRecord
   scope :alphabetical, -> { order('name') }
   scope :active,       -> { where(active: true) }
   scope :inactive,     -> { where(active: false) }
-  scope :for_name, -> (name) { where("name==?", name) }
+  scope :for_name, -> (name) { where("name=?", name) }
 
 
 
