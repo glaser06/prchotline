@@ -33,6 +33,14 @@
 
  }
 
+ h1, h3 {
+   text-align:center;
+ }
+
+ .top-bar {
+   padding: 0rem;
+ }
+
 .header-subnav {
   float: none;
   position: relative;

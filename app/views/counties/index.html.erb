@@ -1,7 +1,10 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Counties</h1>
-<%= link_to 'New County', new_county_path %>
+
+<div class="row">
+<div class="large-12 columns">
+<div class="panel">
 
 <table border= "1px solid black">
   <thead>
@@ -14,13 +17,16 @@
   <tbody>
     <% @counties.each do |county| %>
       <tr>
-        <td><%= county.name %></td>
-        <td><%= link_to 'Show', county %></td>
+        <td><%= link_to county.name, county %></td>
         <td><%= link_to 'Edit', edit_county_path(county) %></td>
-        <td><%= link_to 'Destroy', county, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', county, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<%= link_to 'New County', new_county_path %>
+
+</div></div>
+</div>
 
 <br>

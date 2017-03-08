@@ -1,0 +1,52 @@
+
+<div class="row">
+<div class="large-6 columns">
+<div class="panel">
+<h5>County</h5>
+<p>Insert county info</p>
+</div>
+</div>
+<div class="large-6 columns">
+<div class="panel">
+<h5>Item</h5>
+<p>Insert item info</p>
+</div>
+</div>
+</div>
+
+
+<div class="row">
+<div class="large-12 columns">
+<div class="panel">
+<h5>Locations</h5>
+<h3><%= @item.name %> in <%= @county.name %></h3>
+
+<table border= "1px solid black">
+
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Zipcode</th>
+
+
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @locations.each do |loc| %>
+      <tr>
+        <td><%= loc.name %></td>
+        <td><%= loc.address %></td>
+        <td><%= loc.zipcode %></td>
+
+      </tr>
+    <% end %>
+  </tbody>
+
+</table>
+
+</div>
+</div>
+</div
