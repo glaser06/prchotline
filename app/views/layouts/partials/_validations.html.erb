@@ -34,14 +34,17 @@
                 <li><%= il.item.name %></li>
               <% else %>
                 <br></br>
-                <a data-open= "<%=location.id%>Modal" >More...</a>
+                <p><a data-open= "<%=location.id%>Modal" >More...</a></p>
 
 
                 <% break%>
               <% end %>
             <% end %>
+
             <div class="reveal" id="<%=location.id%>Modal" data-reveal>
+
               <h3> <%= location.name %> </h3>
+
               <form>
                 <fieldset class="fieldset">
                   <legend>Items accepted here</legend>
@@ -57,9 +60,8 @@
               </form>
               <button data-close> Confirm </button>
               <%= link_to 'Edit', edit_location_path(location) %>
-              <button class="close-button" data-close aria-label="Close modal" type="button">
-                <span aria-hidden="true">&times;</span>
-              </button>
+              <button style="float:right;" data-close type="button"> Close </button>
+
             </div>
           </ul>
         </td>
