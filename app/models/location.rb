@@ -1,6 +1,6 @@
 class Location < ApplicationRecord
 
-  belongs_to :county
+  belongs_to :county, :foreign_key => "counties_id"
   has_many :item_locations
   has_many :items, through: :item_locations
 

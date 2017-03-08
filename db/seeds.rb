@@ -141,9 +141,9 @@ County.all.each do |c|
 
         address = "#{Faker::Address.street_address} Ave."
         phone = (Faker::PhoneNumber.phone_number).split('x')[0]
-
+        # c.locations.create(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", address: address, city: zipCity[1], phone: phone, website: 'www.example.com', zipcode: zipCity[0], state: 'PA', counties_id: c.id, active: true)
         @loc1 = Location.create(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", address: address, city: zipCity[1], phone: phone, website: 'www.example.com', zipcode: zipCity[0], state: 'PA', counties_id: c.id, active: true)
-        Rails.logger.info(@loc1.errors.inspect)
+        # Rails.logger.info(@loc1.errors.inspect)
         count += 1
       end
     end
