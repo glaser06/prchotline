@@ -25,8 +25,10 @@
     <%= l.input :phone %>
     <%= l.input :website %>
     <%= l.input :active %>
+    Items
     <% @items = Item.all.map { |a| [ a.name, a.id ] } %>
-    <%= select_tag 'item', options_for_select(@items), :prompt => "Add Items" %>
+    <%= select_tag 'item', options_for_select(@items), :prompt => "Add an Item" %>
+    <%= l.button :submit %>
     <%= l.button :submit %>
   <% end %>
   </fieldset>
