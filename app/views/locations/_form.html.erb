@@ -1,28 +1,34 @@
-<%= simple_form_for @location do |l| %>
+<div class='row'>
+  <div class="large-8 large-centered columns">
+  <fieldset>
+  <%= simple_form_for @location do |l| %>
 
-<% if location.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(location.errors.count, "error") %> prohibited this location from being saved:</h2>
+  <% if location.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(location.errors.count, "error") %> prohibited this location from being saved:</h2>
 
-    <ul>
-    <% location.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-    </ul>
+      <ul>
+      <% location.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <%= l.input :name %>
+    <%= l.input :address %>
+    <%= l.input :city %>
+    <%= l.input :state %>
+    <%= l.input :zipcode %>
+    <% @options = County.all.map { |a| [ a.name, a.id ] } %>
+    <%= select_tag 'county', options_for_select(@options), :prompt => "Choose a county..." %>
+    <%= l.input :phone %>
+    <%= l.input :website %>
+    <%= l.input :active %>
+    <% @items = Item.all.map { |a| [ a.name, a.id ] } %>
+    <%= select_tag 'item', options_for_select(@items), :prompt => "Add Items" %>
+    <%= l.button :submit %>
+  <% end %>
+  </fieldset>
   </div>
-<% end %>
-
-  <%= l.input :name %>
-  <%= l.input :address %>
-  <%= l.input :city %>
-  <%= l.input :state %>
-  <%= l.input :zipcode %>
-  <% @options = County.all.map { |a| [ a.name, a.id ] } %>
-  <%= select_tag 'county', options_for_select(@options), :prompt => "Choose a county..." %>
-  <%= l.input :phone %>
-  <%= l.input :website %>
-  <%= l.input :active %>
-  <% @items = Item.all.map { |a| [ a.name, a.id ] } %>
-  <%= select_tag 'item', options_for_select(@items), :prompt => "Add Items" %>
-  <%= l.button :submit %>
-<% end %>
+</div>
