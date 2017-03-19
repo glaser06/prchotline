@@ -20,14 +20,17 @@
     <%= l.input :city %>
     <%= l.input :state %>
     <%= l.input :zipcode %>
-    <% @options = County.all.map { |a| [ a.name, a.id ] } %>
-    <%= select_tag 'county', options_for_select(@options), :prompt => "Choose a county..." %>
+    <%= l.collection_select(:counties_id, County.all, :id, :name) %>
     <%= l.input :phone %>
     <%= l.input :website %>
     <%= l.input :active %>
     Items
     <% @items = Item.all.map { |a| [ a.name, a.id ] } %>
-    <%= select_tag 'item', options_for_select(@items), :prompt => "Add an Item" %>
+    <% @items.each do |item| %>
+      <div> 
+        <%= l.check_box(:items, { :multiple => true }, item[1], nil) %>  <%= item[0] %> 
+      </div>
+    <% end %>
     <%= l.button :submit %>
   <% end %>
   </fieldset>

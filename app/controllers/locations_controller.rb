@@ -4,7 +4,7 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.json
   def index
-    @locations = Location.all
+    @locations = Location.all.by_zipcode
     @item_locations = ItemLocation.all
   end
 
@@ -70,6 +70,6 @@ class LocationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def location_params
-      params.require(:location).permit(:name, :address, :phone, :website, :city, :zipcode, :state)
+      params.require(:location).permit(:name, :address, :phone, :website, :city, :zipcode, :state, :counties_id)
     end
 end
