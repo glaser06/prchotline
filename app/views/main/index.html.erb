@@ -3,21 +3,22 @@
 
 <% if @errors != "" %>
 <div class="row">
-<div class="large-12 columns">
-<div class="panel">
-  <h3> Search </h3>
+  <div class="large-12 columns">
+    <div class="panel">
+      <h3> Search </h3>
 
-  <h4> <%= @errors %> </h4>
-  <%= form_tag("", :method => "get", id: "search-form") do %>
+      <h4> <%= @errors %> </h4>
+      <%= form_tag("", :method => "get", id: "search-form") do %>
       <%= text_field_tag :item, params[:item], placeholder: "Items" %>
       <%= text_field_tag :county, params[:county], placeholder: "Counties" %>
       <%= text_field_tag :zip, params[:zip], placeholder: "Zipcodes", maxlength: 5, class: 'input-small' %>
       <%= submit_tag "Search", :name => nil %>
-  <% end %>
-</div></div></div>
-<% else %>
-
-
-<%= render 'layouts/partials/searchResults' %>
-<% end %>
-<br>
+      <% end %>
+    </div>
+  </div>
+</div>
+    <% else %>
+    
+    <%= render 'layouts/partials/searchResults' %>
+    <% end %>
+    <br>

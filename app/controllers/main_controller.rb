@@ -38,7 +38,7 @@ class MainController < ApplicationController
       end
       contexts = []
       @locations.each do |loc|
-        context = ItemLocation.active.for_item(@item.id).for_location(loc.id)
+        context = ItemLocation.active.for_item(@item.id).for_location(loc.id).first
         contexts.push(context)
 
       end
