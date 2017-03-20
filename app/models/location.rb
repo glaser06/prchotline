@@ -4,6 +4,8 @@ class Location < ApplicationRecord
   has_many :item_locations
   has_many :items, through: :item_locations
 
+  accepts_nested_attributes_for :item_locations
+
   validates :name, :address, :city, :zipcode, :state, presence: true
 
 
@@ -15,5 +17,9 @@ class Location < ApplicationRecord
   # scope :by_county, ->  { includes(:county).order('counties.name') }
   scope :for_county, -> (id) { where('counties_id=?', id) }
 
+  def item_locations_for_form
+    collection = item_locations.where(location_id: id)
+    collection.any? ? collection : item_locations.build
+  end
 
 end
