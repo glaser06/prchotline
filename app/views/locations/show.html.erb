@@ -39,5 +39,14 @@
   <%= @location.active %>
 </p>
 
+ <p>
+  <b>Items in <%= @location.name %>:</b>
+    <ol>
+      <% for il in @item_locations %>
+        <li><%= il.item_id %> </li>
+      <% end %>
+    </ol>
+  </p>
+
 <%= link_to 'Edit', edit_location_path(@location) %> |
 <%= link_to 'Back', locations_path %>

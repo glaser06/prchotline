@@ -4,10 +4,9 @@ class Location < ApplicationRecord
   has_many :item_locations
   has_many :items, through: :item_locations
 
-  accepts_nested_attributes_for :item_locations
+  accepts_nested_attributes_for :item_locations, reject_if: lambda { |item_location| item_location[:item_id].blank? }, allow_destroy: true
 
   validates :name, :address, :city, :zipcode, :state, presence: true
-
 
   scope :alphabetical , -> { order('name') }
   scope :active, -> { where(active: true) }

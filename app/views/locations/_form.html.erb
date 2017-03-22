@@ -1,7 +1,7 @@
 <div class='row'>
   <div class="large-8 large-centered columns">
   <fieldset>
-  <%= simple_form_for @location do |l| %>
+  <%= simple_nested_form_for @location, :html => { :class => 'form-horizontal' } do |location_form| %>
 
   <% if location.errors.any? %>
     <div id="error_explanation">
@@ -15,26 +15,20 @@
     </div>
   <% end %>
 
-    <%= l.input :name %>
-    <%= l.input :address %>
-    <%= l.input :city %>
-    <%= l.input :state %>
-    <%= l.input :zipcode %>
-    <%= l.collection_select(:counties_id, County.all, :id, :name) %>
-    <%= l.input :phone %>
-    <%= l.input :website %>
-    <%= l.input :active %>
-    Items
+  <%= render :partial => "location_fields", :locals => { :l => location_form } %>
 
+    <legend>Items for this location</legend>
+        <div id="item_locations">
+          <%= location_form.simple_fields_for :item_locations do |il_form| %>
+            <%= render :partial => "itemLocations", :locals => { :l => il_form } %>
+          <% end %> 
+          <p>
+            <br /><%= location_form.link_to_add("Add Item", :item_locations, :class => 'button tiny') %>
+          </p>
+        </div> 
 
-   <!--<%= l.collection_select(:items, Item.all, :id, :name) %> -->
-    <% @items = Item.all.map { |a| [ a.name, a.id.to_i ] } %>
-    <% @items.each do |item| %>
-      <div> 
-        <%= l.check_box(:items, { :multiple => true }, item[1], nil) %>  <%= item[0] %> 
-      </div>
-    <% end %> 
-    <%= l.button :submit %>
+    
+  <%= location_form.submit nil, :class => 'button radius' %>
   <% end %>
   </fieldset>
   </div> 

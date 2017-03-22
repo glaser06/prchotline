@@ -1,9 +1,7 @@
 class ItemLocation < ApplicationRecord
 
   belongs_to :item
-  belongs_to :location
-
-
+  belongs_to :location, required: false
 
   scope :active, -> {where(active: true)}
   scope :by_days_since, -> {order('verified')}
