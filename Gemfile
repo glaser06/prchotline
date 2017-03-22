@@ -9,6 +9,7 @@ end
 gem 'foundation-rails'
 gem 'simple_form'
 gem "nested_form"
+gem 'will_paginate', '~> 3.1.0'
 
 
 gem 'faker'
