@@ -25,15 +25,17 @@
     <%= l.input :website %>
     <%= l.input :active %>
     Items
-    <%= l.collection_select(:items, Item.all, :id, :name) %>
-   <!--  <% @items = Item.all.map { |a| [ a.name, a.id ] } %>
+
+
+   <!--<%= l.collection_select(:items, Item.all, :id, :name) %> -->
+    <% @items = Item.all.map { |a| [ a.name, a.id.to_i ] } %>
     <% @items.each do |item| %>
       <div> 
-        <%= l.check_box(:item_locations, { :multiple => true }, item[1], nil) %>  <%= item[0] %> 
+        <%= l.check_box(:items, { :multiple => true }, item[1], nil) %>  <%= item[0] %> 
       </div>
-    <% end %> -->
+    <% end %> 
     <%= l.button :submit %>
   <% end %>
   </fieldset>
-  </div>
+  </div> 
 </div>

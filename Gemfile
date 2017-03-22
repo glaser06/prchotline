@@ -8,6 +8,7 @@ end
 
 gem 'foundation-rails'
 gem 'simple_form'
+gem "nested_form"
 
 
 gem 'faker'
