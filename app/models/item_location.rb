@@ -3,10 +3,13 @@ class ItemLocation < ApplicationRecord
   belongs_to :item
   belongs_to :location, required: false
 
+  validates_uniqueness_of :item_id, scope: [:location_id]
+
   scope :active, -> {where(active: true)}
   scope :by_days_since, -> {order('verified')}
 
   scope :for_item, -> (item){where("item_id=?",item)}
   scope :for_location, -> (loc){where("location_id=?",loc)}
+
 
 end
