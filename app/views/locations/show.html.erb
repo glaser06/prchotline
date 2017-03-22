@@ -1,23 +1,15 @@
-<p id="notice"><%= notice %></p>
+<div class='row'>
 
-<p>
-  <strong>Name:</strong>
-  <%= @location.name %>
-</p>
+<h3><%= @location.name %></h3>
 
 <p>
   <strong>Address:</strong>
+  <br></br>
   <%= @location.address %>
-</p>
-
-<p>
-  <strong>Phone:</strong>
-  <%= @location.phone %>
-</p>
-
-<p>
-  <strong>Website:</strong>
-  <%= @location.website %>
+  <div>
+  <%= @location.city %>
+  <%= @location.zipcode %>
+  </div>
 </p>
 
 <p>
@@ -31,22 +23,32 @@
 </p>
 
 <p>
-  <strong>State:</strong>
-  <%= @location.state %>
+  <strong>Phone:</strong>
+  <%= @location.phone %>
 </p>
+
+<p>
+  <strong>Website:</strong>
+  <%= @location.website %>
+</p>
+
+
+
 <p>
   <strong>Active:</strong>
   <%= @location.active %>
 </p>
 
  <p>
-  <b>Items in <%= @location.name %>:</b>
-    <ol>
+  <b>Items:</b>
+    <ul>
       <% for il in @item_locations %>
         <li><%= il.item.name %> </li>
       <% end %>
-    </ol>
+    </ul>
   </p>
 
 <%= link_to 'Edit', edit_location_path(@location) %> |
 <%= link_to 'Back', locations_path %>
+
+</div>

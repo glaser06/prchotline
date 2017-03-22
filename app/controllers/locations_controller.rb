@@ -5,13 +5,13 @@ class LocationsController < ApplicationController
   # GET /locations.json
   def index
     @locations = Location.all.paginate(:page => params[:page]).per_page(20)
-    @item_locations = ItemLocation.all
+    @item_locations = ItemLocation.by_item.all
   end
 
   # GET /locations/1
   # GET /locations/1.json
   def show
-    @item_locations = @location.item_locations.to_a
+    @item_locations = @location.item_locations.by_item.to_a
   end
 
   # GET /locations/new
