@@ -43,7 +43,7 @@
   <b>Items in <%= @location.name %>:</b>
     <ol>
       <% for il in @item_locations %>
-        <li><%= il.item_id %> </li>
+        <li><%= il.item.name %> </li>
       <% end %>
     </ol>
   </p>
