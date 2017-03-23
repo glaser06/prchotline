@@ -8,7 +8,7 @@ class Location < ApplicationRecord
 
   accepts_nested_attributes_for :item_locations, reject_if: lambda { |item_location| item_location[:item_id].blank? }, allow_destroy: true
 
-  validates :name, :address, :city, :zipcode, :state, presence: true
+  validates :name, :address, :city, :zipcode, :county, presence: true
 
   scope :alphabetical , -> { order('name') }
   scope :active, -> { where(active: true) }
