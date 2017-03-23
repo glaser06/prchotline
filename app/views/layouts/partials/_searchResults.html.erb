@@ -3,6 +3,12 @@
   <div class="callout">
 
     <h2><%= @item.name %> in <%= @county.name %> County</h2>
+
+    <% st = "" %>
+    <% @item.aliases.each do |a| %>
+      <% st += " " + a.name %>
+    <% end %>
+    <h6>Also known as: <%= st  %> </h6>
     <br>
     <div class="large-8 columns">
         <h4><%= @item.name %></h4>
@@ -24,7 +30,8 @@
 
 
 
-    <div id="bar" >
+    <div>
+
       <table border= "1px solid black" >
 
         <thead>
@@ -32,6 +39,7 @@
             <th>Name</th>
             <th>Address</th>
             <th>Zipcode</th>
+            <th>Phone</th>
             <th>Validated</th>
             <th>Context </th>
 
@@ -44,8 +52,13 @@
           <tr>
             <td><%= link_to loc.name, loc %> </td>
 
-            <td><%= link_to loc.address+" "+loc.city+", PA", "http://maps.google.com/?q=#{loc.address+" "+loc.city+", PA"}" %>  </td>
-            <td><%= loc.zipcode %></td>
+            <td><%= link_to loc.addresses.first.address+" "+loc.addresses.first.city+", PA", "http://maps.google.com/?q=#{loc.addresses.first.address+" "+loc.addresses.first.city+", PA"}" %>  </td>
+            <td><%= loc.addresses.first.zipcode %></td>
+            <td>
+              <% ph = loc.phone %>
+              <% a = loc.phone.gsub!(/\D/, "") %>
+              <%= "(#{ph[0..2]})" %>&nbsp;<%="#{ph[3..5]}"%>&nbsp;<%="#{ph[6..-1]}"%>
+            </td>
             <td><%= @contexts[index].verified.blank? ? "Not validated" : @contexts[index].verified  %></td>
             <td><%= @contexts[index].context%></td>
 

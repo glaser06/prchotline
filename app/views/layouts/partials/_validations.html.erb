@@ -46,19 +46,26 @@
               <h3> <%= location.name %> </h3>
 
               <form>
-                <fieldset class="fieldset">
-                  <legend>Items accepted here</legend>
-                  <div class="row">
 
-                    <% @item_locations.for_location(location.id).each do |il| %>
-                      <input id= "<%= il.location.id %><%= il.item.id %>" type="checkbox"><label><b><%= il.item.name %></b></label>
+                  <legend>Items accepted here</legend>
+                  <% @location = location %>
+                  <%= simple_nested_form_for @location, :url => edit_location_path(@location.id),:method => :put, :html => { :class => 'form-horizontal' } do |location_form| %>
+                    <%= location_form.simple_fields_for :item_locations do |il_form| %>
+                      <div class="large-5 large-centered columns">
+                      <%= il_form.input :active, label: Item.find(il_form.object.item_id).name %>
+
+
+                      </div>
 
                     <% end %>
+                    <%= location_form.submit "Update Items", :class => 'button radius' %>
+                  <% end %>
 
-                  </div>
-                </fieldset>
+
+
               </form>
-              <button data-close> Confirm </button>
+              <!-- <button data-close> Confirm </button>
+              <button data-close> Confirm All </button> -->
               <%= link_to 'Edit', edit_location_path(location) %>
               <button style="float:right;" data-close type="button"> Close </button>
 
@@ -73,7 +80,7 @@
           <% a = location.phone.gsub!(/\D/, "") %>
           <%= "(#{ph[0..2]})" %>&nbsp;<%="#{ph[3..5]}"%>&nbsp;<%="#{ph[6..-1]}"%>
         </td>
-        <td><%= location.address %></td>
+        <td><%= location.addresses.first.address %></td>
         <td>
           <%= "#{location.updated_at.month}/#{location.updated_at.day}/#{location.updated_at.year}" %>
 
@@ -90,17 +97,8 @@
           <p><a data-open="<%= location.id %>EditModal" >Edit</a></p>
           <div class="reveal" id="<%= location.id %>EditModal" data-reveal>
             <h3> <%= location.name %> </h3>
-            <%= simple_form_for location do |l| %>
-
-              <%= l.input :name %>
-              <%= l.input :address %>
-              <%= l.input :phone %>
-              <%= l.input :website %>
-              <%= l.input :city %>
-              <%= l.input :state %>
-              <%= l.input :active %>
-              <%= l.button :submit %>
-            <% end %>
+            <% @location = location %>
+            <%= render 'locations/form', location: @location %>
 
 
             <button class="close-button" data-close aria-label="Close modal" type="button">

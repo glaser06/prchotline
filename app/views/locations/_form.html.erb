@@ -1,23 +1,35 @@
-<%= simple_form_for @location do |l| %>
+<div class='row'>
+  <div class="large-8 large-centered columns">
+  <fieldset>
+  <%= simple_nested_form_for @location, :html => { :class => 'form-horizontal' } do |location_form| %>
 
-<% if location.errors.any? %>
-  <div id="error_explanation">
-    <h2><%= pluralize(location.errors.count, "error") %> prohibited this location from being saved:</h2>
+  <% if location.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(location.errors.count, "error") %> prohibited this location from being saved:</h2>
 
-    <ul>
-    <% location.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-    </ul>
+      <ul>
+      <% location.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= render :partial => "locations/location_fields", :locals => { :l => location_form } %>
+
+    <legend>Items</legend>
+        <div id="item_locations">
+          <%= location_form.simple_fields_for :item_locations do |il_form| %>
+            <%= render :partial => "locations/itemLocations", :locals => { :l => il_form } %>
+          <% end %>
+          <p>
+            <br /><%= location_form.link_to_add("Add Item", :item_locations, :class => 'button tiny') %>
+          </p>
+        </div>
+
+
+  <%= location_form.submit nil, :class => 'button radius' %>
+  <% end %>
+  </fieldset>
   </div>
-<% end %>
-
-  <%= l.input :name %>
-  <%= l.input :address %>
-  <%= l.input :phone %>
-  <%= l.input :website %>
-  <%= l.input :city %>
-  <%= l.input :state %>
-  <%= l.input :active %>
-  <%= l.button :submit %>
-<% end %>
+</div>

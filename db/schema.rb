@@ -10,7 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170227162831) do
+ActiveRecord::Schema.define(version: 20170323161303) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "addresses", force: :cascade do |t|
+    t.string   "context"
+    t.string   "phone"
+    t.string   "address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "zipcode"
+    t.boolean  "active"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "location_id"
+    t.integer  "county_id"
+    t.index ["county_id"], name: "index_addresses_on_county_id", using: :btree
+    t.index ["location_id"], name: "index_addresses_on_location_id", using: :btree
+  end
+
+  create_table "aliases", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "item_id"
+    t.boolean  "active"
+    t.index ["item_id"], name: "index_aliases_on_item_id", using: :btree
+  end
 
   create_table "counties", force: :cascade do |t|
     t.string   "name"
@@ -34,8 +62,8 @@ ActiveRecord::Schema.define(version: 20170227162831) do
     t.integer  "location_id"
     t.text     "reason"
     t.boolean  "active"
-    t.index ["item_id"], name: "index_item_locations_on_item_id"
-    t.index ["location_id"], name: "index_item_locations_on_location_id"
+    t.index ["item_id"], name: "index_item_locations_on_item_id", using: :btree
+    t.index ["location_id"], name: "index_item_locations_on_location_id", using: :btree
   end
 
   create_table "items", force: :cascade do |t|
@@ -48,17 +76,14 @@ ActiveRecord::Schema.define(version: 20170227162831) do
 
   create_table "locations", force: :cascade do |t|
     t.string   "name"
-    t.string   "address"
     t.string   "phone"
     t.string   "website"
-    t.string   "city"
-    t.string   "zipcode"
-    t.string   "state"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "counties_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.boolean  "active"
-    t.index ["counties_id"], name: "index_locations_on_counties_id"
   end
 
+  add_foreign_key "addresses", "counties"
+  add_foreign_key "addresses", "locations"
+  add_foreign_key "aliases", "items"
 end
