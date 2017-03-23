@@ -30,7 +30,7 @@
         <td><%= location.address %></td>
         <td><%= location.city %></td>
         <td><%= location.zipcode %></td>
-        <td><%= location.phone %></td>
+        <td><%= number_to_phone location.phone %></td>
         <td><%= location.website %></td>
         <td>
         <% @item_locations.for_location(location.id).each do |il| %>

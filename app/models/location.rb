@@ -1,5 +1,7 @@
 class Location < ApplicationRecord
 
+  before_save :reformat_phone
+
   belongs_to :county, :foreign_key => "counties_id"
   has_many :item_locations
   has_many :items, through: :item_locations
@@ -19,6 +21,14 @@ class Location < ApplicationRecord
   def item_locations_for_form
     collection = item_locations.where(location_id: id)
     collection.any? ? collection : item_locations.build
+  end
+
+  private
+
+  def reformat_phone
+    phone = self.phone.to_s  # change to string in case input as all numbers 
+    phone.gsub!(/[^0-9]/,"") # strip all non-digits
+    self.phone = phone       # reset self.phone to new string
   end
 
 end
