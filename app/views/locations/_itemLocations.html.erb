@@ -1,9 +1,8 @@
  <div class="fields">
-    <div class="min_attraction">
+      <!-- fields -->
+      <div class="large-5 large-centered columns">
+      <%= l.collection_select(:item_id, Item.all.alphabetical, :id, :name, { :prompt => 'Select Item' } ) %>
       <!-- x icon to remove -->
       <%= l.link_to_remove("x") %>
-      <!-- fields -->
-      <%= l.collection_select(:item_id, Item.all.alphabetical, :id, :name, { :prompt => 'Select Item' } ) %>
-
-    </div>
+      </div>
 </div>

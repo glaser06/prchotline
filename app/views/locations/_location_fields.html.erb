@@ -2,7 +2,7 @@
 <%= l.input :address %>
 <%= l.input :city %>
 <%= l.input :zipcode %>
-<%= l.collection_select(:counties_id, County.all, :id, :name) %>
+<%= l.collection_select(:counties_id, County.all, :id, :name, :prompt => "Choose a county...") %>
 <%= l.input :phone %>
 <%= l.input :website %>
 <%= l.input :active %>

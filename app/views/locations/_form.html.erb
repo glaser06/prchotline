@@ -17,7 +17,7 @@
 
   <%= render :partial => "location_fields", :locals => { :l => location_form } %>
 
-    <legend>Items for this location</legend>
+    <legend>Items</legend>
         <div id="item_locations">
           <%= location_form.simple_fields_for :item_locations do |il_form| %>
             <%= render :partial => "itemLocations", :locals => { :l => il_form } %>
