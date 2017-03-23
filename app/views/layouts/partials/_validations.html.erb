@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h3> <%= @countyName %> </h3>
+<h4> <%= @countyName %> </h4>
 
 
 
@@ -34,36 +34,19 @@
                 <li><%= il.item.name %></li>
               <% else %>
                 <br></br>
-                <p><a data-open= "<%=location.id%>Modal" >More...</a></p>
+
 
 
                 <% break%>
               <% end %>
             <% end %>
+            <p><a data-open= "<%=location.id%>Modal" >Validate</a></p>
 
             <div class="reveal" id="<%=location.id%>Modal" data-reveal>
 
               <h3> <%= location.name %> </h3>
-
-              <form>
-
-                  <legend>Items accepted here</legend>
-                  <% @location = location %>
-                  <%= simple_nested_form_for @location, :url => edit_location_path(@location.id),:method => :put, :html => { :class => 'form-horizontal' } do |location_form| %>
-                    <%= location_form.simple_fields_for :item_locations do |il_form| %>
-                      <div class="large-5 large-centered columns">
-                      <%= il_form.input :active, label: Item.find(il_form.object.item_id).name %>
-
-
-                      </div>
-
-                    <% end %>
-                    <%= location_form.submit "Update Items", :class => 'button radius' %>
-                  <% end %>
-
-
-
-              </form>
+              <% @location = location %>
+              <%= render 'locations/item_checklist', location: @location %>
               <!-- <button data-close> Confirm </button>
               <button data-close> Confirm All </button> -->
               <%= link_to 'Edit', edit_location_path(location) %>
