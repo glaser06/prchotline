@@ -44,8 +44,8 @@ class MainController < ApplicationController
       @errors = ""
       qCounty = params[:county]
       qItem = params[:item]
-      county = County.for_name(qCounty)
-      item = Item.for_name(qItem)
+      county = County.for_name(qCounty.capitalize)
+      item = Item.for_name(qItem.capitalize)
       if item.blank?
         @errors += "Could not find #{params[:item]}"
         return
@@ -78,6 +78,7 @@ class MainController < ApplicationController
     @items = Item.all
     @counties = County.all
     @item_locations = ItemLocation.all
+
     if params[:county]
       countyId = params[:county]
       @countyName = County.find(countyId).name
