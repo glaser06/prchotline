@@ -32,27 +32,21 @@ try{if (!window.CloudFlare) {var CloudFlare=[{verbose:0,p:0,byc:0,owlid:"cf",bag
         </h1>
         </li>
           <li class="divider"></li>
-            <li class="has-dropdown">
+            <li>
               <a><%= link_to "Counties", counties_path, class: "active" %></a>
-              <ul class="dropdown">
-                <li><a><%= link_to "Add County", new_county_path, class: "active" %></a></li>
-              </ul>
+
             </li>
 
             <li class="divider"></li>
-              <li class="has-dropdown">
+              <li>
                 <a><%= link_to "Items", items_path, class: "active" %></a>
-                <ul class="dropdown">
-                  <li><a><%= link_to "Add Item", new_item_path, class: "active" %></a></li>
-                </ul>
+
               </li>
 
               <li class="divider"></li>
-                <li class="has-dropdown">
+                <li >
                   <a><%= link_to "Locations", locations_path, class: "active" %></a>
-                  <ul class="dropdown">
-                    <li><a><%= link_to "Add Location", new_location_path, class: "active" %></a></li>
-                  </ul>
+
                 </li>
 
                 <li class="divider"></li>
@@ -63,8 +57,11 @@ try{if (!window.CloudFlare) {var CloudFlare=[{verbose:0,p:0,byc:0,owlid:"cf",bag
         </ul>
         <ul class="right">
           <li class="divider"></li>
+
             <li >
-              <a class="active" href="#">New Call</a>
+              
+              <a><%= link_to "New Call", newCall_path, class: "active" %></a></li>
+
 
             </li>
 
@@ -79,9 +76,9 @@ try{if (!window.CloudFlare) {var CloudFlare=[{verbose:0,p:0,byc:0,owlid:"cf",bag
 
 
 
-<script>
-      $(document).foundation();
-    </script>
+
+
+
 
 </body>
 </html>

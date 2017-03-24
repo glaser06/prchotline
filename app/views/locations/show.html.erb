@@ -5,21 +5,21 @@
 <p>
   <strong>Address:</strong>
   <br></br>
-  <%= @location.address %>
+  <%= @location.addresses.first.address %>
   <div>
-  <%= @location.city %>
-  <%= @location.zipcode %>
+  <%= @location.addresses.first.city %>
+  <%= @location.addresses.first.zipcode %>
   </div>
 </p>
 
 <p>
   <strong>City:</strong>
-  <%= @location.city %>
+  <%= @location.addresses.first.city %>
 </p>
 
 <p>
   <strong>Zipcode:</strong>
-  <%= @location.zipcode %>
+  <%= @location.addresses.first.zipcode %>
 </p>
 
 <p>

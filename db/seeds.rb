@@ -97,7 +97,15 @@ item_list = ["Air Conditioners", "Aluminum", "Ammunition", "Antifreeze", "Applia
 "X-Ray & MRI Film",
 "Yard Waste"]
 item_list.each do |name|
-  Item.create( name: name, description: "Nothing just yet", active: true)
+  @item = Item.create( name: name.downcase, description: "Nothing just yet", active: true)
+
+  @item.aliases.create(name: name.downcase, active: true)
+  if name == "Mobile Phones"
+    @item.aliases.create(name: "Cellphones".downcase, active: true)
+  elsif name == "Televisions"
+    @item.aliases.create(name: "TV".downcase, active: true)
+  end
+  Rails.logger.info(@item.errors.inspect)
 end
 # Item.create(name: 'Paint', description: 'Paint needs to be disposed of properly to protect the environment.', active: true)
 # Item.create(name: 'Television', description: 'Nothing right now', active: true)
@@ -122,14 +130,15 @@ csv.each do |row|
   if row['county']
     county = row['county'].split(' ')[0]
     if countyZip.key?(county)
-      countyZip[county].push([row['zip'],row['primary_city']])
+      countyZip[county].push([row['zip'],row['primary_city'], row['latitude'], row['longitude']])
     else
-      countyZip[county] = [[row['zip'],row['primary_city']]]
+      countyZip[county] = [[row['zip'],row['primary_city'], row['latitude'], row['longitude']]]
     end
   end
 
 end
 Faker::Config.locale = 'en-US'
+counter = 0
 County.all.each do |c|
   county = c.name
   zipcodes = countyZip[county]
@@ -142,8 +151,12 @@ County.all.each do |c|
         address = "#{Faker::Address.street_address} Ave."
         phone = (Faker::PhoneNumber.phone_number).split('x')[0]
         # c.locations.create(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", address: address, city: zipCity[1], phone: phone, website: 'www.example.com', zipcode: zipCity[0], state: 'PA', counties_id: c.id, active: true)
-        @loc1 = Location.create(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", address: address, city: zipCity[1], phone: phone, website: 'www.example.com', zipcode: zipCity[0], state: 'PA', counties_id: c.id, active: true)
-        # Rails.logger.info(@loc1.errors.inspect)
+        @loc1 = Location.create(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", phone: phone, website: 'www.example.com', active: true)
+
+        @addr1 = Address.create(address: address, city: zipCity[1], zipcode: zipCity[0], state: 'PA', county_id: c.id,location_id: @loc1.id, latitude: zipCity[2], longitude: zipCity[3], active: true)
+        Rails.logger.info(@loc1.errors.inspect)
+        Rails.logger.info(@addr1.errors.inspect)
+
         count += 1
       end
     end
@@ -156,11 +169,11 @@ end
 items = Item.all
 locs = Location.all
 items.each do |item|
-  if ["Paper", "Televisions","Mobile Phones","Cardboard"].include?(item.name)
+  if ["paper", "televisions","mobile phones","cardboard"].include?(item.name)
     locs.each do |loc|
 
-      ItemLocation.create(item_id: item.id, location_id: loc.id, context: "This is an example context. We don't know much beyond this.",active: true)
-
+      @asd = ItemLocation.create(item_id: item.id, location_id: loc.id, context: "This is an example context. We don't know much beyond this.",active: true)
+      Rails.logger.info(@asd.errors.inspect)
     end
   end
 end

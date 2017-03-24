@@ -26,10 +26,10 @@
     <% @locations.each do |location| %>
       <tr>
         <td><%= link_to location.name, location %></td>
-        <td><%= location.county.name %></td>
-        <td><%= location.address %></td>
-        <td><%= location.city %></td>
-        <td><%= location.zipcode %></td>
+        <td><%= location.addresses.first.county.name %></td>
+        <td><%= location.addresses.first.address %></td>
+        <td><%= location.addresses.first.city %></td>
+        <td><%= location.addresses.first.zipcode %></td>
         <td><%= number_to_phone location.phone %></td>
         <td><%= location.website %></td>
         <td>
@@ -48,4 +48,3 @@
 <%= will_paginate @locations, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
 </div>
 <br>
-
