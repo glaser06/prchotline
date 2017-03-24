@@ -1,13 +1,25 @@
-<p id="notice"><%= notice %></p>
+<div class='row'>
 
-<p>
-  <strong>Name:</strong>
-  <%= @location.name %>
-</p>
+<h3><%= @location.name %></h3>
 
 <p>
   <strong>Address:</strong>
-  <%= @location.address %>
+  <br></br>
+  <%= @location.addresses.first.address %>
+  <div>
+  <%= @location.addresses.first.city %>
+  <%= @location.addresses.first.zipcode %>
+  </div>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @location.addresses.first.city %>
+</p>
+
+<p>
+  <strong>Zipcode:</strong>
+  <%= @location.addresses.first.zipcode %>
 </p>
 
 <p>
@@ -20,24 +32,23 @@
   <%= @location.website %>
 </p>
 
-<p>
-  <strong>City:</strong>
-  <%= @location.city %>
-</p>
 
-<p>
-  <strong>Zipcode:</strong>
-  <%= @location.zipcode %>
-</p>
 
-<p>
-  <strong>State:</strong>
-  <%= @location.state %>
-</p>
 <p>
   <strong>Active:</strong>
   <%= @location.active %>
 </p>
 
+ <p>
+  <b>Items:</b>
+    <ul>
+      <% for il in @item_locations %>
+        <li><%= il.item.name %> </li>
+      <% end %>
+    </ul>
+  </p>
+
 <%= link_to 'Edit', edit_location_path(@location) %> |
 <%= link_to 'Back', locations_path %>
+
+</div>

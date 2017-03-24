@@ -4,17 +4,20 @@ class LocationsController < ApplicationController
   # GET /locations
   # GET /locations.json
   def index
-    @locations = Location.all
+    @locations = Location.all.paginate(:page => params[:page]).per_page(20)
+    @item_locations = ItemLocation.by_item.all
   end
 
   # GET /locations/1
   # GET /locations/1.json
   def show
+    @item_locations = @location.item_locations.by_item.to_a
   end
 
   # GET /locations/new
   def new
     @location = Location.new
+    @location.item_locations.build
   end
 
   # GET /locations/1/edit
@@ -25,7 +28,7 @@ class LocationsController < ApplicationController
   # POST /locations.json
   def create
     @location = Location.new(location_params)
-
+    puts location_params
     respond_to do |format|
       if @location.save
         format.html { redirect_to @location, notice: 'Location was successfully created.' }
@@ -69,6 +72,6 @@ class LocationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def location_params
-      params.require(:location).permit(:name, :address, :phone, :website, :city, :zipcode, :state)
+      params.require(:location).permit(:name, :address, :phone, :website, :city, :zipcode, :counties_id, :active, item_locations_attributes: [:id, :item_id, :location_id, :active, :_destroy])
     end
 end

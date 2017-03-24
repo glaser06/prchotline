@@ -3,7 +3,7 @@
   <fieldset>
   <%= simple_nested_form_for @location, :html => { :class => 'form-horizontal' } do |location_form| %>
 
-  <% if location.errors.any? %>
+  <!-- <% if location.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(location.errors.count, "error") %> prohibited this location from being saved:</h2>
 
@@ -13,22 +13,36 @@
       <% end %>
       </ul>
     </div>
-  <% end %>
+  <% end %> -->
 
-  <%= render :partial => "locations/location_fields", :locals => { :l => location_form } %>
 
-    <legend>Items</legend>
-        <div id="item_locations">
+
+    
+    <div id="item_locations">
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Valid</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+
           <%= location_form.simple_fields_for :item_locations do |il_form| %>
-            <%= render :partial => "locations/itemLocations", :locals => { :l => il_form } %>
+            <tr>
+              <%= render :partial => "locations/item_field", :locals => { :l => il_form } %>
+            </tr>
           <% end %>
-          <p>
-            <br /><%= location_form.link_to_add("Add Item", :item_locations, :class => 'button tiny') %>
-          </p>
-        </div>
+        </tbody>
 
 
-  <%= location_form.submit nil, :class => 'button radius' %>
+      </table>
+
+    </div>
+
+
+  <%= location_form.submit "Update", :class => 'button radius' %>
   <% end %>
   </fieldset>
   </div>
