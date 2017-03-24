@@ -48,15 +48,16 @@
         </thead>
 
         <tbody>
-          <% @locations.each_with_index do |loc, index| %>
+          <% @locations.each_with_index do |addr, index| %>
           <tr>
-            <td><%= link_to loc.name, loc %> </td>
+            <% location = Location.find(addr.location_id) %>
+            <td><%= link_to location.name, location%> </td>
 
-            <td><%= link_to loc.addresses.first.address+" "+loc.addresses.first.city+", PA", "http://maps.google.com/?q=#{loc.addresses.first.address+" "+loc.addresses.first.city+", PA"}" %>  </td>
-            <td><%= loc.addresses.first.zipcode %></td>
+            <td><%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}" %>  </td>
+            <td><%= addr.zipcode %></td>
             <td>
-              <% ph = loc.phone %>
-              <% a = loc.phone.gsub!(/\D/, "") %>
+              <% ph = location.phone %>
+              <% a = location.phone.gsub!(/\D/, "") %>
               <%= "(#{ph[0..2]})" %>&nbsp;<%="#{ph[3..5]}"%>&nbsp;<%="#{ph[6..-1]}"%>
             </td>
             <td><%= @contexts[index].verified.blank? ? "Not validated" : @contexts[index].verified  %></td>

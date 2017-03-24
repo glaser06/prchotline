@@ -47,9 +47,9 @@
               <h3> <%= location.name %> </h3>
               <% @location = location %>
               <%= render 'locations/item_checklist', location: @location %>
-              <!-- <button data-close> Confirm </button>
-              <button data-close> Confirm All </button> -->
-              <%= link_to 'Edit', edit_location_path(location) %>
+              <!-- <button data-close> Confirm </button> -->
+              <button data-close> Confirm All </button>
+
               <button style="float:right;" data-close type="button"> Close </button>
 
             </div>

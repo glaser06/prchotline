@@ -5,6 +5,7 @@ class Item < ApplicationRecord
   has_many :item_counties
   has_many :counties, through: :item_counties
   has_many :locations, through: :item_locations
+  has_many :addresses, through: :locations
   has_many :aliases
 
   # Validations

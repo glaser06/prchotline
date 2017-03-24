@@ -15,4 +15,14 @@ class Address < ApplicationRecord
 
 
 
+  geocoded_by :zipcode
+  # after_validation :geocode
+
+  def full_address
+    address = "#{self.address} #{self.city}, PA #{self.zipcode}"
+    return address
+  end
+
+
+
 end

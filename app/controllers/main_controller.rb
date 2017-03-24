@@ -12,7 +12,7 @@ class MainController < ApplicationController
       qItem = params[:item]
       county = County.for_name(qCounty.capitalize)
 
-      item = Item.find(Alias.for_name(qItem.titleize).first.item_id)
+      item = Item.find(Alias.for_name(qItem.downcase).first.item_id)
 
       if item.blank?
         @errors += "Could not find #{params[:item]}"
@@ -28,13 +28,17 @@ class MainController < ApplicationController
       if params[:zip] != ""
         qZip = params[:zip]
         # i,l,c = search(qItem, qCounty, qZip)
-        @locations = @item.locations.active.addresses.active.for_zipcode(qZip).alphabetical
+        coords = Geocoder.coordinates(qZip)
+        @locations1 = Address.near(coords,50)
+
+        @locations = @item.addresses.near(coords,50)
+        # @locations = @item.locations.active.addresses.active.for_zipcode(qZip).alphabetical
 
 
       else
 
 
-        @locations = @item.locations.active.for_county(@county.id).alphabetical
+        # @locations = @item.locations.active.for_county(@county.id).alphabetical
 
 
       end
