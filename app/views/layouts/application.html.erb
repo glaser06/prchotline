@@ -15,8 +15,6 @@
 
         <%= render 'layouts/partials/header' %>
         <br>
-
-
     <div id="wrap">
       <div style="clear:both;"></div>
 
@@ -26,13 +24,14 @@
         <%= yield %>
       </div>
     </div>
-
-    <footer>
-      <div class="row">
-        <div class="small-6 large-centered columns">
-          <%= render 'layouts/partials/footer' %>
+    <div class="floating-form" id="contact_form">
+    <div class="contact-opener">Open Contact Form</div>
+        <div class="floating-form-heading"></div>
+        <div id="contact_results"></div>
+        <div id="contact_body">
+          <%= render 'layouts/partials/floatingForm' %>
         </div>
-      </div>
-    </footer>
+    </div>
+
   </body>
 </html>
