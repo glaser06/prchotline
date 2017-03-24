@@ -67,7 +67,7 @@ try{if (!window.CloudFlare) {var CloudFlare=[{verbose:0,p:0,byc:0,owlid:"cf",bag
         <ul class="right">
           <li class="divider"></li>
             <li class="has-dropdown">
-              <a class="active" href="#">New Call</a>
+              <a><%= link_to "New Call", newCall_path, class: "active" %></a>
               <ul class="dropdown">
                 <li><a href="#">See all &rarr;</a></li>
               </ul>
@@ -87,9 +87,9 @@ try{if (!window.CloudFlare) {var CloudFlare=[{verbose:0,p:0,byc:0,owlid:"cf",bag
 <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/js/foundation.min.js"></script>
 <script>
       $(document).foundation();
-    </script>
-<script>//<![CDATA[
+</script>
+<!-- <script>
 document.write('<script src="//' + (location.hostname || 'localhost') + ':35729/livereload.js?snipver=1"><\/script>')
-//]]></script>
+</script> -->
 </body>
 </html>

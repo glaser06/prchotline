@@ -16,6 +16,27 @@
 
  */
 
+
+ .floating-form { /*contact form wrapper*/
+     max-width: 300px;
+     padding: 10px 10px 10px 10px;
+     border: 1px solid #ddd;
+     /*right: 10px;*/
+     position: fixed; /*Form position fixed*/
+     background-color: inherit;
+     }
+ .contact-opener { /*opener button*/
+     position: absolute;
+     left: -88px;
+     transform: rotate(-90deg); /* rotate button -90deg */
+     top: 100px;
+     padding: 9px;
+     color: #fff;
+     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.43);
+     cursor: pointer;
+     border-radius: 5px 5px 0px 0px;
+ }
+
  .header {
   text-align: center;
   background: url('cover.jpg') no-repeat center center;

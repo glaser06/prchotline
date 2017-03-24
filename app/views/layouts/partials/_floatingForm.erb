@@ -1,0 +1,27 @@
+      <h3> New Call </h3>
+      <%= form_tag do %>
+          Caller Name
+          <%= text_field_tag :callerName, session[:value][0],  :required => true%>
+          How did you find out about the hotline?
+          <%= select_tag 'method',
+          options_for_select(['Hauler', 'Verizon', 'Municipality', 'Internet', 'Other']),
+           value: session[:value][1], :required => true %>
+           County
+          <%= select_tag 'county', options_for_select(County.all.map { |a| [a.name, a.id]}), value: session[:value][2], :required => true %>
+          Item
+          <%= select_tag 'item', options_for_select(Item.all.map { |a| [a.name, a.id]}), value: session[:value][3], :required => true %>
+          Call Disposition
+          <%= select_tag 'disposition',
+          options_for_select(['Answered directly', 'Referred to Verizon', 'Referred to County Coordinator', 'Referred to CDRA Manufacturer']),
+           value: session[:value][4], :required => true %>
+           Call Purpose
+           <%= select_tag 'purpose',
+           options_for_select(['Answered directly', 'Referred to Verizon', 'Referred to County Coordinator', 'Referred to CDRA Manufacturer']),
+            value: session[:value][5], :required => true %>
+            Call Type
+            <%= select_tag 'type',
+            options_for_select(['Where to recycle', 'How to recycle', 'Verizon Inquiry', 'Other']),
+             value: session[:value][6], :required => true %>
+             <%= button_tag 'Reset',{ :controller => "main", :action => "clear_form"} %>
+          <%= button_tag "Submit",  {controller: "main", action: "newCall"} %>
+      <% end %>

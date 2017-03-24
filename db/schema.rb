@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 20170227162831) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "counties", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
@@ -34,8 +37,8 @@ ActiveRecord::Schema.define(version: 20170227162831) do
     t.integer  "location_id"
     t.text     "reason"
     t.boolean  "active"
-    t.index ["item_id"], name: "index_item_locations_on_item_id"
-    t.index ["location_id"], name: "index_item_locations_on_location_id"
+    t.index ["item_id"], name: "index_item_locations_on_item_id", using: :btree
+    t.index ["location_id"], name: "index_item_locations_on_location_id", using: :btree
   end
 
   create_table "items", force: :cascade do |t|
@@ -58,7 +61,7 @@ ActiveRecord::Schema.define(version: 20170227162831) do
     t.datetime "updated_at",  null: false
     t.integer  "counties_id"
     t.boolean  "active"
-    t.index ["counties_id"], name: "index_locations_on_counties_id"
+    t.index ["counties_id"], name: "index_locations_on_counties_id", using: :btree
   end
 
 end
