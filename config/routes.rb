@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
 
   get 'main/index'
-  get 'validations' => 'main#validations', as: :validations
   get 'search' => 'main#index', as: :search
   get 'newCall' => 'main#newCall', as: :newCall
+
+  get 'validations' => 'validations'
 
   post 'newCall' => 'main#newCall'
 
