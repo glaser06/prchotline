@@ -7,17 +7,22 @@
 <div class="panel">
 
 <table border= "1px solid black">
-  <thead>
-    <tr>
-      <th>Name</th>
-    </tr>
-  </thead>
+
+
 
   <tbody>
+    <% count = 0 %>
     <% @counties.each do |county| %>
-      <tr>
+      <% if count == 0 %>
+        <tr><td><%= county.name%></td>
+          <% count += 1 %>
+      <% elsif count < 5 %>
         <td><%= county.name%></td>
-      </tr>
+        <% count += 1 %>
+      <% elsif count == 5 %>
+        <td><%= county.name%></td></tr>
+        <% count = 0 %>
+      <% end %>
     <% end %>
   </tbody>
 </table>
