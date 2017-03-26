@@ -10,7 +10,6 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th colspan="3"></th>
     </tr>
   </thead>
 
@@ -18,8 +17,6 @@
     <% @counties.each do |county| %>
       <tr>
         <td><%= link_to county.name, county %></td>
-        <td><%= link_to 'Edit', edit_county_path(county) %></td>
-        <td><%= link_to 'Delete', county, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
