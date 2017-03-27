@@ -26,7 +26,6 @@
           <td><%= item.name %></td>
           <td><%= item.description %></td>
           <td><%= item.active %></td>
-
         </tr>
       <% end %>
     </tbody>
@@ -37,3 +36,5 @@
 <%= link_to 'New Item', new_item_path %>
 
 </div></div></div>
+
+<%= will_paginate @items, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>

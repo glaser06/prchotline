@@ -65,7 +65,7 @@ class MainController < ApplicationController
         coords = Geocoder.coordinates(qZip)
         @locations1 = Address.near(coords,50)
 
-        @locations = @item.addresses.near(coords,50)
+        @locations = @item.addresses.near(coords,50).paginate(:page => params[:page]).per_page(10)
         # @locations = @item.locations.active.addresses.active.for_zipcode(qZip).alphabetical
 
 
