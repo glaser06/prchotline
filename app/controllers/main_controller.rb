@@ -46,13 +46,13 @@ class MainController < ApplicationController
       qItem = params[:item]
       county = County.for_name(qCounty.capitalize)
 
-      item = Item.find(Alias.for_name(qItem.downcase).first.item_id)
+      item = Alias.for_name(qItem.downcase)
 
       if item.blank?
         @errors += "Could not find #{params[:item]}"
         return
       end
-      @item = item
+      @item = Item.find(item.first.item_id)
       if county.blank?
         @errors += "#{params[:county]} does not exist"
         return
@@ -71,7 +71,8 @@ class MainController < ApplicationController
 
       else
 
-
+        coords = Geocoder.coordinates("#{@county.name} County")
+        @locations = @item.addresses.near(coords, 50)
         # @locations = @item.locations.active.for_county(@county.id).alphabetical
 
 
