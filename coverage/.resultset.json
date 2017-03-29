@@ -29,28 +29,6 @@
         1,
         null
       ],
-      "/Users/dsai96/Desktop/prchotline/app/models/county.rb": [
-        1,
-        null,
-        null,
-        1,
-        1,
-        1,
-        null,
-        null,
-        1,
-        null,
-        null,
-        1,
-        1,
-        null,
-        null
-      ],
-      "/Users/dsai96/Desktop/prchotline/app/models/application_record.rb": [
-        1,
-        1,
-        null
-      ],
       "/Users/dsai96/Desktop/prchotline/app/models/location.rb": [
         1,
         null,
@@ -94,45 +72,9 @@
         null,
         null
       ],
-      "/Users/dsai96/Desktop/prchotline/app/models/item_county.rb": [
-        1,
-        null,
-        null,
+      "/Users/dsai96/Desktop/prchotline/app/models/application_record.rb": [
         1,
         1,
-        null,
-        null,
-        1,
-        null,
-        null,
-        1,
-        null,
-        null
-      ],
-      "/Users/dsai96/Desktop/prchotline/app/models/item.rb": [
-        1,
-        null,
-        null,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        null,
-        null,
-        1,
-        null,
-        null,
-        1,
-        1,
-        1,
-        1,
-        null,
-        null,
-        null,
-        null,
-        null,
         null
       ],
       "/Users/dsai96/Desktop/prchotline/app/models/item_location.rb": [
@@ -186,6 +128,49 @@
         null,
         null,
         null,
+        null,
+        null
+      ],
+      "/Users/dsai96/Desktop/prchotline/app/models/item.rb": [
+        1,
+        null,
+        null,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        null,
+        null,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "/Users/dsai96/Desktop/prchotline/app/models/county.rb": [
+        1,
+        null,
+        null,
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        null,
+        null,
+        1,
+        1,
         null,
         null
       ],
@@ -708,8 +693,23 @@
         0,
         0,
         0
+      ],
+      "/Users/dsai96/Desktop/prchotline/app/models/item_county.rb": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
       ]
     },
-    "timestamp": 1490795301
+    "timestamp": 1490799044
   }
 }
