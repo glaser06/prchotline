@@ -1,7 +1,10 @@
       <h3> New Call </h3>
       <%= form_tag do %>
+
           Caller Name
-          <%= text_field_tag :callerName, session[:value][0],  :required => true%>
+          <%= text_field_tag :callerName, session[:value][0]%>
+
+
           How did you find out about the hotline?
           <%= select_tag 'method',
           options_for_select(['Hauler', 'Verizon', 'Municipality', 'Internet', 'Other']),

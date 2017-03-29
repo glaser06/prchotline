@@ -7,14 +7,6 @@ class MainController < ApplicationController
   end
 
   def newCall
-      if session[:visit_count].nil?
-        session[:visit_count] = 1
-      else
-        session[:visit_count] += 1
-      end
-      @visit_count = session[:visit_count]
-      puts @visit_count
-
       callerName = params[:callerName]
       method = params[:method]
       disposition = params[:disposition]
@@ -26,11 +18,10 @@ class MainController < ApplicationController
 
       session[:value] = [callerName, method, disposition, county, item, method, purpose, type]
       @vals = session[:value]
-      puts @vals
 
       if params[:callerName] && params[:method] && params[:disposition] && params[:county]&& params[:method] && params[:purpose] && params[:type]
       CSV.open('call_stats.csv', "at") do |csv|
-        csv << [callerName, method, county, item, disposition, purpose, type]
+        csv << [callerName, method, County.find(county).name.titleize, Item.find(item).name.titleize, disposition, purpose, type]
       end
       redirect_to "/"
     end
