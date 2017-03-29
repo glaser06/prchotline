@@ -11,6 +11,8 @@ class Location < ApplicationRecord
   accepts_nested_attributes_for :addresses, reject_if: lambda { |addr| addr[:address].blank? }, allow_destroy: true
 
   validates :name, presence: true
+  validates_format_of :phone, with: /\A\(?\d{3}\)?[-. ]?\d{3}[-.]?\d{4}\z/, message: "should be 10 digits (area code needed) and delimited with dashes only", allow_blank: true
+  #TO DO validates format of website
 
   scope :alphabetical , -> { order('name') }
   scope :active, -> { where(active: true) }

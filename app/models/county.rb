@@ -2,6 +2,7 @@ class County < ApplicationRecord
 
   # Relationships
   has_many :items, through: :item_counties
+  has_many :item_counties
   has_many :locations
 
   # Validations

@@ -1,7 +1,10 @@
 require 'test_helper'
 
 class CountyTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  should have_many(:locations)
+  # should have_many(:item_counties)
+  should have_many(:items).through(:item_counties)
+  should validate_presence_of(:name)
+
+  
 end
