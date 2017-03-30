@@ -14,6 +14,8 @@ gem 'geocoder'
 
 gem 'faker'
 
+gem "font-awesome-rails"
+
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
