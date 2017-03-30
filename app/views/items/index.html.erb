@@ -1,8 +1,16 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Items</h1>
+<div class="row">
+  <div class="large-12 columns">
+  <div class="left">
+    <h1>Items</h1>
+  </div>
 
-
+  <div class="right">
+  <%= link_to '<i class="fa fa-plus-square" aria-hidden="true"></i> Add Item'.html_safe, new_item_path %>
+  </div>
+  </div>
+</div>
 
 <div class="row">
 <div class="large-12 columns">
