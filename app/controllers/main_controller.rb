@@ -2,8 +2,34 @@ require 'csv'
 
 class MainController < ApplicationController
 
+
   def clear_form
-    reset_session
+    session.delete(:value)
+    redirect_to :back
+  end
+
+  def submit_form
+    callerName = params[:callerName]
+    method = params[:method]
+    disposition = params[:disposition]
+    county = params[:county]
+    item = params[:item]
+    method = params[:method]
+    purpose = params[:purpose]
+    type = params[:type]
+
+    session[:value] = [callerName, method, disposition, county, item, method, purpose, type]
+    vals = session[:value]
+    puts "submit_form"
+    puts vals
+    if params[:callerName] && params[:method] && params[:disposition] && params[:county]&& params[:method] && params[:purpose] && params[:type]
+    CSV.open('call_stats.csv', "at") do |csv|
+      csv << [callerName, method, County.find(county).name.titleize, Item.find(item).name.titleize, disposition, purpose, type]
+    end
+
+    session.delete(:value)
+    redirect_to "/"
+
   end
 
   def newCall
@@ -18,12 +44,11 @@ class MainController < ApplicationController
 
       session[:value] = [callerName, method, disposition, county, item, method, purpose, type]
       @vals = session[:value]
+      puts "newCall"
+      puts vals
+      # @value = session[:value]
 
-      if params[:callerName] && params[:method] && params[:disposition] && params[:county]&& params[:method] && params[:purpose] && params[:type]
-      CSV.open('call_stats.csv', "at") do |csv|
-        csv << [callerName, method, County.find(county).name.titleize, Item.find(item).name.titleize, disposition, purpose, type]
-      end
-      redirect_to "/"
+
     end
   end
 
