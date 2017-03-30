@@ -3,23 +3,20 @@
 
         <% caller_name = if @vals.blank? then "" else @vals[0] end%>
           Caller Name
-          <%= text_field_tag 'callerName', caller_name %>
+          <%= text_field_tag :callerName, caller_name %>
 
           How did you find out about the hotline?
           <%= select_tag 'method',
           options_for_select(['Hauler', 'Verizon', 'Municipality', 'Internet', 'Other']),
-           value: if @vals.blank? then "Hauler" elsif @vals[1].nil? then @vals[1] end , :required => true %>
+          value: if @vals.blank? then "Hauler" elsif @vals[1].nil? then @vals[1] end , :required => true %>
 
-
-           County
+          County
           <%= select_tag 'county', options_for_select(County.all.map { |a| [a.name, a.id]}),
           value: if @vals.blank? then County.all.first elsif @vals[2].nil? then @vals[2] end , :required => true %>
-
 
           Item
           <%= select_tag 'item', options_for_select(Item.all.map { |a| [a.name, a.id]}),
           value: if @vals.blank? then Item.all.first elsif @vals[3].nil? then @vals[3] end , :required => true %>
-
 
           Call Disposition
           <%= select_tag 'disposition',
@@ -36,9 +33,10 @@
           options_for_select(['Where to recycle', 'How to recycle', 'Verizon Inquiry', 'Other']),
           value: if @vals.blank? then 'Where to recycle' elsif @vals[6].nil? then @vals[6] end , :required => true %>
 
-          <%= button_tag "Submit" %>
+          <%= submit_tag "Submit", name: 'submit_clicked' %>
+          <%= submit_tag "Save" %>
       <% end %>
       <%= button_to 'Reset', clear_form_path, method: :post %>
-      <%= button_to 'Save', newCall_path, method: :post %>
+
 
       <!-- <%= button_tag 'Reset',{ :controller => "main", :action => "clear_form"} %> -->
