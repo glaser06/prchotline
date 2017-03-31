@@ -1,6 +1,16 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Items</h1>
+<div class="row">
+  <div class="large-12 columns">
+  <div class="left">
+    <h1>Items</h1>
+  </div>
+
+  <div class="right">
+  <%= link_to '<i class="fa fa-plus-square" aria-hidden="true"></i> Add Item'.html_safe, new_item_path %>
+  </div>
+  </div>
+</div>
 
 <div class="row">
 <div class="large-12 columns">
@@ -14,9 +24,6 @@
       <tr>
         <th>Name</th>
         <th>Description</th>
-        <th>Active</th>
-
-        <th colspan="3"></th>
       </tr>
     </thead>
 
@@ -25,8 +32,6 @@
         <tr>
           <td><%= item.name %></td>
           <td><%= item.description %></td>
-          <td><%= item.active %></td>
-
         </tr>
       <% end %>
     </tbody>
@@ -34,6 +39,7 @@
   </table>
 <% end %>
 <br>
-<%= link_to 'New Item', new_item_path %>
 
 </div></div></div>
+
+<%= will_paginate @items, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>

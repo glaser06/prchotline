@@ -1,14 +1,13 @@
 Rails.application.routes.draw do
 
   get 'main/index'
-  get 'validations' => 'main#validations', as: :validations
   get 'search' => 'main#index', as: :search
   get 'newCall' => 'main#newCall', as: :newCall
-
-
-  post 'clear_form' => 'main#clear_form'
+  get 'validations' => 'validations'
+  
   post 'newCall' => 'main#newCall'
   post 'submit_form' => 'main#submit_form'
+  post 'clear_form' => 'main#clear_form'
 
 
   root 'main#index'

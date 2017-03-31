@@ -16,7 +16,15 @@
   <% end %>
 
   <%= render :partial => "locations/location_fields", :locals => { :l => location_form } %>
-
+  <legend>Addresses</legend>
+      <div id="addresses">
+        <%= location_form.simple_fields_for :addresses do |addr_f| %>
+          <%= render :partial => "locations/address_fields", :locals => { :l => addr_f } %>
+        <% end %>
+        <p>
+          <br /><%= location_form.link_to_add("Add Address", :addresses, :class => 'button tiny') %>
+        </p>
+      </div>
     <legend>Items</legend>
         <div id="item_locations">
           <%= location_form.simple_fields_for :item_locations do |il_form| %>

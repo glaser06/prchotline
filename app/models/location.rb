@@ -2,7 +2,6 @@ class Location < ApplicationRecord
 
   before_save :reformat_phone
 
-
   has_many :item_locations
   has_many :items, through: :item_locations
   has_many :addresses

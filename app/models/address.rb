@@ -1,10 +1,10 @@
 class Address < ApplicationRecord
   # before_save :reformat_phone
 
-  belongs_to :location
+  belongs_to :location, required: false
   belongs_to :county
 
-  validates :address, :city, :zipcode, :location, :county, presence: true
+  validates :address, :city, :zipcode, :county, presence: true
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
