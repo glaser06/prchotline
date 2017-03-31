@@ -2,19 +2,13 @@ require 'csv'
 
 class MainController < ApplicationController
 
+
   def clear_form
-    reset_session
+    session.delete(:value)
+    redirect_to :back
   end
 
-  def newCall
-      if session[:visit_count].nil?
-        session[:visit_count] = 1
-      else
-        session[:visit_count] += 1
-      end
-      @visit_count = session[:visit_count]
-      puts @visit_count
-
+  def submit_form
       callerName = params[:callerName]
       method = params[:method]
       disposition = params[:disposition]
@@ -25,15 +19,39 @@ class MainController < ApplicationController
       type = params[:type]
 
       session[:value] = [callerName, method, disposition, county, item, method, purpose, type]
-      @vals = session[:value]
-      puts @vals
+      vals = session[:value]
+      puts "submit_form"
+      puts vals
 
+    if params[:submit_clicked]
       if params[:callerName] && params[:method] && params[:disposition] && params[:county]&& params[:method] && params[:purpose] && params[:type]
-      CSV.open('call_stats.csv', "at") do |csv|
-        csv << [callerName, method, county, item, disposition, purpose, type]
+        CSV.open('call_stats.csv', "at") do |csv|
+          csv << [callerName, method, County.find(county).name.titleize, Item.find(item).name.titleize, disposition, purpose, type]
+        end
       end
+      session.delete(:value)
       redirect_to "/"
     end
+  end
+
+  def newCall
+    if params.has_key?([:callerName]) # && params[:method] && params[:disposition] && params[:county]&& params[:method] && params[:purpose] && params[:type]
+      callerName = params[:callerName]
+      # method = params[:method]
+      # disposition = params[:disposition]
+      # county = params[:county]
+      # item = params[:item]
+      # method = params[:method]
+      # purpose = params[:purpose]
+      # type = params[:type]
+      session[:value] = [callerName]#, method, disposition, county, item, method, purpose, type]
+      puts "newCall"
+
+    end
+    puts "everything"
+    @vals = session[:value]
+    puts @vals
+
   end
 
   def index
