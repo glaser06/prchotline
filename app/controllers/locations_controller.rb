@@ -18,6 +18,7 @@ class LocationsController < ApplicationController
   def new
     @location = Location.new
     @location.item_locations.build
+    @location.addresses.build
   end
 
   # GET /locations/1/edit
@@ -72,6 +73,6 @@ class LocationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def location_params
-      params.require(:location).permit(:name, :address, :phone, :website, :city, :zipcode, :counties_id, :active, item_locations_attributes: [:id, :item_id, :location_id, :active, :_destroy])
+      params.require(:location).permit(:name, :address, :phone, :website, :city, :zipcode, :counties_id, :active, addresses_attributes: [:id, :location_id, :county_id, :address, :city, :zipcode, :active, :_destroy], item_locations_attributes: [:id, :item_id, :location_id, :active, :_destroy])
     end
 end

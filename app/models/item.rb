@@ -17,8 +17,4 @@ class Item < ApplicationRecord
   scope :inactive,     -> { where(active: false) }
   scope :for_name, -> (name) { where("name=?", name) }
 
-
-
-
-
 end

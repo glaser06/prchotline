@@ -64,13 +64,13 @@ class MainController < ApplicationController
       qItem = params[:item]
       county = County.for_name(qCounty.capitalize)
 
-      item = Item.find(Alias.for_name(qItem.downcase).first.item_id)
+      item = Alias.for_name(qItem.downcase)
 
       if item.blank?
         @errors += "Could not find #{params[:item]}"
         return
       end
-      @item = item
+      @item = Item.find(item.first.item_id)
       if county.blank?
         @errors += "#{params[:county]} does not exist"
         return
@@ -83,13 +83,14 @@ class MainController < ApplicationController
         coords = Geocoder.coordinates(qZip)
         @locations1 = Address.near(coords,50)
 
-        @locations = @item.addresses.near(coords,50)
+        @locations = @item.addresses.near(coords,50).paginate(:page => params[:page]).per_page(10)
         # @locations = @item.locations.active.addresses.active.for_zipcode(qZip).alphabetical
 
 
       else
 
-
+        coords = Geocoder.coordinates("#{@county.name} County")
+        @locations = @item.addresses.near(coords, 50)
         # @locations = @item.locations.active.for_county(@county.id).alphabetical
 
 
@@ -100,20 +101,6 @@ class MainController < ApplicationController
         contexts.push(context)
       end
       @contexts = contexts
-    end
-  end
-
-  def validations
-    @locations = []
-    @countyName = ""
-    @items = Item.all
-    @counties = County.all
-    @item_locations = ItemLocation.all
-
-    if params[:county]
-      countyId = params[:county]
-      @countyName = County.find(countyId).name
-      @locations = Location.all.for_county(countyId).alphabetical
     end
   end
 

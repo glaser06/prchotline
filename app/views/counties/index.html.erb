@@ -7,24 +7,25 @@
 <div class="panel">
 
 <table border= "1px solid black">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+
+
 
   <tbody>
+    <% count = 0 %>
     <% @counties.each do |county| %>
-      <tr>
-        <td><%= link_to county.name, county %></td>
-        <td><%= link_to 'Edit', edit_county_path(county) %></td>
-        <td><%= link_to 'Delete', county, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <% if count == 0 %>
+        <tr><td><%= county.name%></td>
+          <% count += 1 %>
+      <% elsif count < 5 %>
+        <td><%= county.name%></td>
+        <% count += 1 %>
+      <% elsif count == 5 %>
+        <td><%= county.name%></td></tr>
+        <% count = 0 %>
+      <% end %>
     <% end %>
   </tbody>
 </table>
-<%= link_to 'New County', new_county_path %>
 
 </div></div>
 </div>

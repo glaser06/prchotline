@@ -20,5 +20,6 @@
     <% else %>
     
     <%= render 'layouts/partials/searchResults' %>
+    <%= will_paginate @locations, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
     <% end %>
     <br>

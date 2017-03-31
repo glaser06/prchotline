@@ -2,9 +2,12 @@
 
 <h1>Items</h1>
 
+
+
 <div class="row">
 <div class="large-12 columns">
 <div class="panel">
+<%= link_to 'New Item', new_item_path %>
 <% if @items.blank? %>
   <h4> No item available.</h4>
 <% else %>
@@ -14,9 +17,6 @@
       <tr>
         <th>Name</th>
         <th>Description</th>
-        <th>Active</th>
-
-        <th colspan="3"></th>
       </tr>
     </thead>
 
@@ -25,8 +25,6 @@
         <tr>
           <td><%= item.name %></td>
           <td><%= item.description %></td>
-          <td><%= item.active %></td>
-
         </tr>
       <% end %>
     </tbody>
@@ -34,6 +32,7 @@
   </table>
 <% end %>
 <br>
-<%= link_to 'New Item', new_item_path %>
 
 </div></div></div>
+
+<%= will_paginate @items, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
