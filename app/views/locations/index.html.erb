@@ -8,6 +8,42 @@
   <div class="right">
   <%= link_to '<i class="fa fa-plus-square" aria-hidden="true"></i> Add Location'.html_safe, new_location_path %>
   </div>
+  <script>
+  $( function() {
+    var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+    $( "#tags" ).autocomplete({
+      source: availableTags
+    });
+  } );
+  </script>
+
+  <div class="ui-widget">
+    <label for="tags">Tags: </label>
+    <input id="tags">
+  </div>
 </div>
 
 <div class="row">

@@ -16,6 +16,8 @@ gem 'faker'
 
 gem "font-awesome-rails"
 
+gem "jquery-ui-rails"
+
 
 group :test do
   gem 'shoulda'
