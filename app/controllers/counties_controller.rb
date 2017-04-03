@@ -11,8 +11,10 @@ class CountiesController < ApplicationController
   if params[:term]
     puts "hello"
     puts params[:term]
-    #@extant = Vote.find(:last, :conditions => ["item_id = ? AND user_id = ?", item, uid])
-    @counties = County.where("name like ?", "%#{params[:term]}")
+    @counties = County.where("name similar to ?", "%#{params[:term]}%")
+    for c in @counties
+      puts c.name
+    end
   else
     @counties = County.all
   end
