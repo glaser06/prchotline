@@ -3,9 +3,26 @@ class CountiesController < ApplicationController
 
   # GET /counties
   # GET /counties.json
-  def index
+  # def index
+  #   @counties = County.all
+  # end
+  def index  
+# I will explain this part in a moment.
+  if params[:term]
+    puts "hello"
+    puts params[:term]
+    #@extant = Vote.find(:last, :conditions => ["item_id = ? AND user_id = ?", item, uid])
+    @counties = County.where("name like ?", "%#{params[:term]}")
+  else
     @counties = County.all
   end
+
+  respond_to do |format|  
+    format.html # index.html.erb  
+# Here is where you can specify how to handle the request for "/people.json"
+    format.json { render :json => @counties.to_json }
+    end
+end
 
   # GET /counties/1
   # GET /counties/1.json
