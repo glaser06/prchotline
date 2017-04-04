@@ -12,14 +12,19 @@
   <script>
   $( function() {
     $( "#tags" ).autocomplete({
-      source: '<%= counties_path(:json) %>'
+      source: '<%= counties_path(:json) %>',
+      appendTo: "#someElem"
     });
   } );
+
   </script>
 
   <div class="ui-widget">
     Tags:
     <input id="tags">
+  </div>
+  <div id="someElem">
+    Hello
   </div>
 </div>
 

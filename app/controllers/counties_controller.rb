@@ -15,6 +15,11 @@ class CountiesController < ApplicationController
     for c in @counties
       puts c.name
     end
+    arr = []
+    @counties_autocomplete = @counties.map do |c|
+      arr.push(c.name)
+    end   
+    #@counties_autocomplete = @counties.map(&:id)
   else
     @counties = County.all
   end
@@ -22,7 +27,7 @@ class CountiesController < ApplicationController
   respond_to do |format|  
     format.html # index.html.erb  
 # Here is where you can specify how to handle the request for "/people.json"
-    format.json { render :json => @counties.to_json }
+    format.json { render :json => @counties_autocomplete[0]}
     end
 end
 
