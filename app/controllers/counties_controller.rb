@@ -11,7 +11,7 @@ class CountiesController < ApplicationController
   if params[:term]
     puts "hello"
     puts params[:term]
-    @counties = County.where("name similar to ?", "%#{params[:term]}%")
+    @counties = County.where("name ilike ?", "%#{params[:term]}%")
     for c in @counties
       puts c.name
     end
