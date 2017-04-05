@@ -12,7 +12,7 @@
 
     <%= form_tag("", :method => "get", id: "search-form") do %>
         <div class="ui-widget">
-            <input id="tags" name="county">
+            <input id="tags" name="county" placeholder = 'Enter County'>
         </div>
             <%= submit_tag "Search", :name => nil %>
     <% end %>

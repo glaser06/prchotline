@@ -5,7 +5,7 @@ class ItemsController < ApplicationController
   # GET /items.json
   def index
     if params[:term]
-      @items = Item.where("name ilike ?", "%#{params[:term]}%")
+      @items = Item.where("name ilike ?", "%#{params[:term]}%").limit(10)
       arr = []
       # adds possible counties into an array of options to select
       @items_autocomplete = @items.map do |i|

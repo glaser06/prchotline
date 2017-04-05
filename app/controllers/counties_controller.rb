@@ -5,7 +5,7 @@ class CountiesController < ApplicationController
   # GET /counties.json
   def index  
   if params[:term]
-    @counties = County.where("name ilike ?", "%#{params[:term]}%")
+    @counties = County.where("name ilike ?", "%#{params[:term]}%").limit(10)
     arr = []
     # adds possible counties into an array of options to select
     @counties_autocomplete = @counties.map do |c|
