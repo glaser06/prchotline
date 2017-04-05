@@ -3,30 +3,20 @@ class CountiesController < ApplicationController
 
   # GET /counties
   # GET /counties.json
-  # def index
-  #   @counties = County.all
-  # end
   def index  
-# I will explain this part in a moment.
   if params[:term]
-    puts "hello"
-    puts params[:term]
     @counties = County.where("name ilike ?", "%#{params[:term]}%")
-    for c in @counties
-      puts c.name
-    end
     arr = []
+    # adds possible counties into an array of options to select
     @counties_autocomplete = @counties.map do |c|
       arr.push(c.name)
     end   
-    #@counties_autocomplete = @counties.map(&:id)
   else
     @counties = County.all
   end
 
   respond_to do |format|  
-    format.html # index.html.erb  
-# Here is where you can specify how to handle the request for "/people.json"
+    format.html
     format.json { render :json => @counties_autocomplete[0]}
     end
 end

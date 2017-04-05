@@ -9,23 +9,7 @@
   <div class="right">
   <%= link_to '<i class="fa fa-plus-square" aria-hidden="true"></i> Add Location'.html_safe, new_location_path %>
   </div>
-  <script>
-  $( function() {
-    $( "#tags" ).autocomplete({
-      source: '<%= counties_path(:json) %>',
-      appendTo: "#someElem"
-    });
-  } );
 
-  </script>
-
-  <div class="ui-widget">
-    Tags:
-    <input id="tags">
-  </div>
-  <div id="someElem">
-    Hello
-  </div>
 </div>
 
 <div class="row">

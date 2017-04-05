@@ -5,29 +5,27 @@
     <script>
       $( function() {
         $( "#tags" ).autocomplete({
-          source: '<%= counties_path(:json) %>',
-          appendTo: "#someElem"
+          source: '<%= counties_path(:json) %>'
         });
       } );
     </script>
 
-
-
-</div>
-
     <%= form_tag("", :method => "get", id: "search-form") do %>
-     
         <div class="ui-widget">
-            <input id="tags" name="tab">
+            <input id="tags" name="county">
         </div>
             <%= submit_tag "Search", :name => nil %>
     <% end %>
 
-    <% if @locations != [] %>
-
+    <% if @locations == "errorMessage" %>
+        <br></br>
+        <h3> That county does not exist. Please try again. </h3>
+    <% elsif @locations != [] %>
         <%= render 'layouts/partials/validations' %>
         <%= will_paginate @locations, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
-
+    <% else  %>
+        <br></br>
+        <h3> Search for any county. </h3>
     <% end %>
 
   </div>
