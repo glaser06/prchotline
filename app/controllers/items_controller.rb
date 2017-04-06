@@ -4,7 +4,20 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    @items = Item.alphabetical.all.paginate(:page => params[:page]).per_page(20)
+    if params[:term]
+      @items = Item.where("name ilike ?", "%#{params[:term]}%").limit(10)
+      arr = []
+      # adds possible counties into an array of options to select
+      @items_autocomplete = @items.map do |i|
+        arr.push(i.name)
+      end   
+    else
+      @items = Item.alphabetical.all.paginate(:page => params[:page]).per_page(20)
+    end
+    respond_to do |format|  
+      format.html
+      format.json { render :json => @items_autocomplete[0]}
+    end
   end
 
   # GET /items/1
