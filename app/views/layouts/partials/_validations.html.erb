@@ -14,6 +14,7 @@
       <th>Last Verified</th>
       <th>Availability</th>
       <th colspan="1"></th>
+      <th colspan="1"></th>
     </tr>
   </thead>
 
@@ -62,11 +63,11 @@
           <%= "#{location.updated_at.month}/#{location.updated_at.day}/#{location.updated_at.year}" %>
 
            <br></br>
-           <% if (location.updated_at-Time.now).days.round < 0%>
+           <% if (Time.new.to_date - location.updated_at.to_date).to_i < 0%>
 
              0 days ago
           <% else %>
-               <%= (location.updated_at-Time.now).days.round %> days ago
+               <%= (Time.new.to_date - location.updated_at.to_date).to_i %> days ago
           <% end %>
          </td>
         <td><%= (if location.active then "Open" else "Closed" end) %></td>
