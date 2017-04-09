@@ -2,3 +2,4 @@
 <%= l.input :city %>
 <%= l.input :zipcode %>
 <%= l.collection_select(:county_id, County.all, :id, :name, :prompt => "Choose a county...") %>
+<%= l.link_to_remove("x") %>
