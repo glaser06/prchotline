@@ -42,6 +42,8 @@ class LocationsController < ApplicationController
     end
   end
 
+
+
   # PATCH/PUT /locations/1
   # PATCH/PUT /locations/1.json
   def update

@@ -2,92 +2,123 @@
 
 <h4> <%= @countyName %> </h4>
 
-<table border= "1px solid black">
-  <thead>
-    <tr>
-      <th>Location</th>
-      <th>Items</th>
-      <th>Context</th>
-      <th>Website</th>
-      <th>Phone</th>
-      <th>Address</th>
-      <th>Last Verified</th>
-      <th>Availability</th>
-      <th colspan="1"></th>
-      <th colspan="1"></th>
-    </tr>
-  </thead>
+    <table border= "1px solid black">
+      <thead>
+        <tr>
+          <th>Location</th>
 
-  <tbody>
-    <% @locations.each do |location| %>
-      <tr>
-        <td><%= location.name %></td>
-        <td>
-          <ul>
-            <% count=0 %>
-            <% @item_locations.for_location(location.id).each do |il| %>
-              <% count+=1 %>
-              <% if count < 4 %>
-                <li><%= il.item.name %></li>
+
+          <th>Website</th>
+          <th>Phone</th>
+
+          <th>Last Verified</th>
+          <th>Active</th>
+          <th colspan="1"></th>
+          <th colspan="1"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @locations.each do |location| %>
+          <tr>
+            <td>
+              <h5><%= location.name %></h5><br/>
+              <%= location.addresses.first.address %><br/> <br/>
+              <ul>
+                <% count=0 %>
+                <% @item_locations.for_location(location.id).each do |il| %>
+                  <% count+=1 %>
+                  <% if count < 4 %>
+                    <input id="<%= "checkbox#{count}"%>" checked type="checkbox"><label for="<%= "checkbox#{count}"%>" ><%= il.item.name %></label>
+
+                  <% else %>
+
+
+                    <% break%>
+                  <% end %>
+                <% end %>
+                <a data-open= "<%=location.id%>Modal" >More</a>
+
+                <div class="reveal" id="<%=location.id%>Modal" data-reveal>
+
+                  <h3> <%= location.name %> </h3>
+                  <% @location = location %>
+                  <%= render 'locations/item_checklist', location: @location %>
+                  <!-- <button data-close> Confirm </button> -->
+
+
+                  <button class="close-button"  data-close type="button"> x </button>
+
+                </div>
+              </ul>
+
+            </td>
+
+
+            <td><%= location.website %></td>
+
+            <td class="top">
+              <% ph = location.phone %>
+              <% a = location.phone.gsub!(/\D/, "") %>
+              <%= "(#{ph[0..2]})" %>&nbsp;<%="#{ph[3..5]}"%>&nbsp;<%="#{ph[6..-1]}"%>
+            </td>
+
+            <td>
+              <%= "#{location.updated_at.month}/#{location.updated_at.day}/#{location.updated_at.year}" %>
+
+               <br></br>
+               <% if (Time.new.to_date - location.updated_at.to_date).to_i < 0%>
+
+                 0 days ago
               <% else %>
-                <br></br>
-
-                <% break%>
+                   <%= (Time.new.to_date - location.updated_at.to_date).to_i %> days ago
               <% end %>
-            <% end %>
-            <p><a data-open= "<%=location.id%>Modal" >Validate</a></p>
+             </td>
+             <td>
+               <% if location.active %>
+                 <div class="switch">
+                    <input class="switch-input" id="exampleSwitch" type="checkbox" checked name="exampleSwitch">
+                    <label class="switch-paddle" for="exampleSwitch">
+                      <span class="show-for-sr"></span>
+                    </label>
+                  </div>
+               <% else %>
+                 <div class="switch">
+                    <input class="switch-input" id="exampleSwitch" type="checkbox" name="exampleSwitch">
+                    <label class="switch-paddle" for="exampleSwitch">
+                      <span class="show-for-sr"></span>
+                    </label>
+                  </div>
+               <% end %>
 
-            <div class="reveal" id="<%=location.id%>Modal" data-reveal>
+             </td>
 
-              <h3> <%= location.name %> </h3>
-              <% @location = location %>
-              <%= render 'locations/item_checklist', location: @location %>
-              <!-- <button data-close> Confirm </button> -->
-              <button data-close> Confirm All </button>
-
-              <button style="float:right;" data-close type="button"> Close </button>
-
-            </div>
-          </ul>
-        </td>
-        <td><%= 'Should we have something for this field?' %></td>
-        <td><%= location.website %></td>
-
-        <td>
-          <% ph = location.phone %>
-          <% a = location.phone.gsub!(/\D/, "") %>
-          <%= "(#{ph[0..2]})" %>&nbsp;<%="#{ph[3..5]}"%>&nbsp;<%="#{ph[6..-1]}"%>
-        </td>
-        <td><%= location.addresses.first.address %></td>
-        <td>
-          <%= "#{location.updated_at.month}/#{location.updated_at.day}/#{location.updated_at.year}" %>
-
-           <br></br>
-           <% if (Time.new.to_date - location.updated_at.to_date).to_i < 0%>
-
-             0 days ago
-          <% else %>
-               <%= (Time.new.to_date - location.updated_at.to_date).to_i %> days ago
-          <% end %>
-         </td>
-        <td><%= (if location.active then "Open" else "Closed" end) %></td>
-        <td>
-          <p><a data-open="<%= location.id %>EditModal" >Edit</a></p>
-          <div class="reveal" id="<%= location.id %>EditModal" data-reveal>
-            <h3> <%= location.name %> </h3>
-            <% @location = location %>
-            <%= render 'locations/form', location: @location %>
+            <td>
+              <p><a data-open="<%= location.id %>EditModal" >Edit</a></p>
+              <div class="reveal" id="<%= location.id %>EditModal" data-reveal>
+                <h3> <%= location.name %> </h3>
+                <% @location = location %>
+                <%= render 'locations/form', location: @location %>
 
 
-            <button class="close-button" data-close aria-label="Close modal" type="button">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        </td>
+                <button class="close-button" data-close aria-label="Close modal" type="button">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </td>
+            <td>
 
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+            </td>
+
+          </tr>
+
+
+
+        <% end %>
+      </tbody>
+    </table>
+
+
+
 
 <br>

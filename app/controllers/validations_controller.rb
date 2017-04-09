@@ -15,7 +15,10 @@ class ValidationsController < ApplicationController
           @locations = Location.all.for_county(@countyId).alphabetical.paginate(:page => params[:page]).per_page(10)
         else
           @locations = "errorMessage"
-        end      
+        end
+      end
+      if params[:sortby]
+        puts "woah it works"
       end
   end
 
