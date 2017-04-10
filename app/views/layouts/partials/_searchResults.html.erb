@@ -59,8 +59,7 @@
               <% a = location.phone.gsub!(/\D/, "") %>
               <%= "(#{ph[0..2]})" %>&nbsp;<%="#{ph[3..5]}"%>&nbsp;<%="#{ph[6..-1]}"%>
             </td>
-            <td><%= @contexts[index].verified.blank? ? "Not validated" : @contexts[index].verified  %></td>
-            <td><%= @contexts[index].context%></td>
+            
 
           </tr>
           <% end %>
