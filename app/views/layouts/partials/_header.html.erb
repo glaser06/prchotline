@@ -3,13 +3,13 @@
 <!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
 <html class="no-js" lang="en">
 <head>
-<meta charset="utf-8">
+  <meta charset="utf-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PRC Hotline</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRC Hotline</title>
 
-<!-- <script type="text/javascript">
-try{if (!window.CloudFlare) {var CloudFlare=[{verbose:0,p:0,byc:0,owlid:"cf",bag2:1,mirage2:0,oracle:0,paths:{cloudflare:"/cdn-cgi/nexp/dok3v=1613a3a185/"},atok:"0cc73d55edd1b1f7930e346e05e77f65",petok:"3984d209e7b2d77fe6df75a026e05f98269d7eed-1488976956-1800",zone:"zurb.com",rocket:"m",apps:{}}];document.write('<script type="text/javascript" src="//ajax.cloudflare.com/cdn-cgi/nexp/dok3v=f2befc48d1/cloudflare.min.js"><'+'\/script>');}}catch(e){};
+  <!-- <script type="text/javascript">
+  try{if (!window.CloudFlare) {var CloudFlare=[{verbose:0,p:0,byc:0,owlid:"cf",bag2:1,mirage2:0,oracle:0,paths:{cloudflare:"/cdn-cgi/nexp/dok3v=1613a3a185/"},atok:"0cc73d55edd1b1f7930e346e05e77f65",petok:"3984d209e7b2d77fe6df75a026e05f98269d7eed-1488976956-1800",zone:"zurb.com",rocket:"m",apps:{}}];document.write('<script type="text/javascript" src="//ajax.cloudflare.com/cdn-cgi/nexp/dok3v=f2befc48d1/cloudflare.min.js"><'+'\/script>');}}catch(e){};
 </script> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/normalize.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/5.5.3/css/foundation.min.css">
@@ -21,47 +21,43 @@ try{if (!window.CloudFlare) {var CloudFlare=[{verbose:0,p:0,byc:0,owlid:"cf",bag
 </head>
 <body>
 
-<nav class="top-bar" data-topbar>
+  <nav class="top-bar" data-topbar>
 
-<section class="top-bar-section">
+    <section class="top-bar-section">
 
       <ul class="left">
         <li class="name">
-        <h1>
-        <a><%= link_to "PRC Hotline", search_path, class: "active" %></a>
-        </h1>
+          <h1>
+            <a><%= link_to "PRC Hotline", search_path, class: "active" %></a>
+          </h1>
         </li>
-            <li class="divider"></li>
-              <li>
-                <a><%= link_to "Items", items_path, class: "active" %></a>
+        <li class="divider"></li>
+        <li>
+          <a><%= link_to "Items", items_path, class: "active" %></a>
 
-              </li>
-
-              <li class="divider"></li>
-                <li >
-                  <a><%= link_to "Locations", locations_path, class: "active" %></a>
-
-                </li>
-
-                <li class="divider"></li>
-                  <li>
-                    <a><%= link_to "Validations", validations_path, class: "active" %></a>
-
-                  </li>
-        </ul>
-        <ul class="right">
-          <li class="divider"></li>
-
-            <li >
-              
-              <a><%= link_to "New Call", newCall_path, class: "active" %></a></li>
+        </li>
 
 
-            </li>
 
-            <li class="divider"></li>
-              <li >
-                <a><%= link_to "Search", search_path, class: "active" %></a></li>
+        <li class="divider"></li>
+        <li>
+          <a><%= link_to "Locations", validations_path, class: "active" %></a>
+
+        </li>
+      </ul>
+      <ul class="right">
+        <li class="divider"></li>
+
+        <li >
+
+          <a><%= link_to "New Call", newCall_path, class: "active" %></a></li>
+
+
+        </li>
+
+        <li class="divider"></li>
+        <li >
+          <a><%= link_to "Search", search_path, class: "active" %></a></li>
         </ul>
       </section>
     </nav>
@@ -74,5 +70,5 @@ try{if (!window.CloudFlare) {var CloudFlare=[{verbose:0,p:0,byc:0,owlid:"cf",bag
 
 
 
-</body>
-</html>
+  </body>
+  </html>
