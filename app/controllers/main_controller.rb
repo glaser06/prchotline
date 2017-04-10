@@ -90,7 +90,7 @@ class MainController < ApplicationController
       else
 
         coords = Geocoder.coordinates("#{@county.name} County")
-        @locations = @item.addresses.near(coords, 50)
+        @locations = @item.addresses.near(coords, 50).paginate(:page => params[:page]).per_page(10)
         # @locations = @item.locations.active.for_county(@county.id).alphabetical
 
 
