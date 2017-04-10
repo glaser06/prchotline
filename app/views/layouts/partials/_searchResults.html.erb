@@ -1,3 +1,7 @@
+
+<p id="notice"><%= notice %></p>
+
+
 <div class="column expanded row" style="width: 60%">
   <div class="callout">
 
@@ -59,8 +63,6 @@
               <% a = location.phone.gsub!(/\D/, "") %>
               <%= "(#{ph[0..2]})" %>&nbsp;<%="#{ph[3..5]}"%>&nbsp;<%="#{ph[6..-1]}"%>
             </td>
-            <td><%= @contexts[index].verified.blank? ? "Not validated" : @contexts[index].verified  %></td>
-            <td><%= @contexts[index].context%></td>
 
           </tr>
           <% end %>
@@ -78,5 +80,3 @@
 <% if @locations != [] %>
         <%= will_paginate @locations, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
 <% end %>
-
-
