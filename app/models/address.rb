@@ -4,7 +4,7 @@ class Address < ApplicationRecord
   belongs_to :location, required: false
   belongs_to :county
 
-  validates :address, :city, :zipcode, :county, presence: true
+  # validates :address, :city, :zipcode, :county, presence: true
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
@@ -12,6 +12,8 @@ class Address < ApplicationRecord
   scope :by_zipcode, -> { order('zipcode') }
   scope :for_county, -> (id) { where('county_id=?', id) }
   scope :by_city, -> (id) { order('city') }
+  scope :by_name, -> { joins(:location).order('locations.name')}
+  scope :by_verified, -> { joins(:location).order('locations.updated_at')}
 
 
 
