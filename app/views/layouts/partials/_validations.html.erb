@@ -27,7 +27,7 @@
             <% end %>
           </div>
           <div class="large-1 column">
-            <%= location_form.input :active, as: :radio_buttons, :input_html => {  id: "active#{location.id}" }  %>
+            <%= location_form.input :active, as: :radio_buttons, :collection => [['Active', true],['Inactive', false]], :input_html => {  id: "active#{location.id}" }  %>
 
           </div>
         </div>
@@ -41,7 +41,7 @@
            in <%= location.addresses.first.county.name %>
           &nbsp;&nbsp;<a data-open= "<%=location.id%>AddressModal" >More Addresses</a>
           <%= location_form.input :verified, :as => :hidden, :input_html => { :value => Time.new.to_date } %>
-          
+
           <!-- <%= location.addresses.first.address %><br/> <br/> -->
         </div> <br/>
         <div class="row">
