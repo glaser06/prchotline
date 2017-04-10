@@ -8,13 +8,13 @@
           <div class="large-7 column">
             <h4><%= location.name %></h4><br/>
           </div>
-          <div class="large-3 small-3 column">
+          <div class="large-2 small-3 column">
             <%= location.website %> <br/>
             <% ph = location.phone %>
             <% a = location.phone.gsub!(/\D/, "") %>
             <%= "(#{ph[0..2]})" %>&nbsp;<%="#{ph[3..5]}"%>&nbsp;<%="#{ph[6..-1]}"%>
           </div>
-          <div class="large-1 small-1 column">
+          <div class="large-2 small-1 column">
             <i> Updated </i> <br/>
             <% year = "#{location.updated_at.year}".split(//).last(2).join %>
             <%= "#{location.updated_at.month}/#{location.updated_at.day}/#{year}" %>
@@ -90,7 +90,7 @@
               <button class="close-button" data-close aria-label="Close modal" type="button">
                 <span aria-hidden="true">&times;</span>
               </button>
-            </div>
+            </div> &nbsp;&nbsp;
             <%= location_form.submit "Validate",:class => 'radius' %>
           </div>
         </div>
