@@ -1,7 +1,7 @@
 <div class="column expanded row" style="width: 60%">
   <div class="callout">
 
-    <h2><%= @item.name %> in <%= @county.name %> County</h2>
+    <h2><%= @item.name.capitalize %> in <%= @county.name %> County</h2>
 
     <% st = "" %>
     <% @item.aliases.each do |a| %>
@@ -10,7 +10,7 @@
     <h6>Also known as: <%= st  %> </h6>
     <br>
     <div class="large-8 columns">
-        <h4><%= @item.name %></h4>
+        <h4><%= @item.name.capitalize %></h4>
         <p><%= @item.name %> is very useful and can be recycled. </p>
     </div>
 
@@ -19,7 +19,7 @@
         <h4><%= @county.name %> County</h4>
         <p><%= @county.name %> can recycle <%= @item.name %>
         <br> <br>
-          County Coordinator: <br>
+          County Coordinator: <br> <br/>
           Someone Someone <br>
           something@county.com <br>
           Phone: (888)-888-8888
@@ -78,5 +78,3 @@
 <% if @locations != [] %>
         <%= will_paginate @locations, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
 <% end %>
-
-

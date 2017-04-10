@@ -1,124 +1,99 @@
 <p id="notice"><%= notice %></p>
+<h4> <%= @countyName %> County </h4>
+<% @locations.each do |location| %>
+  <div class="row" >
+    <fieldset style="background-color: #ffffff;">
+      <%= simple_nested_form_for location, :html => { :class => 'form-horizontal' } do |location_form| %>
+        <div class="row">
+          <div class="large-7 column">
+            <h4><%= location.name %></h4><br/>
+          </div>
+          <div class="large-2 column">
+            <%= location.website %> <br/>
+            <% ph = location.phone %>
+            <% a = location.phone.gsub!(/\D/, "") %>
+            <%= "(#{ph[0..2]})" %>&nbsp;<%="#{ph[3..5]}"%>&nbsp;<%="#{ph[6..-1]}"%>
+          </div>
+          <div class="large-2 column">
+            <i> Updated </i> <br/>
+            <%= "#{location.updated_at.month}/#{location.updated_at.day}/#{location.updated_at.year}" %>
 
-<h4> <%= @countyName %> </h4>
+             <br/>
+             <% if (Time.new.to_date - location.updated_at.to_date).to_i < 0%>
 
-    <table border= "1px solid black">
-      <thead>
-        <tr>
-          <th>Location</th>
+               0 days ago
+            <% else %>
+                 <%= (Time.new.to_date - location.updated_at.to_date).to_i %> days ago
+            <% end %>
+          </div>
+          <div class="large-1 column">
+            <%= location_form.input :active, as: :radio_buttons, :input_html => {  id: "active#{location.id}" }  %>
 
+          </div>
+        </div>
+        <div class="column row">
+          Addresses: <br/>
 
-          <th>Website</th>
-          <th>Phone</th>
-
-          <th>Last Verified</th>
-          <th>Active</th>
-          <th colspan="1"></th>
-          <th colspan="1"></th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @locations.each do |location| %>
-          <tr>
-            <td>
-              <h5><%= location.name %></h5><br/>
-              <%= location.addresses.first.address %><br/> <br/>
-              <ul>
-                <% count=0 %>
-                <% @item_locations.for_location(location.id).each do |il| %>
-                  <% count+=1 %>
-                  <% if count < 4 %>
-                    <input id="<%= "checkbox#{count}"%>" checked type="checkbox"><label for="<%= "checkbox#{count}"%>" ><%= il.item.name %></label>
-
-                  <% else %>
-
-
-                    <% break%>
-                  <% end %>
-                <% end %>
-                <a data-open= "<%=location.id%>Modal" >More</a>
-
-                <div class="reveal" id="<%=location.id%>Modal" data-reveal>
-
-                  <h3> <%= location.name %> </h3>
-                  <% @location = location %>
-                  <%= render 'locations/item_checklist', location: @location %>
-                  <!-- <button data-close> Confirm </button> -->
-
-
-                  <button class="close-button"  data-close type="button"> x </button>
-
-                </div>
-              </ul>
-
-            </td>
+          <%= location.addresses.first.address %>
+          <%= location.addresses.first.city %>,
+          PA
+          <%= location.addresses.first.zipcode %>
+           in <%= location.addresses.first.county.name %>
+          &nbsp;&nbsp;<a data-open= "<%=location.id%>AddressModal" >More Addresses</a>
+          <%= location_form.input :verified, :as => :hidden, :input_html => { :value => Time.new.to_date } %>
+          
+          <!-- <%= location.addresses.first.address %><br/> <br/> -->
+        </div> <br/>
+        <div class="row">
+          <div class="large-10 column">
 
 
-            <td><%= location.website %></td>
 
-            <td class="top">
-              <% ph = location.phone %>
-              <% a = location.phone.gsub!(/\D/, "") %>
-              <%= "(#{ph[0..2]})" %>&nbsp;<%="#{ph[3..5]}"%>&nbsp;<%="#{ph[6..-1]}"%>
-            </td>
+            <% count = 0 %>
+            <% @item_locations.for_location(location.id).each do |il| %>
 
-            <td>
-              <%= "#{location.updated_at.month}/#{location.updated_at.day}/#{location.updated_at.year}" %>
+              <% if count < 7 %>
+                <input id="<%= "itemcheck#{location.id}#{count}"%>" checked type="checkbox"><label for="<%= "itemcheck#{location.id}#{count}"%>" ><%= il.item.name %></label>
 
-               <br></br>
-               <% if (Time.new.to_date - location.updated_at.to_date).to_i < 0%>
-
-                 0 days ago
               <% else %>
-                   <%= (Time.new.to_date - location.updated_at.to_date).to_i %> days ago
+
+
+                <% break%>
               <% end %>
-             </td>
-             <td>
-               <% if location.active %>
-                 <div class="switch">
-                    <input class="switch-input" id="exampleSwitch" type="checkbox" checked name="exampleSwitch">
-                    <label class="switch-paddle" for="exampleSwitch">
-                      <span class="show-for-sr"></span>
-                    </label>
-                  </div>
-               <% else %>
-                 <div class="switch">
-                    <input class="switch-input" id="exampleSwitch" type="checkbox" name="exampleSwitch">
-                    <label class="switch-paddle" for="exampleSwitch">
-                      <span class="show-for-sr"></span>
-                    </label>
-                  </div>
-               <% end %>
+              <% count = count + 1 %>
+            <% end %>
 
-             </td>
+            <a data-open= "<%=location.id%>Modal" data-reveal>More</a>
 
-            <td>
-              <p><a data-open="<%= location.id %>EditModal" >Edit</a></p>
-              <div class="reveal" id="<%= location.id %>EditModal" data-reveal>
-                <h3> <%= location.name %> </h3>
-                <% @location = location %>
-                <%= render 'locations/form', location: @location %>
+            <div class="reveal full" id="<%=location.id%>Modal" data-reveal>
+
+              <h3> <%= location.name %> </h3>
+              <% @location = location %>
+              <%= render 'locations/item_checklist', location: @location %>
+              <!-- <button data-close> Confirm </button> -->
 
 
-                <button class="close-button" data-close aria-label="Close modal" type="button">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-            </td>
-            <td>
+              <button class="close-button"  data-close type="button"> x </button>
 
-            </td>
+            </div>
 
-          </tr>
-
-
-
-        <% end %>
-      </tbody>
-    </table>
+          </div>
+          <div class="large-2 column">
+            <a data-open="<%= location.id %>EditModal" data-reveal>Edit</a>
+            <div class="reveal full" id="<%= location.id %>EditModal" data-reveal>
+              <h3> <%= location.name %> </h3>
+              <% @location = location %>
+              <%= render 'locations/form', location: @location %>
 
 
-
-
-<br>
+              <button class="close-button" data-close aria-label="Close modal" type="button">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <%= location_form.submit "Validate",:class => 'radius' %>
+          </div>
+        </div>
+      <% end %>
+    </fieldset>
+  </div>
+<% end %>

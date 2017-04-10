@@ -11,7 +11,8 @@ class Address < ApplicationRecord
   scope :for_zipcode, -> (zip) { where("zipcode=?", zip ) }
   scope :by_zipcode, -> { order('zipcode') }
   scope :for_county, -> (id) { where('county_id=?', id) }
-  scope :by_city, -> (id) { order('city') }
+  scope :by_county, -> { order('county_id') }
+  scope :by_city, -> { order('city') }
 
 
 
