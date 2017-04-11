@@ -2,14 +2,16 @@
       <!-- fields -->
 
       <td>
-      <%= l.collection_select(:item_id, Item.all.alphabetical, :id, :name, { :prompt => 'Select Item' } ) %>
+
+        <% if !l.object.item.nil? %>
+          <%= l.object.item.name %>
+        <% end %>
+
       <!-- x icon to remove -->
       </td>
       <td>
         <%= l.input :active, label: "" %>
       </td>
-      <td>
-        <%= l.link_to_remove("x") %>
-      </td>
+
 
       <!-- x icon to remove -->

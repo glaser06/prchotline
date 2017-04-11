@@ -7,53 +7,55 @@
   </div>
 
   <div class="right">
-  <%= link_to '<i class="fa fa-plus-square" aria-hidden="true"></i> Add Location'.html_safe, new_location_path %>
+    <%= link_to '<i class="fa fa-plus-square" aria-hidden="true"></i> Add Location'.html_safe, new_location_path %>
   </div>
 
 </div>
 
+
 <div class="row">
 
-<div class="panel">
+  <div class="panel">
 
-<table border= "1px solid black">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>County</th>
-      <th>Address</th>
-      <th>City</th>
-      <th>Zipcode</th>
-      <th>Phone</th>
-      <th>Website</th>
-      <th>Items</th>
-      <th>Active</th>
-    </tr>
-  </thead>
+    <table border= "1px solid black">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>County</th>
+          <th>Address</th>
+          <th>City</th>
+          <th>Zipcode</th>
+          <th>Phone</th>
+          <th>Website</th>
+          <th>Items</th>
+          <th>Active</th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <% @locations.each do |location| %>
-      <tr>
-        <td><%= link_to location.name, location %></td>
-        <td><%= location.addresses.first.county.name %></td>
-        <td><%= location.addresses.first.address %></td>
-        <td><%= location.addresses.first.city %></td>
-        <td><%= location.addresses.first.zipcode %></td>
-        <td><%= number_to_phone location.phone %></td>
-        <td><%= location.website %></td>
-        <td>
-        <% @item_locations.for_location(location.id).each do |il| %>
+      <tbody>
+        <% @locations.each do |location| %>
+        <tr>
+          <td><%= link_to location.name, location %></td>
+          <td><%= location.addresses.first.county.name %></td>
+          <td><%= location.addresses.first.address %></td>
+          <td><%= location.addresses.first.city %></td>
+          <td><%= location.addresses.first.zipcode %></td>
+          <td><%= number_to_phone location.phone %></td>
+          <td><%= location.website %></td>
+          <td>
+            <% @item_locations.for_location(location.id).each do |il| %>
             <%= il.item.name %>
+            <% end %>
+          </td>
+          <td><%= location.active ? "Active" : "Inactive" %></td>
+        </tr>
         <% end %>
-        </td>
-        <td><%= location.active ? "Active" : "Inactive" %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      </tbody>
+    </table>
 
-</div></div>
-<div class="row">
-<%= will_paginate @locations, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
+  </div>
 </div>
-<br>
+  <div class="row">
+    <%= will_paginate @locations, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
+  </div>
+  <br>
