@@ -19,7 +19,7 @@
         <h4><%= @county.name %> County</h4>
         <p><%= @county.name %> can recycle <%= @item.name %>
         <br> <br>
-          County Coordinator: <br>
+          County Coordinator: <br> <br/>
           Someone Someone <br>
           something@county.com <br>
           Phone: (888)-888-8888
@@ -63,6 +63,7 @@
               <% a = location.phone.gsub!(/\D/, "") %>
               <%= "(#{ph[0..2]})" %>&nbsp;<%="#{ph[3..5]}"%>&nbsp;<%="#{ph[6..-1]}"%>
             </td>
+
             <td>
               <% if (Time.new.to_date - location.updated_at.to_date).to_i < 0%>
 
@@ -73,6 +74,7 @@
             </td>
 
             <td> </td>
+
 
           </tr>
           <% end %>

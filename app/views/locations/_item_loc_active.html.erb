@@ -1,0 +1,9 @@
+<div class="fields" style="display:none;">
+     <!-- fields -->
+     <div class="large-1 columns">
+     <%= l.collection_select(:item_id, Item.all.alphabetical, :id, :name, { :prompt => 'Select Item' } ) %>
+     <%= l.input :active %>
+     <!-- x icon to remove -->
+     <%= l.link_to_remove("x") %>
+     </div>
+</div>
