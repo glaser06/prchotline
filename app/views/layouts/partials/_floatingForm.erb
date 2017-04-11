@@ -23,15 +23,11 @@
           options_for_select(['Answered directly', 'Referred to Verizon', 'Referred to County Coordinator', 'Referred to CDRA Manufacturer']),
           value: if @vals.blank? then 'Answered directly' elsif @vals[4].nil? then @vals[4] end , :required => true %>
 
-          Call Purpose
-          <%= select_tag 'purpose',
-          options_for_select(['Answered directly', 'Referred to Verizon', 'Referred to County Coordinator', 'Referred to CDRA Manufacturer']),
-          value: if @vals.blank? then 'Answered directly' elsif @vals[5].nil? then @vals[5] end , :required => true %>
 
           Call Type
           <%= select_tag 'type',
           options_for_select(['Where to recycle', 'How to recycle', 'Verizon Inquiry', 'Other']),
-          value: if @vals.blank? then 'Where to recycle' elsif @vals[6].nil? then @vals[6] end , :required => true %>
+          value: if @vals.blank? then 'Where to recycle' elsif @vals[5].nil? then @vals[5] end , :required => true %>
 
           <%= submit_tag "Submit", name: 'submit_clicked' %>
           <%= submit_tag "Save" %>

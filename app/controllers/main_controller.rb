@@ -15,17 +15,15 @@ class MainController < ApplicationController
     county = params[:county]
     item = params[:item]
     method = params[:method]
-    purpose = params[:purpose]
     type = params[:type]
-
-    session[:value] = [callerName, method, disposition, county, item, method, purpose, type]
+    session[:value] = [callerName, method, disposition, county, item, method, type]
     vals = session[:value]
 
     respond_to do |format|
       if params[:submit_clicked]
-        if params[:callerName] && params[:method] && params[:disposition] && params[:county]&& params[:method] && params[:purpose] && params[:type]
+        if params[:callerName] && params[:method] && params[:disposition] && params[:county]&& params[:method] &&  params[:type]
           CSV.open('call_stats.csv', "at") do |csv|
-            csv << [callerName, method, County.find(county).name.titleize, Item.find(item).name.titleize, disposition, purpose, type]
+            csv << [callerName, method, County.find(county).name.titleize, Item.find(item).name.titleize, disposition, type]
             session.delete(:value)
             format.html { redirect_to "/", notice: "#{params[:callerName]} was added to Call Stats."}
             end
@@ -35,23 +33,11 @@ class MainController < ApplicationController
   end
 
   def newCall
-    if params.has_key?([:callerName]) # && params[:method] && params[:disposition] && params[:county]&& params[:method] && params[:purpose] && params[:type]
+    if params.has_key?([:callerName])
       callerName = params[:callerName]
-      # method = params[:method]
-      # disposition = params[:disposition]
-      # county = params[:county]
-      # item = params[:item]
-      # method = params[:method]
-      # purpose = params[:purpose]
-      # type = params[:type]
-      session[:value] = [callerName]#, method, disposition, county, item, method, purpose, type]
-      puts "newCall"
-
+      session[:value] = [params[:callerName]]
     end
-    puts "everything"
     @vals = session[:value]
-    puts @vals
-
   end
 
 
