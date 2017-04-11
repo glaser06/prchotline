@@ -157,7 +157,6 @@ County.all.each do |c|
     zipcodes.each do |zipCity|
       rand(3).times do |tmp|
 
-
         address = "#{Faker::Address.street_address} Ave."
         phone = (Faker::PhoneNumber.phone_number).split('x')[0]
         # c.locations.create(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", address: address, city: zipCity[1], phone: phone, website: 'www.example.com', zipcode: zipCity[0], state: 'PA', counties_id: c.id, active: true)

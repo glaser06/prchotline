@@ -83,6 +83,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def county_params
-      params.require(:county).permit(:name)
+      params.require(:county).permit(:name, :coordinator, :phone, :website)
     end
 end
