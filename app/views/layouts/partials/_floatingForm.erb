@@ -24,16 +24,53 @@
           value: if @vals.blank? then 'Answered directly' elsif @vals[4].nil? then @vals[4] end , :required => true %>
 
           Call Type
-          <%= select_tag 'type',
+          <!-- <%= select_tag 'type',
           options_for_select(['Where to recycle', 'How to recycle', 'Verizon Inquiry', 'Other']),
-          value: if @vals.blank? then 'Where to recycle' elsif @vals[5].nil? then @vals[5] end , :required => true %>
+          value: if @vals.blank? then 'Where to recycle' elsif @vals[5].nil? then @vals[5] end , :required => true %> -->
+
+          <script type="text/javascript">
+          function showfield(name){
+            if(name=='Other')document.getElementById('div1').innerHTML='Other: <input type="text" name="other" />';
+            else document.getElementById('div1').innerHTML='';
+          }
+          </script>
+
+          <select name="callType" id="callType" onchange="showfield(this.options[this.selectedIndex].value)">
+          <option value="Where to recycle">Where to recycle</option>
+          <option value="How to recycle">How to recycle</option>
+          <option value="Verizon Inquiry">Verizon Inquiry</option>
+          <option value="Other">Other</option>
+          </select>
+          <div id="div1"></div>
+
+          <!-- <script type="text/javascript">
+          $(document).ready(function(){
+              $("#car_selector").change(function(){
+                  if($("#car_selector").val() == "fiat"){
+                    $(".hidden_option").fadeIn('fast');
+                  }
+              });
+          });
+          </script>
+
+
+          <select name="cars" id="car_selector">
+            <option value="volvo">Volvo</option>
+            <option value="saab">Saab</option>
+            <option value="fiat">Fiat</option>
+            <option value="audi">Audi</option>
+          </select>
+          <p>&nbsp;</p>
+          <label class="hidden_option">Why would you DO that?</label>
+          <input type="text" name="reason" class="hidden_option" />
+ -->
+
 
           PRC Call
           <%= check_box_tag :prcCall, if @vals.blank? then "Yes" elsif @vals[6].nil? then "No" end  %>
 
           DEP Call
           <%= check_box_tag :depCall, if @vals.blank? then "Yes" elsif @vals[7].nil? then "No" end %>
-
 
           <br>
           <%= submit_tag "Submit", name: 'submit_clicked' %>
