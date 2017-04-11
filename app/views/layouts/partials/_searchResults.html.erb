@@ -23,7 +23,11 @@
           <%= @county.coordinator %><br>
           <%= @county.phone%><br>
           <% link = @county.website%>
-          <%= link_to "County Recycling Website", "#{link}", :target => "_blank" %>
+          <% if link != 'N/A' %>
+            <%= link_to "County Recycling Website", "#{link}", :target => "_blank" %>
+          <% else %>
+            <%= "There is no county website." %>
+          <% end %>
         </p>
 
     </div>
