@@ -13,6 +13,8 @@ class Location < ApplicationRecord
   validates_format_of :phone, with: /\A\(?\d{3}\)?[-. ]?\d{3}[-.]?\d{4}\z/, message: "should be 10 digits (area code needed) and delimited with dashes only", allow_blank: true
   #TO DO validates format of website
 
+  validate :require_one_address
+
   scope :alphabetical , -> { order('name') }
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
@@ -31,9 +33,11 @@ class Location < ApplicationRecord
     collection.any? ? collection : item_locations.build
   end
 
-
-
   private
+
+  def require_one_address
+    errors.add(:base, "You must provide at least one address") if addresses.size < 1
+  end
 
   def reformat_phone
     phone = self.phone.to_s  # change to string in case input as all numbers

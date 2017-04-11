@@ -51,7 +51,7 @@
 
             <% count = 0 %>
             <%= location_form.simple_fields_for :item_locations do |il| %>
-              <%= render :partial => "locations/itemLocations", :locals => { :l => il } %>
+              <%= render :partial => "locations/item_loc_active", :locals => { :l => il } %>
               <%= il.input :active, label: il.object.item.name, wrapper_html: { class: "large-1 column"}, input_html: { id: "itemcheck#{location.id}#{count}" }%>
               <% count += 1 %>
             <% end %>
