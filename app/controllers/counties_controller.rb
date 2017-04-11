@@ -3,9 +3,23 @@ class CountiesController < ApplicationController
 
   # GET /counties
   # GET /counties.json
-  def index
+  def index  
+  if params[:term]
+    @counties = County.where("name ilike ?", "%#{params[:term]}%").limit(10)
+    arr = []
+    # adds possible counties into an array of options to select
+    @counties_autocomplete = @counties.map do |c|
+      arr.push(c.name)
+    end   
+  else
     @counties = County.all
   end
+
+  respond_to do |format|  
+    format.html
+    format.json { render :json => @counties_autocomplete[0]}
+    end
+end
 
   # GET /counties/1
   # GET /counties/1.json

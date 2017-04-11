@@ -21,9 +21,26 @@ try{if (!window.CloudFlare) {var CloudFlare=[{verbose:0,p:0,byc:0,owlid:"cf",bag
     <section class="top-bar-section">
 
       <ul class="left">
-        <li class="name"><h1><a><%= link_to "PRC Hotline", search_path, class: "active" %></a></h1></li>
-          <li class="divider"></li>
-          <li><a><%= link_to "Counties", counties_path, class: "active" %></a></li>
+        <li class="name">
+        <h1>
+        <a><%= link_to "PRC Hotline", search_path, class: "active" %></a>
+        </h1>
+        </li>
+            <li class="divider"></li>
+              <li>
+                <a><%= link_to "Items", items_path, class: "active" %></a>
+
+              </li>
+
+              <li class="divider"></li>
+                <li >
+                  <a><%= link_to "Locations", locations_path, class: "active" %></a>
+
+                </li>
+
+                <li class="divider"></li>
+                  <li>
+                    <a><%= link_to "Validations", validations_path, class: "active" %></a>
 
           <li class="divider"></li>
           <li> <a><%= link_to "Items", items_path, class: "active" %></a></li>
