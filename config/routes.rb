@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
   get 'validations' => 'validations'
 
+  post 'clear_form' => 'main#clear_form'
+
   post 'newCall' => 'main#newCall'
   post 'submit_form' => 'main#submit_form'
   post 'clear_form' => 'main#clear_form'
