@@ -9,20 +9,21 @@
     <% end %>
     <h6>Also known as: <%= st  %> </h6>
     <br>
-    <div class="large-8 columns">
+    <div class="large-7 columns">
         <h4><%= @item.name %></h4>
         <p><%= @item.name %> is very useful and can be recycled. </p>
     </div>
 
-    <div class="large-4 columns">
+    <div class="large-5 columns">
 
         <h4><%= @county.name %> County</h4>
         <p><%= @county.name %> can recycle <%= @item.name %>
         <br> <br>
           County Coordinator: <br>
           <%= @county.coordinator %><br>
-          <%= @county.website %><br>
-          <%= @county.phone%>
+          <%= @county.phone%><br>
+          <% link = @county.website%>
+          <%= link_to "County Recycling Website", "#{link}", :target => "_blank" %>
         </p>
 
     </div>
