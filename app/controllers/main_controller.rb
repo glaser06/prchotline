@@ -16,18 +16,28 @@ class MainController < ApplicationController
     item = params[:item]
     method = params[:method]
     type = params[:type]
-    session[:value] = [callerName, method, disposition, county, item, method, type]
-    vals = session[:value]
+    prc = params[:prcCall]
+    dep = params[:depCall]
+    if prc.nil? then prc = "No" else prc = "Yes" end
+    if dep.nil? then dep = "No" else dep = "Yes" end
 
+    session[:value] = [callerName, method, disposition, county, item, method, type, prc, dep]
+    vals = session[:value]
+    puts vals
     respond_to do |format|
       if params[:submit_clicked]
-        if params[:callerName] && params[:method] && params[:disposition] && params[:county]&& params[:method] &&  params[:type]
-          CSV.open('call_stats.csv', "at") do |csv|
+        if prc == "Yes"
+          CSV.open('PRCcall_stats.csv', "at") do |csv|
             csv << [callerName, method, County.find(county).name.titleize, Item.find(item).name.titleize, disposition, type]
-            session.delete(:value)
-            format.html { redirect_to "/", notice: "#{params[:callerName]} was added to Call Stats."}
-            end
+          end
         end
+        if dep == "Yes"
+          CSV.open('DEPcall_stats.csv', "at") do |csv|
+            csv << [callerName, method, County.find(county).name.titleize, Item.find(item).name.titleize, disposition, type]
+          end
+        end
+        session.delete(:value)
+        format.html { redirect_to "/", notice: "#{params[:callerName]} was added to Call Stats."}
       end
     end
   end

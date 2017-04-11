@@ -3,7 +3,7 @@
 
         <% caller_name = if @vals.blank? then "" else @vals[0] end%>
           Caller Name
-          <%= text_field_tag :callerName, caller_name %>
+          <%= text_field_tag :callerName, caller_name, :required => true  %>
 
           How did you find out about the hotline?
           <%= select_tag 'method',
@@ -23,12 +23,19 @@
           options_for_select(['Answered directly', 'Referred to Verizon', 'Referred to County Coordinator', 'Referred to CDRA Manufacturer']),
           value: if @vals.blank? then 'Answered directly' elsif @vals[4].nil? then @vals[4] end , :required => true %>
 
-
           Call Type
           <%= select_tag 'type',
           options_for_select(['Where to recycle', 'How to recycle', 'Verizon Inquiry', 'Other']),
           value: if @vals.blank? then 'Where to recycle' elsif @vals[5].nil? then @vals[5] end , :required => true %>
 
+          PRC Call
+          <%= check_box_tag :prcCall, if @vals.blank? then "Yes" elsif @vals[6].nil? then "No" end  %>
+
+          DEP Call
+          <%= check_box_tag :depCall, if @vals.blank? then "Yes" elsif @vals[7].nil? then "No" end %>
+
+
+          <br>
           <%= submit_tag "Submit", name: 'submit_clicked' %>
           <%= submit_tag "Save" %>
       <% end %>
