@@ -1,5 +1,5 @@
 <div class="column expanded row" style="width: 60%">
-  <div class="callout">
+  <div class="callout"  align = 'center'>
 
     <h2><%= @item.name %> in <%= @county.name %> County</h2>
 
@@ -9,12 +9,12 @@
     <% end %>
     <h6>Also known as: <%= st  %> </h6>
     <br>
-    <div class="large-7 columns">
+    <div class="large-7 columns"  align = 'left'>
         <h4><%= @item.name %></h4>
         <p><%= @item.name %> is very useful and can be recycled. </p>
     </div>
 
-    <div class="large-5 columns">
+    <div class="large-5 columns"  align = 'left'>
 
         <h4><%= @county.name %> County</h4>
         <p><%= @county.name %> can recycle <%= @item.name %>
@@ -34,7 +34,9 @@
 
     <br>
 
-    <div>
+    <div align = 'center'>
+
+    <%if @locations.size > 0 %>
 
       <table border= "1px solid black" >
 
@@ -72,6 +74,9 @@
         </tbody>
 
       </table>
+    <% else %>
+      <%= "There are no active locations where this item can be recycled." %>
+    <% end %>
     </div>
 
 
