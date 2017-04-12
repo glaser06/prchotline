@@ -19,6 +19,10 @@ class Location < ApplicationRecord
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
   scope :for_county, -> (id) {Location.joins(:addresses).where(addresses: {county_id: id})}
+  scope :by_county, -> {Location.joins(:addresses).order("addresses.county_id")}
+  scope :by_city, -> {Location.joins(:addresses).order("addresses.city")}
+  scope :by_zipcode, -> {Location.joins(:addresses).order("addresses.zipcode")}
+  scope :by_updated, ->  {order('updated_at')}
   # scope :for_zipcode, -> (zip) { where("zipcode=?", zip ) }
   # scope :by_zipcode, -> { order('zipcode') }
   # scope :by_county, ->  { includes(:county).order('counties.name') }
