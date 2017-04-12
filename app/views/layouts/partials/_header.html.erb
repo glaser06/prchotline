@@ -2,16 +2,14 @@
 <div class="top-bar" data-topbar role="navigation">
   <ul class="dropdown menu" data-dropdown-menu>
 
-  <!-- <div class="top-bar-left"> -->
       <li class="name"><h4><%= link_to "PRC Hotline", search_path, class: "active" %></h4></li>
       <li><%= link_to "Counties", counties_path, class: "active" %></li>
       <li><%= link_to "Items", items_path, class: "active" %></li>
       <li><%= link_to "Locations", locations_path, class: "active" %></li>
       <li><%= link_to "Validations", validations_path, class: "active" %></li>
 
-  <!-- </div> -->
   <div class="top-bar-right">
-        <%= form_tag("", :method => "get", id: "search-form") do %>
+        <%= form_tag("", contoller: "application", :method => "get", id: "search-form") do %>
             <div class="row">
               <div class="medium-3 columns">
                 <%= text_field_tag :item, params[:item], placeholder: "Items" %>
