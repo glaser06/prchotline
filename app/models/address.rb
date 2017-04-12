@@ -22,11 +22,12 @@ class Address < ApplicationRecord
 
 
 
-  geocoded_by :zipcode
+  geocoded_by :full_address
+  # after_validation :geocode
   # after_validation :geocode
 
   def full_address
-    address = "#{self.address} #{self.city}, PA #{self.zipcode}"
+    address = "#{self.address} #{self.city}, PA"
     return address
   end
 

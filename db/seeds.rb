@@ -7,15 +7,25 @@ require 'csv'
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-county_list = ["Adams", "Allegheny", "Armstrong", "Beaver", "Bedford", "Berks", "Blair", "Bradford", "Bucks", "Butler", "Cambria", "Cameron", "Carbon", "Centre", "Chester", "Clarion", "Clearfield", "Clinton", "Columbia", "Crawford", "Cumberland", "Dauphin", "Delaware", "Elk", "Erie", "Fayette", "Forest", "Franklin", "Fulton", "Greene", "Huntingdon", "Indiana", "Jefferson", "Juniata", "Lackawanna", "Lancaster", "Lawrence", "Lebanon", "Lehigh", "Luzerne", "Lycoming", "Mckean", "Mercer", "Mifflin", "Monroe", "Montgomery", "Montour", "Northampton", "Northumberland", "Perry", "Philadelphia", "Pike", "Potter", "Schuylkill", "Snyder", "Somerset", "Sullivan", "Susquehanna", "Tioga", "Union", "Venango", "Warren", "Washington", "Wayne", "Westmoreland", "Wyoming", "York"]
+#county_list = ["Adams", "Allegheny", "Armstrong", "Beaver", "Bedford", "Berks", "Blair", "Bradford", "Bucks", "Butler", "Cambria", "Cameron", "Carbon", "Centre", "Chester", "Clarion", "Clearfield", "Clinton", "Columbia", "Crawford", "Cumberland", "Dauphin", "Delaware", "Elk", "Erie", "Fayette", "Forest", "Franklin", "Fulton", "Greene", "Huntingdon", "Indiana", "Jefferson", "Juniata", "Lackawanna", "Lancaster", "Lawrence", "Lebanon", "Lehigh", "Luzerne", "Lycoming", "Mckean", "Mercer", "Mifflin", "Monroe", "Montgomery", "Montour", "Northampton", "Northumberland", "Perry", "Philadelphia", "Pike", "Potter", "Schuylkill", "Snyder", "Somerset", "Sullivan", "Susquehanna", "Tioga", "Union", "Venango", "Warren", "Washington", "Wayne", "Westmoreland", "Wyoming", "York"]
 
-county_list.each do |name|
-  County.create( name: name)
+# county_list.each do |name|
+#   County.create( name: name)
+# end
+
+csv_text = File.read('countyCoordinators.csv')
+csv = CSV.parse(csv_text, :headers => true)
+countyZip = {}
+csv.each do |row|
+  #countyInfo = row.split(',')
+  countyName = row["County"]
+  countyCoord = row["Coordinator "]
+  countyPhone = row["Phone #"]
+  countyWebsite = row["Website"]
+  County.create( name: countyName, coordinator: countyCoord, phone: countyPhone, website: countyWebsite)
 end
 
 item_list = ["Paper", "Television"]
-
-
 
 item_list = ["Air Conditioners", "Aluminum", "Ammunition", "Antifreeze", "Appliances (with Freon)", "Appliances (No Freon)", "Art & Education Materials", "Asbestos", "Aseptic Packaging (Drink Boxes/Milk Cartons)", "Asphalt, Brick, Concrete, Gravel, & Porcelain", "Audio/Videotapes, CDs, DVDs, & Records", "Automotive Parts & Liquids",
 "Ballast", "Batteries (Alkaline/Zinc Carbon)", "Batteries (Button Cell)", "Batteries (Lead Acid)", "Batteries (Rechargable)", "Biohazardous Waste", "Books","Bricks","Building Materials","Bulbs",
@@ -137,43 +147,90 @@ csv.each do |row|
   end
 
 end
-Faker::Config.locale = 'en-US'
-counter = 0
-County.all.each do |c|
-  county = c.name
-  zipcodes = countyZip[county]
-  if countyZip.key?(county)
-    count = 1
-    zipcodes.each do |zipCity|
-      rand(3).times do |tmp|
+# Faker::Config.locale = 'en-US'
+# counter = 0
+# County.all.each do |c|
+#   county = c.name
+#   zipcodes = countyZip[county]
+#   if countyZip.key?(county)
+#     count = 1
+#     zipcodes.each do |zipCity|
+#       rand(3).times do |tmp|
+#
+#         address = "#{Faker::Address.street_address} Ave."
+#         phone = (Faker::PhoneNumber.phone_number).split('x')[0]
+#         # c.locations.create(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", address: address, city: zipCity[1], phone: phone, website: 'www.example.com', zipcode: zipCity[0], state: 'PA', counties_id: c.id, active: true)
+#         @loc1 = Location.new(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", phone: phone, website: 'www.example.com', active: true)
+#
+#         @loc1.addresses.build(address: address, city: zipCity[1], zipcode: zipCity[0], state: 'PA', county_id: c.id,location_id: @loc1.id, latitude: zipCity[2], longitude: zipCity[3], active: true)
+#         @loc1.save
+#         # @loc1 = Location.create(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", phone: phone, website: 'www.example.com', active: true)
+#
+#         # @addr1 = Address.create(address: address, city: zipCity[1], zipcode: zipCity[0], state: 'PA', county_id: c.id,location_id: @loc1.id, latitude: zipCity[2], longitude: zipCity[3], active: true)
+#         Rails.logger.info(@loc1.errors.inspect)
+#         # Rails.logger.info(@addr1.errors.inspect)
+#
+#         count += 1
+#       end
+#     end
+#   end
+# end
 
+csv_text = File.read('BucksCountyData.csv')
+csv = CSV.parse(csv_text, :headers => true)
+countyZip = []
+locations = {}
+csv.each do |row|
 
-        address = "#{Faker::Address.street_address} Ave."
-        phone = (Faker::PhoneNumber.phone_number).split('x')[0]
-        # c.locations.create(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", address: address, city: zipCity[1], phone: phone, website: 'www.example.com', zipcode: zipCity[0], state: 'PA', counties_id: c.id, active: true)
-        @loc1 = Location.create(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", phone: phone, website: 'www.example.com', active: true)
-
-        @addr1 = Address.create(address: address, city: zipCity[1], zipcode: zipCity[0], state: 'PA', county_id: c.id,location_id: @loc1.id, latitude: zipCity[2], longitude: zipCity[3], active: true)
-        Rails.logger.info(@loc1.errors.inspect)
-        Rails.logger.info(@addr1.errors.inspect)
-
-        count += 1
-      end
+  if row['Location Name']
+    name = row['Location Name'].rstrip
+    item = row["Item"].downcase.rstrip
+    county = row['County'].split(' ')[0]
+    if !locations.key?(name)
+      locations[name] = {}
+      locations[name]["Addr"] = [row['City'],row["Address"], row["Location Name"], row['Phone'], row['Website'],row["Details"], county]
     end
+
+    locations[name][item] = []
+    # locations[name].push([row['City'],row["Address"], row["Location Name"], row["Item"], row['Phone'], row['Website'], row["Details"], county])
+
+
+
+
+      # countyZip[county] = [[row['City'],row["Address"], row["Location Name"], row["Item"], row['Phone'], row['Website'], row["Details"]]]
+
   end
+
 end
+locations.each do |addr, items|
+  row = items["Addr"]
+  c = County.for_name(row[6]).first
+  @loc1 = Location.new(name: row[2], phone: row[3], website: row[4], active: true)
+  @loc1.addresses.build(address: row[1], city: row[0], zipcode: "", state: 'PA', county_id: c.id, location_id: @loc1.id, active: true)
+  items.each do |item, emp|
+    if item != "Addr"
+      i = Item.for_name(item).first
+      @loc1.item_locations.build(item_id: i.id, location_id: @loc1.id, context: row[5] ,active: true)
+    end
+
+
+  end
+  @loc1.save
+
+end
+
 # countyZip.each do |county, zipcodes|
 #
 # end
 
-items = Item.all
-locs = Location.all
-items.each do |item|
-  if ["paper", "televisions","mobile phones","cardboard"].include?(item.name)
-    locs.each do |loc|
-
-      @asd = ItemLocation.create(item_id: item.id, location_id: loc.id, context: "This is an example context. We don't know much beyond this.",active: true)
-      Rails.logger.info(@asd.errors.inspect)
-    end
-  end
-end
+# items = Item.all
+# locs = Location.all
+# items.each do |item|
+#   if ["paper", "televisions","mobile phones","cardboard"].include?(item.name)
+#     locs.each do |loc|
+#
+#       @asd = ItemLocation.create(item_id: item.id, location_id: loc.id, context: "This is an example context. We don't know much beyond this.",active: true)
+#       Rails.logger.info(@asd.errors.inspect)
+#     end
+#   end
+# end
