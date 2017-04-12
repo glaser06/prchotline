@@ -20,17 +20,17 @@
 
       <h4> <%= @errors %> </h4>
       <%= form_tag("", :method => "get", id: "search-form") do %>
-      <%= text_field_tag :item, params[:item], :placeholder => 'Enter Item', id:'items' %> 
-      <%= text_field_tag :county, params[:county], :placeholder => 'Enter County', id:'counties' %> 
-   
-      <%= text_field_tag :zip, params[:zip], placeholder: "Zipcodes", maxlength: 5, class: 'input-small' %>
-      <%= submit_tag "Search", :name => nil %>
+        <%= text_field_tag :item, params[:item], :placeholder => 'Enter Item', id:'items' %>
+        <%= text_field_tag :county, params[:county], :placeholder => 'Enter County', id:'counties' %>
+
+        <%= text_field_tag :zip, params[:zip], placeholder: "Zipcodes", maxlength: 5, class: 'input-small' %>
+        <%= submit_tag "Search", :name => nil %>
       <% end %>
     </div>
   </div>
 </div>
     <% else %>
-    
+
     <%= render 'layouts/partials/searchResults' %>
 
     <% end %>

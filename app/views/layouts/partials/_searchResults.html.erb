@@ -1,7 +1,7 @@
 <div class="column expanded row" style="width: 60%">
   <div class="callout"  align = 'center'>
 
-    <h2><%= @item.name %> in <%= @county.name %> County</h2>
+    <h2><%= @item.name.capitalize %> in <%= @county.name %> County</h2>
 
     <% st = "" %>
     <% @item.aliases.each do |a| %>
@@ -9,8 +9,10 @@
     <% end %>
     <h6>Also known as: <%= st  %> </h6>
     <br>
+
     <div class="large-7 columns"  align = 'left'>
-        <h4><%= @item.name %></h4>
+        <h4><%= @item.name.capitalize %></h4>
+
         <p><%= @item.name %> is very useful and can be recycled. </p>
     </div>
 
@@ -19,6 +21,7 @@
         <h4><%= @county.name %> County</h4>
         <p><%= @county.name %> can recycle <%= @item.name %>
         <br> <br>
+
           County Coordinator: <br>
           <%= @county.coordinator %><br>
           <%= @county.phone%><br>
@@ -28,6 +31,7 @@
           <% else %>
             <%= "There is no county website." %>
           <% end %>
+
         </p>
 
     </div>
@@ -42,11 +46,15 @@
 
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Zipcode</th>
+
+
+            <th><%= button_to "Name", search_path, method: :get, params: { :county => params[:county], :item => params[:item], :zip => params[:zip], :sortby => "name" }%></th>
+            <th>
+              Address <%= button_to "by Zip Code", search_path, method: :get, params: { :county => params[:county], :item => params[:item], :zip => params[:zip], :sortby => "zipcode" }%>
+            </th>
+            <th>Website</th>
             <th>Phone</th>
-            <th>Validated</th>
+            <th><%= button_to "Verified", search_path, method: :get, params: { :county => params[:county], :item => params[:item], :zip => params[:zip], :sortby => "verified" }%></th>
             <th>Context </th>
 
 
@@ -60,14 +68,24 @@
             <td><%= link_to location.name, location%> </td>
 
             <td><%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}" %>  </td>
-            <td><%= addr.zipcode %></td>
+            <td><%= location.website %></td>
             <td>
               <% ph = location.phone %>
               <% a = location.phone.gsub!(/\D/, "") %>
               <%= "(#{ph[0..2]})" %>&nbsp;<%="#{ph[3..5]}"%>&nbsp;<%="#{ph[6..-1]}"%>
             </td>
-            <td><%= @contexts[index].verified.blank? ? "Not validated" : @contexts[index].verified  %></td>
-            <td><%= @contexts[index].context%></td>
+
+            <td>
+              <% if (Time.new.to_date - location.updated_at.to_date).to_i < 0%>
+
+                0 days ago
+             <% else %>
+                  <%= (Time.new.to_date - location.updated_at.to_date).to_i %> days ago
+             <% end %>
+            </td>
+
+            <td> </td>
+
 
           </tr>
           <% end %>
@@ -88,5 +106,3 @@
 <% if @locations != [] %>
         <%= will_paginate @locations, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
 <% end %>
-
-

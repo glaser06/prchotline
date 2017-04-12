@@ -9,19 +9,19 @@ class MainController < ApplicationController
   end
 
   def submit_form
-      callerName = params[:callerName]
-      method = params[:method]
-      disposition = params[:disposition]
-      county = params[:county]
-      item = params[:item]
-      method = params[:method]
-      purpose = params[:purpose]
-      type = params[:type]
+    callerName = params[:callerName]
+    method = params[:method]
+    disposition = params[:disposition]
+    county = params[:county]
+    item = params[:item]
+    method = params[:method]
+    purpose = params[:purpose]
+    type = params[:type]
 
-      session[:value] = [callerName, method, disposition, county, item, method, purpose, type]
-      vals = session[:value]
-      puts "submit_form"
-      puts vals
+    session[:value] = [callerName, method, disposition, county, item, method, purpose, type]
+    vals = session[:value]
+    puts "submit_form"
+    puts vals
 
     if params[:submit_clicked]
       if params[:callerName] && params[:method] && params[:disposition] && params[:county]&& params[:method] && params[:purpose] && params[:type]
@@ -68,10 +68,12 @@ class MainController < ApplicationController
 
       if item.blank?
         @errors += "Could not find #{params[:item]}"
+        puts "ereror2"
         return
       end
       @item = Item.find(item.first.item_id)
       if county.blank?
+        puts "ereror"
         @errors += "#{params[:county]} does not exist"
         return
       end
@@ -108,6 +110,21 @@ class MainController < ApplicationController
       end
       @contexts = contexts
     end
+    if params[:sortby]
+      sort = params[:sortby]
+      loc = @locations
+      if sort == "name"
+
+        @locations = loc.by_name
+      elsif sort == "verified"
+        @locations = loc.by_verified
+      elsif sort == "zipcode"
+        @locations = loc.by_zipcode
+      elsif sort == "city"
+        puts ""
+      end
+    end
   end
+
 
 end
