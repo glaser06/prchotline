@@ -1,32 +1,61 @@
-<div class="row">
-  <div class="small-7 columns">
-    <h2>Validations</h2>
 
-    <script>
+<div class="row">
+
+    <h2>Locations</h2>
+
+    <%= form_tag("", :method => "get", id: "search-form") do %>
+    <fieldset class="large-6 columns">
+
+      <legend>Filter by </legend>
+      <script>
       $( function() {
         $( "#tags" ).autocomplete({
           source: '<%= counties_path(:json) %>'
         });
       } );
-    </script>
+      </script>
 
-    <%= form_tag("", :method => "get", id: "search-form") do %>
-        <div class="ui-widget">
-            <input id="tags" name="county" placeholder = 'Enter County'>
-        </div>
-            <%= submit_tag "Search", :name => nil %>
+
+      <div class="ui-widget">
+        <input id="tags" name="county" placeholder = 'Enter County' value='<%= params[:county] if params[:county]%>'>
+      </div>
+      <div >
+        <%= submit_tag "Search", :name => nil %>
+      </div>
+
+    </fieldset>
+
+
+
+    <fieldset class="large-6 columns">
+      <legend>Sort by </legend>
+      <input type="radio" name="sortby" value="county" id="countySort"><label for="countySort">County</label>
+      <input type="radio" name="sortby" value="name" id="nameSort"><label for="nameSort">Name</label>
+      <input type="radio" name="sortby" value="verified" id="verifySort"><label for="verifySort">Last Verified</label>
+      <input type="radio" name="sortby" value="city" id="citySort"><label for="citySort">City</label>
+      <input type="radio" name="sortby" value="zipcode" id="zipSort"><label for="zipSort">Zip code</label>
+      <%= submit_tag "Sort", :name => nil %>
+
+    </fieldset>
+
+
+
     <% end %>
 
+
+  </div>
+
+<div class="expanded row" style="width:90%;">
+  <div class="panel">
     <% if @locations == "errorMessage" %>
-        <br></br>
-        <h3> That county does not exist. Please try again. </h3>
+    <br></br>
+    <h3> That county does not exist. Please try again. </h3>
     <% elsif @locations != [] %>
-        <%= render 'layouts/partials/validations' %>
-        <%= will_paginate @locations, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
+    <%= render 'layouts/partials/validations' %>
+    <%= will_paginate @locations, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
     <% else  %>
-        <br></br>
-        <h3> Search for any county. </h3>
+    <br></br>
+    <h3> Search for any county. </h3>
     <% end %>
-
   </div>
 </div>
