@@ -14,45 +14,46 @@ class MainController < ApplicationController
     disposition = params[:disposition]
     county = params[:county]
     item = params[:item]
+
+
+
     method = params[:method]
     purpose = params[:purpose]
     type = params[:type]
 
     session[:value] = [callerName, method, disposition, county, item, method, purpose, type]
     vals = session[:value]
-    puts "submit_form"
-    puts vals
 
-    if params[:submit_clicked]
-      if params[:callerName] && params[:method] && params[:disposition] && params[:county]&& params[:method] && params[:purpose] && params[:type]
-        CSV.open('call_stats.csv', "at") do |csv|
-          csv << [callerName, method, County.find(county).name.titleize, Item.find(item).name.titleize, disposition, purpose, type]
+
+    respond_to do |format|
+      if params[:submit_clicked]
+        if params[:callerName] && params[:method] && params[:disposition] && params[:county]&& params[:method] && params[:purpose] && params[:type]
+          CSV.open('call_stats.csv', "at") do |csv|
+            csv << [callerName, method, County.find(county).name.titleize, Item.find(item).name.titleize, disposition, purpose, type]
+            session.delete(:value)
+            format.html { redirect_to "/", notice: "#{params[:callerName]} was added to Call Stats."}
+            end
+
         end
+        if dep == "Yes"
+          CSV.open('DEPcall_stats.csv', "at") do |csv|
+            csv << [callerName, method, County.find(county).name.titleize, Item.find(item).name.titleize, disposition, type]
+          end
+        end
+        session.delete(:value)
+        format.html { redirect_to "/", notice: "#{params[:callerName]} was added to Call Stats."}
       end
-      session.delete(:value)
-      redirect_to "/"
     end
   end
 
   def newCall
-    if params.has_key?([:callerName]) # && params[:method] && params[:disposition] && params[:county]&& params[:method] && params[:purpose] && params[:type]
+    if params.has_key?([:callerName])
       callerName = params[:callerName]
-      # method = params[:method]
-      # disposition = params[:disposition]
-      # county = params[:county]
-      # item = params[:item]
-      # method = params[:method]
-      # purpose = params[:purpose]
-      # type = params[:type]
-      session[:value] = [callerName]#, method, disposition, county, item, method, purpose, type]
-      puts "newCall"
-
+      session[:value] = [params[:callerName]]
     end
-    puts "everything"
     @vals = session[:value]
-    puts @vals
-
   end
+
 
   def index
     @items = Item.all
@@ -119,6 +120,7 @@ class MainController < ApplicationController
       end
     end
   end
+
 
 
 end

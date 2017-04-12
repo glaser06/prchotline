@@ -1,15 +1,16 @@
 <p id="notice"><%= notice %></p>
 <h4> <%= @countyName %> </h4>
 <% @locations.each do |location| %>
+  <div class="row"> <br/><br/> </div>
   <div class="row" >
-    <fieldset style="background-color: #ffffff;">
+    <fieldset style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);">
       <%= simple_nested_form_for location, :html => { :class => 'form-horizontal' } do |location_form| %>
 
         <div class="row">
-          <div class="large-7 column">
+          <div class="large-6 column">
             <h4><%= location.name %></h4><br/>
           </div>
-          <div class="large-2 small-3 column">
+          <div class="large-3 small-3 column">
             <%= location.website %> <br/>
             <% ph = location.phone %>
             <% a = location.phone.gsub!(/\D/, "") %>

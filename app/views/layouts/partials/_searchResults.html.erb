@@ -1,3 +1,6 @@
+
+<p id="notice"><%= notice %></p>
+
 <div class="column expanded row" style="width: 60%">
   <div class="callout">
 
@@ -64,6 +67,7 @@
               <%= "(#{ph[0..2]})" %>&nbsp;<%="#{ph[3..5]}"%>&nbsp;<%="#{ph[6..-1]}"%>
             </td>
 
+
             <td>
               <% if (Time.new.to_date - location.updated_at.to_date).to_i < 0%>
 
@@ -74,6 +78,7 @@
             </td>
 
             <td> </td>
+
 
 
           </tr>
