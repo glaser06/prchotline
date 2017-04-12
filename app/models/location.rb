@@ -4,7 +4,7 @@ class Location < ApplicationRecord
 
   has_many :item_locations
   has_many :items, through: :item_locations
-  has_many :addresses
+  has_many :addresses, :autosave => true
 
   accepts_nested_attributes_for :item_locations, reject_if: lambda { |item_location| item_location[:item_id].blank? }, allow_destroy: true
   accepts_nested_attributes_for :addresses, reject_if: lambda { |addr| addr[:address].blank? }, allow_destroy: true

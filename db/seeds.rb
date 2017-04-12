@@ -160,11 +160,15 @@ County.all.each do |c|
         address = "#{Faker::Address.street_address} Ave."
         phone = (Faker::PhoneNumber.phone_number).split('x')[0]
         # c.locations.create(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", address: address, city: zipCity[1], phone: phone, website: 'www.example.com', zipcode: zipCity[0], state: 'PA', counties_id: c.id, active: true)
-        @loc1 = Location.create(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", phone: phone, website: 'www.example.com', active: true)
+        @loc1 = Location.new(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", phone: phone, website: 'www.example.com', active: true)
 
-        @addr1 = Address.create(address: address, city: zipCity[1], zipcode: zipCity[0], state: 'PA', county_id: c.id,location_id: @loc1.id, latitude: zipCity[2], longitude: zipCity[3], active: true)
+        @loc1.addresses.build(address: address, city: zipCity[1], zipcode: zipCity[0], state: 'PA', county_id: c.id,location_id: @loc1.id, latitude: zipCity[2], longitude: zipCity[3], active: true)
+        @loc1.save
+        # @loc1 = Location.create(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", phone: phone, website: 'www.example.com', active: true)
+
+        # @addr1 = Address.create(address: address, city: zipCity[1], zipcode: zipCity[0], state: 'PA', county_id: c.id,location_id: @loc1.id, latitude: zipCity[2], longitude: zipCity[3], active: true)
         Rails.logger.info(@loc1.errors.inspect)
-        Rails.logger.info(@addr1.errors.inspect)
+        # Rails.logger.info(@addr1.errors.inspect)
 
         count += 1
       end
