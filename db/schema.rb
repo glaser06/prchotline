@@ -92,10 +92,9 @@ ActiveRecord::Schema.define(version: 20170410193516) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean  "active"
-<<<<<<< HEAD
-=======
+
     t.date     "verified"
->>>>>>> dev
+
   end
 
   add_foreign_key "addresses", "counties"

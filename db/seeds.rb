@@ -147,46 +147,90 @@ csv.each do |row|
   end
 
 end
-Faker::Config.locale = 'en-US'
-counter = 0
-County.all.each do |c|
-  county = c.name
-  zipcodes = countyZip[county]
-  if countyZip.key?(county)
-    count = 1
-    zipcodes.each do |zipCity|
-      rand(3).times do |tmp|
+# Faker::Config.locale = 'en-US'
+# counter = 0
+# County.all.each do |c|
+#   county = c.name
+#   zipcodes = countyZip[county]
+#   if countyZip.key?(county)
+#     count = 1
+#     zipcodes.each do |zipCity|
+#       rand(3).times do |tmp|
+#
+#         address = "#{Faker::Address.street_address} Ave."
+#         phone = (Faker::PhoneNumber.phone_number).split('x')[0]
+#         # c.locations.create(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", address: address, city: zipCity[1], phone: phone, website: 'www.example.com', zipcode: zipCity[0], state: 'PA', counties_id: c.id, active: true)
+#         @loc1 = Location.new(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", phone: phone, website: 'www.example.com', active: true)
+#
+#         @loc1.addresses.build(address: address, city: zipCity[1], zipcode: zipCity[0], state: 'PA', county_id: c.id,location_id: @loc1.id, latitude: zipCity[2], longitude: zipCity[3], active: true)
+#         @loc1.save
+#         # @loc1 = Location.create(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", phone: phone, website: 'www.example.com', active: true)
+#
+#         # @addr1 = Address.create(address: address, city: zipCity[1], zipcode: zipCity[0], state: 'PA', county_id: c.id,location_id: @loc1.id, latitude: zipCity[2], longitude: zipCity[3], active: true)
+#         Rails.logger.info(@loc1.errors.inspect)
+#         # Rails.logger.info(@addr1.errors.inspect)
+#
+#         count += 1
+#       end
+#     end
+#   end
+# end
 
-        address = "#{Faker::Address.street_address} Ave."
-        phone = (Faker::PhoneNumber.phone_number).split('x')[0]
-        # c.locations.create(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", address: address, city: zipCity[1], phone: phone, website: 'www.example.com', zipcode: zipCity[0], state: 'PA', counties_id: c.id, active: true)
-        @loc1 = Location.new(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", phone: phone, website: 'www.example.com', active: true)
+csv_text = File.read('BucksCountyData.csv')
+csv = CSV.parse(csv_text, :headers => true)
+countyZip = []
+locations = {}
+csv.each do |row|
 
-        @loc1.addresses.build(address: address, city: zipCity[1], zipcode: zipCity[0], state: 'PA', county_id: c.id,location_id: @loc1.id, latitude: zipCity[2], longitude: zipCity[3], active: true)
-        @loc1.save
-        # @loc1 = Location.create(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", phone: phone, website: 'www.example.com', active: true)
-
-        # @addr1 = Address.create(address: address, city: zipCity[1], zipcode: zipCity[0], state: 'PA', county_id: c.id,location_id: @loc1.id, latitude: zipCity[2], longitude: zipCity[3], active: true)
-        Rails.logger.info(@loc1.errors.inspect)
-        # Rails.logger.info(@addr1.errors.inspect)
-
-        count += 1
-      end
+  if row['Location Name']
+    name = row['Location Name'].rstrip
+    item = row["Item"].downcase.rstrip
+    county = row['County'].split(' ')[0]
+    if !locations.key?(name)
+      locations[name] = {}
+      locations[name]["Addr"] = [row['City'],row["Address"], row["Location Name"], row['Phone'], row['Website'],row["Details"], county]
     end
+
+    locations[name][item] = []
+    # locations[name].push([row['City'],row["Address"], row["Location Name"], row["Item"], row['Phone'], row['Website'], row["Details"], county])
+
+
+
+
+      # countyZip[county] = [[row['City'],row["Address"], row["Location Name"], row["Item"], row['Phone'], row['Website'], row["Details"]]]
+
   end
+
 end
+locations.each do |addr, items|
+  row = items["Addr"]
+  c = County.for_name(row[6]).first
+  @loc1 = Location.new(name: row[2], phone: row[3], website: row[4], active: true)
+  @loc1.addresses.build(address: row[1], city: row[0], zipcode: "", state: 'PA', county_id: c.id, location_id: @loc1.id, active: true)
+  items.each do |item, emp|
+    if item != "Addr"
+      i = Item.for_name(item).first
+      @loc1.item_locations.build(item_id: i.id, location_id: @loc1.id, context: row[5] ,active: true)
+    end
+
+
+  end
+  @loc1.save
+
+end
+
 # countyZip.each do |county, zipcodes|
 #
 # end
 
-items = Item.all
-locs = Location.all
-items.each do |item|
-  if ["paper", "televisions","mobile phones","cardboard"].include?(item.name)
-    locs.each do |loc|
-
-      @asd = ItemLocation.create(item_id: item.id, location_id: loc.id, context: "This is an example context. We don't know much beyond this.",active: true)
-      Rails.logger.info(@asd.errors.inspect)
-    end
-  end
-end
+# items = Item.all
+# locs = Location.all
+# items.each do |item|
+#   if ["paper", "televisions","mobile phones","cardboard"].include?(item.name)
+#     locs.each do |loc|
+#
+#       @asd = ItemLocation.create(item_id: item.id, location_id: loc.id, context: "This is an example context. We don't know much beyond this.",active: true)
+#       Rails.logger.info(@asd.errors.inspect)
+#     end
+#   end
+# end

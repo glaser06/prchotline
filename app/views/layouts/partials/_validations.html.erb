@@ -6,10 +6,10 @@
       <%= simple_nested_form_for location, :html => { :class => 'form-horizontal' } do |location_form| %>
 
         <div class="row">
-          <div class="large-7 column">
+          <div class="large-6 column">
             <h4><%= location.name %></h4><br/>
           </div>
-          <div class="large-2 small-3 column">
+          <div class="large-3 small-3 column">
             <%= location.website %> <br/>
             <% ph = location.phone %>
             <% a = location.phone.gsub!(/\D/, "") %>
