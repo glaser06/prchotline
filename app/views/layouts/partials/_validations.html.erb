@@ -1,8 +1,9 @@
 <p id="notice"><%= notice %></p>
 <h4> <%= @countyName %> </h4>
 <% @locations.each do |location| %>
+  <div class="row"> <br/><br/> </div>
   <div class="row" >
-    <fieldset style="background-color: #ffffff;">
+    <fieldset style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); padding: 10px 15px 10px 10px;">
       <%= simple_nested_form_for location, :html => { :class => 'form-horizontal' } do |location_form| %>
 
         <div class="row">
@@ -41,7 +42,19 @@
           PA
           <%= location.addresses.first.zipcode %>
            in <%= location.addresses.first.county.name %>
-          &nbsp;&nbsp;<a data-open= "<%=location.id%>AddressModal" >More Addresses</a>
+          &nbsp;&nbsp;
+          <a data-open= "<%=location.id%>AddressModal" >More Addresses</a>
+          <div class="reveal" id="<%=location.id%>AddressModal" data-reveal>
+
+            <h3> <%= location.name %> Addresses </h3>
+            <% @location = location %>
+            No other addresses.
+            <!-- <button data-close> Confirm </button> -->
+
+
+            <button class="close-button"  data-close type="button"> x </button>
+
+          </div>
           <%= location_form.input :verified, :as => :hidden, :input_html => { :value => Time.new.to_date } %>
 
           <!-- <%= location.addresses.first.address %><br/> <br/> -->
@@ -49,18 +62,24 @@
         <div class="row">
           <div class="large-10 column">
 
-            <% count = 0 %>
+            <% count = 1 %>
+            <div class="row">
             <%= location_form.simple_fields_for :item_locations do |il| %>
               <%= render :partial => "locations/item_loc_active", :locals => { :l => il } %>
-              <%= il.input :active, label: il.object.item.name, wrapper_html: { class: "large-1 column"}, input_html: { id: "itemcheck#{location.id}#{count}" }%>
+              <% if count % 5 == 0 %>
+                </div>
+                <div class="row">
+              <% end %>
+              <%= il.input :active, label: il.object.item.name, wrapper_html: { class: "large-2 column"}, input_html: { id: "itemcheck#{location.id}#{count}" }%>
               <% count += 1 %>
             <% end %>
+          </div>
 
 
 
 
 
-            <a data-open= "<%=location.id%>Modal" data-reveal>More Items</a>
+            <!-- <a data-open= "<%=location.id%>Modal" data-reveal>More Items</a> -->
 
             <div class="reveal" id="<%=location.id%>Modal" data-reveal>
 
@@ -76,7 +95,8 @@
 
           </div>
           <div class="large-2 column">
-            <a data-open="<%= location.id %>EditModal" data-reveal>Edit</a>
+            <%= link_to 'Edit', edit_location_path(location), target: :_blank %>
+
 
             <%= location_form.submit "Validate" %>
           </div>

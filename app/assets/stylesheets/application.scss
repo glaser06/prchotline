@@ -24,6 +24,7 @@
  */
 @import "foundation_and_overrides";
 
+
  .floating-form { /*contact form wrapper*/
      max-width: 300px;
      padding: 10px 10px 10px 10px;
@@ -43,7 +44,7 @@
      cursor: pointer;
      border-radius: 5px 5px 0px 0px;
  }
- 
+
 
  .header {
   text-align: center;
@@ -66,10 +67,7 @@
    text-align:center;
  }
 
- .top-bar {
-   padding: 0rem;
- }
-.form-inline div { display: inline-block }
+
 .header-subnav {
   float: none;
   position: relative;
