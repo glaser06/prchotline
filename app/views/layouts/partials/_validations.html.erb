@@ -3,7 +3,7 @@
 <% @locations.each do |location| %>
   <div class="row"> <br/><br/> </div>
   <div class="row" >
-    <fieldset style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); padding: 10px 15px 10px 10px;">
+    <fieldset style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); padding: 10px 10px 10px 10px;">
       <%= simple_nested_form_for location, :html => { :class => 'form-horizontal' } do |location_form| %>
 
         <div class="row">
@@ -30,11 +30,11 @@
             <% end %>
           </div>
           <div class="large-1 small-1 column">
-            <%= location_form.input :active, as: :radio_buttons, :collection => [['Active', true],['Inactive', false]], :input_html => {  id: "active#{location.id}" }  %>
+            <%= location_form.input :active, label: "",  as: :radio_buttons, :collection => [['Active', true],['Inactive', false]], :input_html => {  id: "active#{location.id}" }  %>
 
           </div>
         </div>
-        <div class="column row">
+        <div class="row" style="padding-left: 15px;">
           Addresses: <br/>
 
           <%= location.addresses.first.address %>

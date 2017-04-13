@@ -3,11 +3,10 @@
   <ul class="dropdown menu" data-dropdown-menu>
 
       <li class="name"><h4><%= link_to "PRC Hotline", search_path, class: "active" %></h4></li>
-      <li><%= link_to "Counties", counties_path, class: "active" %></li>
-      <li><%= link_to "Items", items_path, class: "active" %></li>
+
       <li><%= link_to "Locations", locations_path, class: "active" %></li>
       <li><%= link_to "Validations", validations_path, class: "active" %></li>
-
+  </ul>
   <div class="top-bar-right">
         <%= form_tag("/search", :method => "get", id: "search-form") do %>
             <div class="row">
