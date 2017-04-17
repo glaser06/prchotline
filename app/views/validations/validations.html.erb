@@ -17,11 +17,15 @@
 
 
       <div class="ui-widget">
-        <input id="tags" name="county" placeholder = 'Enter County' value='<%= params[:county] if params[:county]%>'>
+        <div class="large-6 columns">
+          <input id="tags" name="county" placeholder = 'Enter County' value='<%= params[:county] if params[:county]%>'>
+        </div>
+
+      <div class="large-6 columns">
+        <%= submit_tag "Search", :name => nil, class: "button" %>
       </div>
-      <div >
-        <%= submit_tag "Search", :name => nil %>
-      </div>
+    </div>
+
 
     </fieldset>
 
@@ -34,7 +38,7 @@
       <input type="radio" name="sortby" value="verified" id="verifySort"><label for="verifySort">Last Verified</label>
       <input type="radio" name="sortby" value="city" id="citySort"><label for="citySort">City</label>
       <input type="radio" name="sortby" value="zipcode" id="zipSort"><label for="zipSort">Zip code</label>
-      <%= submit_tag "Sort", :name => nil %>
+      <%= submit_tag "Sort", :name => nil, class: "button" %>
 
     </fieldset>
 

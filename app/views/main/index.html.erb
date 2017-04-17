@@ -25,7 +25,7 @@
      <%= text_field_tag :county, params[:county], :placeholder => 'Enter County', id:'counties' %>
 
      <%= text_field_tag :zip, params[:zip], placeholder: "Zipcodes", maxlength: 5, class: 'input-small' %>
-     <%= submit_tag "Search", :name => nil %>
+     <%= submit_tag "Search", :name => nil, class: "button" %>
      <% end %>
    </div>
  </div>

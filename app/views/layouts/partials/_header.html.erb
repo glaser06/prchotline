@@ -2,7 +2,8 @@
 <div class="top-bar" data-topbar role="navigation">
   <ul class="dropdown menu" data-dropdown-menu>
 
-      <li class="name"><h4><%= link_to "PRC Hotline", search_path, class: "active" %></h4></li>
+
+      <li class="name"><h4><%= link_to image_tag("logo.png", size: "50x50"), search_path, class: "active" %></h4></li>
 
       <li><%= link_to "Locations", locations_path, class: "active" %></li>
       <li><%= link_to "Validations", validations_path, class: "active" %></li>
@@ -22,11 +23,15 @@
               </div>
 
               <div class="medium-3 columns">
-                <%= submit_tag "Search", :name => nil %>
+                <%= submit_tag "Search", :name => nil, class: "button" %>
               </div>
 
+              <div class="medium-3 columns">
+                <%= link_to image_tag("settings.png", :size => "30x30"), settings_path  %>
+              </div>
             </div>
         <% end %>
+
       </div>
     </ul>
   </div>
