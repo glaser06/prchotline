@@ -80,7 +80,7 @@ item_list = ["Air Conditioners", "Aluminum", "Ammunition", "Antifreeze", "Applia
 "Pet Supplies",
 "Phone Books",
 "Phones",
-"Plastic",
+"Plastics",
 "Plastic Bottle Caps",
 "Polystyrene",
 "Pool Chemicals",
@@ -175,49 +175,60 @@ end
 #     end
 #   end
 # end
+fileNames = ['BucksCountyData.csv', 'Alla.csv']
 
-csv_text = File.read('BucksCountyData.csv')
-csv = CSV.parse(csv_text, :headers => true)
-countyZip = []
-locations = {}
-csv.each do |row|
+fileNames.each do |fname|
+  csv_text = File.read(fname)
+  csv = CSV.parse(csv_text, :headers => true)
+  countyZip = []
+  locations = {}
+  csv.each do |row|
 
-  if row['Location Name']
-    name = row['Location Name'].rstrip
-    item = row["Item"].downcase.rstrip
-    county = row['County'].split(' ')[0]
-    if !locations.key?(name)
-      locations[name] = {}
-      locations[name]["Addr"] = [row['City'],row["Address"], row["Location Name"], row['Phone'], row['Website'],row["Details"], county]
+    if row['Location Name']
+      name = row['Location Name'].rstrip
+      item = row["Item"].downcase.rstrip
+      county = row['County'].split(' ')[0]
+      if !locations.key?(name)
+        locations[name] = {}
+        locations[name]["Addr"] = [row['City'],row["Address"], row["Location Name"], row['Phone'], row['Website'],row["Details"], county]
+      end
+
+      locations[name][item] = []
+      # locations[name].push([row['City'],row["Address"], row["Location Name"], row["Item"], row['Phone'], row['Website'], row["Details"], county])
+
+
+
+
+        # countyZip[county] = [[row['City'],row["Address"], row["Location Name"], row["Item"], row['Phone'], row['Website'], row["Details"]]]
+
     end
 
-    locations[name][item] = []
-    # locations[name].push([row['City'],row["Address"], row["Location Name"], row["Item"], row['Phone'], row['Website'], row["Details"], county])
-
-
-
-
-      # countyZip[county] = [[row['City'],row["Address"], row["Location Name"], row["Item"], row['Phone'], row['Website'], row["Details"]]]
-
   end
+  locations.each do |addr, items|
+    row = items["Addr"]
+    c = County.for_name(row[6]).first
+    @loc1 = Location.new(name: row[2], phone: row[3], website: row[4], active: true)
+    @loc1.addresses.build(address: row[1], city: row[0], zipcode: "", state: 'PA', county_id: c.id, location_id: @loc1.id, active: true)
+    items.each do |item, emp|
+      if item != "Addr"
 
-end
-locations.each do |addr, items|
-  row = items["Addr"]
-  c = County.for_name(row[6]).first
-  @loc1 = Location.new(name: row[2], phone: row[3], website: row[4], active: true)
-  @loc1.addresses.build(address: row[1], city: row[0], zipcode: "", state: 'PA', county_id: c.id, location_id: @loc1.id, active: true)
-  items.each do |item, emp|
-    if item != "Addr"
-      i = Item.for_name(item).first
-      @loc1.item_locations.build(item_id: i.id, location_id: @loc1.id, context: row[5] ,active: true)
+        i = Item.for_name(item).first
+        if i.nil?
+          puts "#{item} is nil"
+        else
+          @loc1.item_locations.build(item_id: i.id, location_id: @loc1.id, context: row[5] ,active: true)
+        end
+
+      end
+
+
     end
-
+    @loc1.save
 
   end
-  @loc1.save
-
 end
+
+
 
 # countyZip.each do |county, zipcodes|
 #
