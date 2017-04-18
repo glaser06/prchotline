@@ -3,23 +3,13 @@
 <h3><%= @location.name %></h3>
 
 <p>
-  <strong>Address:</strong>
+  <strong>Addresses:</strong>
+  <% @addresses = @location.addresses %>
   <br></br>
-  <%= @location.addresses.first.address %>
-  <div>
-  <%= @location.addresses.first.city %>
-  <%= @location.addresses.first.zipcode %>
+  <% @addresses.each do |a| %>
+    <%= a.full_address %>
+  <%end%>
   </div>
-</p>
-
-<p>
-  <strong>City:</strong>
-  <%= @location.addresses.first.city %>
-</p>
-
-<p>
-  <strong>Zipcode:</strong>
-  <%= @location.addresses.first.zipcode %>
 </p>
 
 <p>
