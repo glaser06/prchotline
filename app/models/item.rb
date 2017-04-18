@@ -8,6 +8,8 @@ class Item < ApplicationRecord
   has_many :addresses, through: :locations
   has_many :aliases
 
+  accepts_nested_attributes_for :aliases, reject_if: lambda { |attraction| attraction[:name].blank? }, allow_destroy: true
+
   # Validations
   validates_presence_of :name
 
