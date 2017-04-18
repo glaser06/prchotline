@@ -23,18 +23,27 @@
     <thead>
       <tr>
         <th>Name</th>
+        <th>Aliases</th>
         <th>Description</th>
       </tr>
     </thead>
 
     <tbody>
       <% @items.each do |item| %>
+      <% @aliases = item.aliases %>
         <tr>
           <td><%= item.name %></td>
+          <td>
+            <% @aliases.each do |a| %>
+              <%= a.name if item.name != a.name %>
+            <% end %> 
+          </td>
           <td><%= item.description %></td>
         </tr>
       <% end %>
     </tbody>
+
+
 
   </table>
 <% end %>
