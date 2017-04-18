@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'search' => 'main#index', as: :search
   get 'newCall' => 'main#newCall', as: :newCall
   get 'validations' => 'validations'
+  get 'settings' => 'settings#index', as: :settings
 
   post 'clear_form' => 'main#clear_form'
   post 'newCall' => 'main#newCall'

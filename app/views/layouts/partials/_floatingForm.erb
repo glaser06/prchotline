@@ -73,8 +73,7 @@
           <%= check_box_tag :depCall, if @vals.blank? then "Yes" elsif @vals[7].nil? then "No" end %>
 
           <br>
-          <%= submit_tag "Submit", name: 'submit_clicked' %>
-          <%= submit_tag "Save" %>
+          <%= submit_tag "Submit", name: 'submit_clicked', class: "button" %>
+          <%= submit_tag "Save", class: "button" %>
       <% end %>
-      <br>
-      <%= button_to 'Reset', clear_form_path, method: :post %>
+      <%= button_to 'Reset', clear_form_path, method: :post, class: "button" %>
