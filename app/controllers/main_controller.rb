@@ -9,40 +9,29 @@ class MainController < ApplicationController
   end
 
   def submit_form
-    callerName = params[:callerName]
-    method = params[:method]
-    disposition = params[:disposition]
     county = params[:county]
     item = params[:item]
-
-
-
+    callerName = params[:callerName]
+    if callerName == "" then callerName = "Anonymous" end
     method = params[:method]
-    purpose = params[:purpose]
+    disposition = params[:disposition]
     type = params[:type]
-
-    session[:value] = [callerName, method, disposition, county, item, method, purpose, type]
+    callFor = params[:callFor]
+    session[:value] = [County.find(county).name.titleize, Item.find(item).name.titleize, callerName, method, disposition, type, callFor]
     vals = session[:value]
 
-
-    respond_to do |format|
-      if params[:submit_clicked]
-        if params[:callerName] && params[:method] && params[:disposition] && params[:county]&& params[:method] && params[:purpose] && params[:type]
-          CSV.open('call_stats.csv', "at") do |csv|
-            csv << [callerName, method, County.find(county).name.titleize, Item.find(item).name.titleize, disposition, purpose, type]
-            session.delete(:value)
-            format.html { redirect_to "/", notice: "#{params[:callerName]} was added to Call Stats."}
-            end
-
-        end
-        if dep == "Yes"
-          CSV.open('DEPcall_stats.csv', "at") do |csv|
-            csv << [callerName, method, County.find(county).name.titleize, Item.find(item).name.titleize, disposition, type]
+    if params[:submit_clicked]
+      if callFor == "PRC"
+        CSV.open('PRCcall_stats.csv', "at") do |csv|
+          csv << session[:value]
           end
+      else
+        CSV.open('DEPcall_stats.csv', "at") do |csv|
+          csv << session[:value]
         end
-        session.delete(:value)
-        format.html { redirect_to "/", notice: "#{params[:callerName]} was added to Call Stats."}
       end
+      session.delete(:value)
+      redirect_to "/", notice: "#{callerName} was added to #{callFor}'s call stats."
     end
   end
 
@@ -144,7 +133,7 @@ class MainController < ApplicationController
         #for_county, -> (id) { where('county_id=?', id) }
         @county = County.find(county.first.id)
         #@locations = Location.for_county(@county).for_item(@item).joins(:addresses)
-        
+
         @locations = @item.addresses.for_county(@county).paginate(:page => params[:page]).per_page(10)
         #@locations = @item.addresses.paginate(:page => params[:page]).per_page(10)
         #coords = Geocoder.coordinates("#{@county.name} County")
