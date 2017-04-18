@@ -1,3 +1,13 @@
+<script>
+     $( function() {
+       $( "#counties" ).autocomplete({
+         source: '<%= counties_path(:json) %>'
+       });
+       $( "#items" ).autocomplete({
+         source: '<%= items_path(:json) %>'
+       });
+     } );
+</script>
 
 <div class="top-bar" data-topbar role="navigation">
   <ul class="dropdown menu" data-dropdown-menu>
@@ -11,10 +21,10 @@
         <%= form_tag("/search", :method => "get", id: "search-form") do %>
             <div class="row">
               <div class="medium-3 columns">
-                <%= text_field_tag :item, params[:item], placeholder: "Items" %>
+                <%= text_field_tag :item, params[:item], :placeholder => 'Enter Item', id:'items' %>
               </div>
               <div class="medium-3 columns">
-                <%= text_field_tag :county, params[:county], placeholder: "Counties", class: 'input-small' %>
+                    <%= text_field_tag :county, params[:county], :placeholder => 'Enter County', id:'counties' %>
               </div>
 
               <div class="medium-3 columns">
