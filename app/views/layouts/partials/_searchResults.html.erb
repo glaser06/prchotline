@@ -43,11 +43,11 @@
           <% end %>
           <% link = @county.website%>
           <% if link != nil %>
-            <%= link_to "County Recycling Website", "#{link}", :target => "_blank" %>
+            <%= link_to "County Recycling Website", "#{link}", :target => "_blank" %><br>
           <% else %>
-            <%= "There is no county website." %>
+            <%= "There is no county website." %><br>
           <% end %>
-
+          <td><%= link_to 'Edit County Information', edit_county_path(@county) %></td>
         </p>
 
     </div>
