@@ -19,13 +19,15 @@
     </div>
     <hr>
 
-    <h4>System Password</h4>
+    <!-- <h4>System Password</h4>
     <a href="#" class="button">Change</a>
-    <hr>
+    <hr> -->
 
     <h4>Export Call Reports</h4>
+    <a href="#" class="button">Download Database</a>
     <a href="#" class="button">Download DEP</a>
-    <%= link_to "Download PRC", "public/PRCcall_stats.csv", class: "button" %>
+    <!-- <%= link_to "Download PRC", "public/PRCcall_stats.csv", class: "button" %> -->
+    <%= link_to 'Download PRC', downloadPRC_path,  :"data-no-turbolinks" => true , class: "button" %>
 
 
   </div>

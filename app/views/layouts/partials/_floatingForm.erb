@@ -2,16 +2,13 @@
       <%= form_tag("/submit_form", method: "post") do %>
 
       County
-      <%= select_tag 'county', options_for_select(County.all.alphabetical.map { |a| [a.name, a.id]}),
-      value: if @vals.blank? then County.all.first elsif @vals[0].nil? then @vals[0] end , :required => true %>
+      <%= select_tag 'county', options_for_select(County.all.alphabetical.map { |a| [a.name, a.id]}, @vals[0]), :required => true %>
 
       Item
-      <%= select_tag 'item', options_for_select(Item.all.alphabetical.map { |a| [a.name.capitalize, a.id]}),
-      value: if @vals.blank? then Item.all.first elsif @vals[1].nil? then @vals[1] end , :required => true %>
+      <%= select_tag 'item', options_for_select(Item.all.alphabetical.map { |a| [a.name.capitalize, a.id]}, @vals[1]), :required => true %>
 
       Caller Name
-      <% caller_name = if @vals.blank? then nil else @vals[2] end%>
-      <%= text_field_tag :callerName, caller_name  %>
+      <%= text_field_tag :callerName, @vals[2] %>
 
       How did you find out about the hotline?
       <script type="text/javascript">
@@ -31,8 +28,6 @@
       <option value="other2">Other</option>
       </select>
       <div id="div2"></div>
-
-
 
       Call Disposition
       <script type="text/javascript">
@@ -81,6 +76,6 @@
 
       <%= submit_tag "Submit", name: 'submit_clicked', class: "button" %>
       <%= submit_tag "Save", class: "button" %>
-      <%= button_to 'Reset', clear_form_path, method: :post, class: "button" %>
 
       <% end %>
+      <%= button_to 'Reset', clear_form_path, method: :post, class: "button" %>
