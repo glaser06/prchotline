@@ -1,6 +1,6 @@
 class Alias < ApplicationRecord
 
-  belongs_to :item
+  belongs_to :item, required: false
 
   scope :for_name, -> (name) { where("name=?", name) }
   scope :alphabetical, -> { order('name') }

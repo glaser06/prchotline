@@ -71,7 +71,8 @@
             <td><%= link_to location.name, location%> </td>
 
             <td><%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}" %>  </td>
-            <td><%= location.website %></td>
+            <td>
+            <%= <a href="#{location.website}", target="_blank" >google</a> %>
             <td>
               <% ph = location.phone %>
               <% a = location.phone.gsub!(/\D/, "") %>
