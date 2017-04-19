@@ -14,19 +14,50 @@
       <%= text_field_tag :callerName, caller_name  %>
 
       How did you find out about the hotline?
-      <%= select_tag 'method',
-      options_for_select(['Hauler', 'Verizon', 'Municipality', 'Internet', 'Other']),
-      value: if @vals.blank? then "Hauler" elsif @vals[3].nil? then @vals[3] end , :required => true %>
+      <script type="text/javascript">
+      function showfield2(name){
+        if(name=='other2')document.getElementById('div2').innerHTML='Other method: <input type="text" name="altOther2" />';
+        else document.getElementById('div2').innerHTML='';
+      }
+      </script>
+
+      <select name="method" id="method" onchange="showfield2(this.options[this.selectedIndex].value)">
+      <option value="Flyer">Flyer</option>
+      <option value="Hauler">Hauler</option>
+      <option value="Internet">Internet</option>
+      <option value="Municipality">Municipality</option>
+      <option value="Recycling Center">Recycling Center</option>
+      <option value="Verizon">Verizon</option>
+      <option value="other2">Other</option>
+      </select>
+      <div id="div2"></div>
+
+
 
       Call Disposition
-      <%= select_tag 'disposition',
-      options_for_select(['Answered directly', 'Referred to Verizon', 'Referred to County Coordinator', 'Referred to CDRA Manufacturer']),
-      value: if @vals.blank? then 'Answered directly' elsif @vals[4].nil? then @vals[4] end , :required => true %>
+      <script type="text/javascript">
+      function showfield3(name){
+        if(name=='other3')document.getElementById('div3').innerHTML='Referred to Other: <input type="text" name="altOther3" />';
+        else if(name=='directly')document.getElementById('div3').innerHTML='Answered Directly: <input type="text" name="directly" />';
+        else document.getElementById('div3').innerHTML='';
+      }
+      </script>
+
+      <select name="disposition" id="disposition" onchange="showfield3(this.options[this.selectedIndex].value)">
+      <option value="Referred to Verizon">Referred to Verizon</option>
+      <option value="Referred to County Coordinator">Referred to County Coordinator</option>
+      <option value="Referred to CDRA Manufacturer">Referred to CDRA Manufacturer</option>
+      <option value="Referred to DEP">Referred to DEP</option>
+      <option value="directly">Answered Directly</option>
+      <option value="other3">Referred to Other</option>
+      </select>
+      <div id="div3"></div>
+
 
       Call Type
       <script type="text/javascript">
       function showfield(name){
-        if(name=='Other')document.getElementById('div1').innerHTML='Other: <input type="text" name="other" />';
+        if(name=='Other')document.getElementById('div1').innerHTML='Other type: <input type="text" name="altOther" />';
         else document.getElementById('div1').innerHTML='';
       }
       </script>

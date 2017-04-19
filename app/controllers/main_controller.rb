@@ -14,10 +14,14 @@ class MainController < ApplicationController
     callerName = params[:callerName]
     if callerName == "" then callerName = "Anonymous" end
     method = params[:method]
+    if method == "other2" then method = params[:altOther2] end
     disposition = params[:disposition]
-    type = params[:type]
+    if disposition == "other3" then disposition = params[:altOther3] end
+    if disposition == "directly" then disposition = params[:directly] end
+    callType = params[:callType]
+    if callType == "Other" then callType = params[:altOther] end
     callFor = params[:callFor]
-    session[:value] = [County.find(county).name.titleize, Item.find(item).name.titleize, callerName, method, disposition, type, callFor]
+    session[:value] = [County.find(county).name.titleize, Item.find(item).name.titleize, callerName, method, disposition, callType, callFor]
     vals = session[:value]
 
     if params[:submit_clicked]
