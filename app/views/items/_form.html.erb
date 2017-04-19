@@ -11,9 +11,9 @@
     </ul>
   </div>
 <% end %>
-
   <%= l.input :name %>
   <%= l.input :description %>
   <%= l.input :active %>
+  <%= link_to 'Back', items_path, class: "button" %>
   <%= l.button :submit %>
 <% end %>

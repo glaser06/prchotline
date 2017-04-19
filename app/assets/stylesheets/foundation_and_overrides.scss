@@ -53,14 +53,18 @@
     width: 20%;
 }
 
+h2 {
+  color: #1d9650;
+}
 
 .pagination a {
     display: inline;
 }
 
-.panel a:hover, a:focus {
-    color: black;
-}
+// .callout {
+//   border: 1px solid green;
+//   // display: inline-block;
+// }
 
 .row a:hover, a:focus {
     color: black;
