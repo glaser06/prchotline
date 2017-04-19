@@ -1,7 +1,7 @@
 
 <p id="notice"><%= notice %></p>
 
-<div class="column expanded row" style="width: 60%">
+<div class="column expanded row" style="width: 80%">
   <div class="callout"  align = 'center'>
 
     <h2><%= @item.name.capitalize %> in <%= @county.name %> County</h2>
@@ -59,14 +59,15 @@
           <tr>
 
 
-            <th><%= button_to "Name", search_path, method: :get, params: { :county => params[:county], :item => params[:item], :zip => params[:zip], :sortby => "name" }%></th>
+            <th><%= button_to "by Name", search_path, method: :get, params: { :county => params[:county], :item => params[:item], :zip => params[:zip], :sortby => "name" }%></th>
             <th>
               Address <%= button_to "by Zip Code", search_path, method: :get, params: { :county => params[:county], :item => params[:item], :zip => params[:zip], :sortby => "zipcode" }%>
             </th>
-            <th>Website</th>
-            <th>Phone</th>
-            <th><%= button_to "Verified", search_path, method: :get, params: { :county => params[:county], :item => params[:item], :zip => params[:zip], :sortby => "verified" }%></th>
+
+            <th>Contact Info</th>
+            <th width="10%"><%= button_to "by Verified", search_path, method: :get, params: { :county => params[:county], :item => params[:item], :zip => params[:zip], :sortby => "verified" }%></th>
             <th>Context </th>
+            <th> Verify </th>
 
 
           </tr>
@@ -78,10 +79,13 @@
             <% location = Location.find(addr.location_id) %>
             <td><%= link_to location.name, location%> </td>
 
-            <td><%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}" %>  </td>
+
+            <td><%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}", target: :_blank %>  </td>
+
+
+
             <td>
-            <%= link_to location.website %>
-            <td>
+              <%= link_to location.website, "#{location.website}", target: :_blank %> <br/>
               <% ph = location.phone %>
               <% a = location.phone.gsub!(/\D/, "") %>
               <%= "(#{ph[0..2]})" %>&nbsp;<%="#{ph[3..5]}"%>&nbsp;<%="#{ph[6..-1]}"%>
@@ -89,6 +93,8 @@
 
 
             <td>
+              <%= if location.active then "Active" else "Inactive" end %> <br/>
+              <em>Updated</em><br/>
               <% if (Time.new.to_date - location.updated_at.to_date).to_i < 0%>
 
                 0 days ago
@@ -97,7 +103,15 @@
              <% end %>
             </td>
 
-            <td> </td>
+            <td>
+              <%= location.item_locations.first.context %>
+            </td>
+            <td>
+              <%= simple_nested_form_for location, :html => { :class => 'form-horizontal' } do |f| %>
+                <%= f.input :verified, :as => :hidden, :input_html => { :value => Time.new.to_date } %>
+                <%= f.submit "Verify", class: "button radius" %>
+              <% end %>
+            </td>
 
 
 

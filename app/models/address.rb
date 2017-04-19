@@ -6,6 +6,7 @@ class Address < ApplicationRecord
 
   # validates :address, :city, :zipcode, :county, presence: true
 
+
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
   scope :for_zipcode, -> (zip) { where("zipcode=?", zip ) }
@@ -18,6 +19,7 @@ class Address < ApplicationRecord
 
   scope :by_county, -> { order('county_id') }
   scope :by_city, -> { order('city') }
+  scope :by_active, -> {order('active DESC')}
 
 
 
@@ -27,7 +29,7 @@ class Address < ApplicationRecord
   # after_validation :geocode
 
   def full_address
-    address = "#{self.address} #{self.city}, PA"
+    address = "#{self.address}, #{self.city}, PA #{self.zipcode}"
     return address
   end
 
