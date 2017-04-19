@@ -16,7 +16,6 @@
       <li class="name"><h4><%= link_to image_tag("logo.png", size: "50x50"), search_path, class: "active" %></h4></li>
 
       <li><%= link_to "Locations", locations_path, class: "active" %></li>
-      <li><%= link_to "Validations", validations_path, class: "active" %></li>
   </ul>
   <div class="top-bar-right">
         <%= form_tag("/search", :method => "get", id: "search-form") do %>
