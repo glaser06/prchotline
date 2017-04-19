@@ -2,7 +2,7 @@
   <div class="large-8 large-centered columns">
   <fieldset>
   <%= simple_nested_form_for @location, :html => { :class => 'form-horizontal' } do |location_form| %>
-
+    <%= location_form.input :verified, :as => :hidden, :input_html => { :value => Time.new.to_date } %>
   <% if location.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(location.errors.count, "error") %> prohibited this location from being saved:</h2>
