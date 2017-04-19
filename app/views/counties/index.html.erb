@@ -34,7 +34,7 @@
         <td>
           <%= county.phone%>
           <br></br>
-          <%= county.website%>
+          <%= link_to "#{county.website}", "#{county.website}", :target => "_blank" %>
         </td>
         <td><%= link_to 'Edit', edit_county_path(county) %></td>
       </tr>
