@@ -15,6 +15,7 @@
     </div>
   <% end %>
 
+
   <%= render :partial => "locations/location_fields", :locals => { :l => location_form } %>
   <legend>Addresses</legend>
       <div id="addresses">
@@ -35,8 +36,9 @@
           </p>
         </div>
 
+    <%= link_to 'Back', locations_path, class: "button" %>
 
-  <%= location_form.submit nil, :class => 'button radius' %>
+  <%= location_form.submit nil, :class => 'button' %>
   <% end %>
   </fieldset>
   </div>

@@ -1,1 +1,8 @@
-Caller Name, Method, Disposition, County, Item, Type
+County, Item, Caller Name, Method, Disposition, Type, Call For
+Adams,Air Conditioners,hey,Flyer,Answered directly,,PRC
+Adams,Air Conditioners,hi,Flyer,Answered directly,,PRC
+Adams,Air Conditioners,Anonymous,Flyer,Answered directly,,PRC
+Adams,Air Conditioners,si,Flyer,Answered directly,,PRC
+Adams,Air Conditioners,Anonymous,from website,Answered directly,poo,PRC
+Adams,Air Conditioners,Anonymous,method,direct,type,PRC
+Adams,Air Conditioners,Anonymous,Flyer,ota,Where to recycle,PRC
