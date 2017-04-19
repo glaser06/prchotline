@@ -25,6 +25,7 @@
         <th>Name</th>
         <th>Aliases</th>
         <th>Description</th>
+        <th>Edit</th>
       </tr>
     </thead>
 
@@ -39,6 +40,7 @@
             <% end %> 
           </td>
           <td><%= item.description %></td>
+          <td><%= link_to 'Edit', edit_item_path(item) %></td>
         </tr>
       <% end %>
     </tbody>
