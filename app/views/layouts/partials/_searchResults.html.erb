@@ -26,10 +26,18 @@
         <br> <br>
 
           County Coordinator: <br>
-          <%= @county.coordinator %><br>
-          <%= @county.phone%><br>
+          <% if @county.coordinator != nil %>
+            <%= @county.coordinator %><br>
+          <% else %>
+            <%= "There is no county coordinator." %><br>
+          <% end %>
+          <% if @county.coordinator != nil %>
+            <%= @county.phone%><br>
+          <% else %>
+            <%= "There is no county phone." %><br>
+          <% end %>
           <% link = @county.website%>
-          <% if link != 'N/A' %>
+          <% if link != nil %>
             <%= link_to "County Recycling Website", "#{link}", :target => "_blank" %>
           <% else %>
             <%= "There is no county website." %>

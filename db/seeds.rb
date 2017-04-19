@@ -17,11 +17,19 @@ csv_text = File.read('countyCoordinators.csv')
 csv = CSV.parse(csv_text, :headers => true)
 countyZip = {}
 csv.each do |row|
-  #countyInfo = row.split(',')
   countyName = row["County"]
   countyCoord = row["Coordinator "]
   countyPhone = row["Phone #"]
   countyWebsite = row["Website"]
+  if countyCoord == 'N/A'
+    countyCoord = nil
+  end
+  if countyPhone == 'N/A'
+    countyPhone = nil
+  end
+  if countyWebsite == 'N/A'
+    countyWebsite = nil
+  end
   County.create( name: countyName, coordinator: countyCoord, phone: countyPhone, website: countyWebsite)
 end
 
