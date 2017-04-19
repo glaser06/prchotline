@@ -28,7 +28,6 @@ class ItemsController < ApplicationController
   # GET /items/new
   def new
     @item = Item.new
-    puts "in new"
     @item.aliases.build
   end
 
@@ -39,10 +38,7 @@ class ItemsController < ApplicationController
   # POST /items
   # POST /items.json
   def create
-    puts "in create"
     @item = Item.new(item_params)
-    puts "in create part 2"
-    @item.save!
     respond_to do |format|
       if @item.save
         format.html { redirect_to @item, notice: 'Item was successfully created.' }
