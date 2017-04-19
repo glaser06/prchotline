@@ -1,4 +1,5 @@
-<%= simple_form_for @item do |l| %>
+
+<%= simple_nested_form_for @item, :html => { :class => 'form-horizontal' } do |item_form| %>
 
 <% if item.errors.any? %>
   <div id="error_explanation">
@@ -11,9 +12,29 @@
     </ul>
   </div>
 <% end %>
-  <%= l.input :name %>
-  <%= l.input :description %>
-  <%= l.input :active %>
-  <%= link_to 'Back', items_path, class: "button" %>
-  <%= l.button :submit %>
-<% end %>
+
+    <div class="row">
+      <div class="span7">
+        <fieldset>
+          <legend><%= controller.action_name.capitalize %> item</legend>
+          <%= render :partial => "item_form", :locals => { :f => item_form } %>
+        </fieldset>
+      </div>
+
+    <div class="span5">
+      <legend>aliases for this item</legend>
+        <div id="item_aliases">
+          <%= item_form.simple_fields_for :aliases do |alias_form| %>
+            <%= render :partial => "alias_field", :locals => { :f => alias_form } %>
+          <% end %> 
+          <p>
+            <br /><%= item_form.link_to_add("Add alias", :aliases, :class => 'button tiny') %>
+          </p>
+        </div> 
+      </div>
+    </div>
+    <div class="form-actions">
+      <%= item_form.submit nil, :class => 'button radius' %>
+      <%= link_to 'Cancel', items_path, :class => 'button secondary' %>
+    </div>
+  <% end %>

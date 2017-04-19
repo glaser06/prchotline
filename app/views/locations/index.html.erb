@@ -7,13 +7,59 @@
   </div>
 
   <div class="right">
+    <%= button_to "Validate Mode", locations_path, method: :get, params: { validate: "true" }  %>
     <%= link_to '<i class="fa fa-plus-square" aria-hidden="true"></i> Add Location'.html_safe, new_location_path %>
   </div>
 
 </div>
-
-
 <div class="row">
+  <%= form_tag("", :method => "get", id: "search-form") do %>
+  <fieldset class="large-6 columns">
+
+    <legend>Filter by </legend>
+    <script>
+    $( function() {
+      $( "#tags" ).autocomplete({
+        source: '<%= counties_path(:json) %>'
+      });
+    } );
+    </script>
+
+
+    <div class="ui-widget">
+      <input id="tags" name="county" placeholder = 'Enter County' value='<%= params[:county] if params[:county]%>'>
+      <input style="display: none" name="validate" value='<%= params[:validate] if params[:validate]%>'>
+    </div>
+    <div >
+      <%= submit_tag "Search", :name => nil %>
+    </div>
+
+  </fieldset>
+
+
+
+  <fieldset class="large-6 columns">
+    <legend>Sort by </legend>
+    <input type="radio" name="sortby" value="county" id="countySort"><label for="countySort">County</label>
+    <input type="radio" name="sortby" value="name" id="nameSort"><label for="nameSort">Name</label>
+    <input type="radio" name="sortby" value="verified" id="verifySort"><label for="verifySort">Last Verified</label>
+    <input type="radio" name="sortby" value="city" id="citySort"><label for="citySort">City</label>
+    <input type="radio" name="sortby" value="zipcode" id="zipSort"><label for="zipSort">Zip code</label>
+    <input type="radio" name="sortby" value="active" id="activeSort"><label for="activeSort">Active</label>
+    <%= submit_tag "Sort", :name => nil %>
+
+  </fieldset>
+
+
+
+  <% end %>
+</div>
+<% if params[:validate] %>
+  <div class="expanded row" style="width: 90%;">
+<% else %>
+  <div class="row">
+<% end %>
+
 
   <div class="panel">
 
@@ -23,38 +69,92 @@
           <th>Name</th>
           <th>County</th>
           <th>Address</th>
-          <th>City</th>
-          <th>Zipcode</th>
-          <th>Phone</th>
-          <th>Website</th>
-          <th>Items</th>
-          <th>Active</th>
+
+
+
+          <th>Contact Info</th>
+          <th width="18%;">Items</th>
+          <th width="8%;">Active</th>
+          <th>Last Verified</th>
+          <th>Edit</th>
+
         </tr>
       </thead>
 
       <tbody>
         <% @locations.each do |location| %>
-        <tr>
-          <td><%= link_to location.name, location %></td>
-          <td><%= location.addresses.first.county.name %></td>
-          <td><%= location.addresses.first.address %></td>
-          <td><%= location.addresses.first.city %></td>
-          <td><%= location.addresses.first.zipcode %></td>
-          <td><%= number_to_phone location.phone %></td>
-          <td><%= location.website %></td>
-          <td>
-            <% @item_locations.for_location(location.id).each do |il| %>
-            <%= il.item.name %>
-            <% end %>
-          </td>
-          <td><%= location.active ? "Active" : "Inactive" %></td>
-        </tr>
+
+            <%= simple_nested_form_for location, :html => { :class => 'form-horizontal' } do |f| %>
+              <%= f.input :verified, :as => :hidden, :input_html => { :value => Time.new.to_date } %>
+            <tr>
+              <td><%= link_to location.name, location, target: :_blank %></td>
+              <td><%= location.addresses.first.county.name %></td>
+              <% addr = location.addresses.first %>
+              <td><%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}", target: :_blank %> </td>
+
+
+              <td>
+                <%= link_to location.website, "#{location.website}", target: :_blank %> <br/>
+
+                <%= number_to_phone location.phone %>
+              </td>
+              <td>
+                <% if params[:validate] && params[:validate] != "" %>
+                  <% count = 0 %>
+                  <%= f.simple_fields_for :item_locations do |il| %>
+                    <%= render :partial => "locations/item_loc_active", :locals => { :l => il } %>
+
+                    <%= il.input :active, label: il.object.item.name.capitalize, input_html: { id: "itemcheck#{location.id}#{count}" }%>
+                    <% count += 1 %>
+                  <% end %>
+
+                <% else %>
+                  <% @item_locations.for_location(location.id).each do |il| %>
+                    <%= il.item.name.capitalize %> <br/>
+                  <% end %>
+                <% end %>
+
+              </td>
+
+
+
+                <td>
+                  <% if params[:validate] && params[:validate] != "" %>
+                    <%= f.input :active, label: "",  as: :radio_buttons, :collection => [['Active', true],['Inactive', false]], :input_html => {  id: "active#{location.id}" }  %>
+                    <!-- <%= f.input :active, as: :boolean, checked_value: true, unchecked_value: false %> -->
+                  <% else %>
+                    <%= location.active ? "Active" : "Inactive" %>
+                  <% end %>
+
+                </td>
+                <td>
+                  <% if (Time.new.to_date - location.updated_at.to_date).to_i < 0%>
+
+                  0 days ago
+                  <% else %>
+                  <%= (Time.new.to_date - location.updated_at.to_date).to_i %> days ago
+                  <% end %>
+                </td>
+                <td>
+                  <% if params[:validate] && params[:validate] != "" %>
+                    <%= f.submit "Verify", class: "button radius" %>
+                    <%= link_to 'Edit', edit_location_path(location), target: :_blank %>
+
+                  <% else %>
+                    <%= link_to 'Edit', edit_location_path(location), target: :_blank %>
+                  <% end %>
+
+                </td>
+
+              <% end %>
+            </tr>
+
+
         <% end %>
       </tbody>
     </table>
 
-  </div>
-</div>
+  </div></div>
   <div class="row">
     <%= will_paginate @locations, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
   </div>

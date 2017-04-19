@@ -75,18 +75,18 @@ class MainController < ApplicationController
       county = County.for_name(qCounty.capitalize)
 
       item = Alias.for_name(qItem.downcase)
-
-      if item.blank?
-        @errors += "Could not find #{params[:item]}"
-        puts "ereror2"
-        return
-      end
-      @item = Item.find(item.first.item_id)
       if county.blank?
         puts "ereror"
         @errors += "#{params[:county]} does not exist"
         return
       end
+      if item.blank?
+        @errors += "Could not find #{params[:item]}"
+        redirect_to controller: 'locations', action: 'index', county: county[0].name
+        return
+      end
+      @item = Item.find(item.first.item_id)
+
       @county = county[0]
       if params[:zip] != ""
         qZip = params[:zip]
@@ -115,10 +115,11 @@ class MainController < ApplicationController
       end
       contexts = []
       @locations.each do |loc|
-        context = ItemLocation.active.for_item(@item.id).for_location(loc.location_id).first
+        context = ItemLocation.for_item(@item.id).for_location(loc.location_id).first
         contexts.push(context)
       end
       @contexts = contexts
+      @locations = @locations.by_active
     end
     if params[:sortby]
       sort = params[:sortby]
@@ -131,9 +132,12 @@ class MainController < ApplicationController
       elsif sort == "zipcode"
         @locations = loc.by_zipcode
       elsif sort == "city"
-        puts ""
+        @locations = loc.by_city
       end
+      @locations = @locations.by_active
     end
+
+
   end
 
 

@@ -1,3 +1,13 @@
+<script>
+     $( function() {
+       $( "#counties" ).autocomplete({
+         source: '<%= counties_path(:json) %>'
+       });
+       $( "#items" ).autocomplete({
+         source: '<%= items_path(:json) %>'
+       });
+     } );
+</script>
 
 <div class="top-bar" data-topbar role="navigation">
   <ul class="dropdown menu" data-dropdown-menu>
@@ -6,20 +16,19 @@
       <li class="name"><h4><%= link_to image_tag("logo.png", size: "50x50"), search_path, class: "active" %></h4></li>
 
       <li><%= link_to "Locations", locations_path, class: "active" %></li>
-      <li><%= link_to "Validations", validations_path, class: "active" %></li>
   </ul>
   <div class="top-bar-right">
         <%= form_tag("/search", :method => "get", id: "search-form") do %>
             <div class="row">
               <div class="medium-3 columns">
-                <%= text_field_tag :item, params[:item], placeholder: "Items" %>
+                <%= text_field_tag :item, params[:item], :placeholder => 'Enter Item', id:'items' %>
               </div>
               <div class="medium-3 columns">
-                <%= text_field_tag :county, params[:county], placeholder: "Counties", class: 'input-small' %>
+                    <%= text_field_tag :county, params[:county], :placeholder => 'Enter County', id:'counties' %>
               </div>
 
               <div class="medium-3 columns">
-                <%= text_field_tag :zip, params[:zip], placeholder: "Zipcodes", maxlength: 5, class: 'input-small'%>
+                <%= text_field_tag :zip, params[:zip], placeholder: "(Optional) Zipcode", maxlength: 5, class: 'input-small'%>
               </div>
 
               <div class="medium-3 columns">

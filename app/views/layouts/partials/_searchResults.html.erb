@@ -1,40 +1,53 @@
 
 <p id="notice"><%= notice %></p>
 
-<div class="column expanded row" style="width: 60%">
+<div class="column expanded row" style="width: 80%">
   <div class="callout"  align = 'center'>
 
     <h2><%= @item.name.capitalize %> in <%= @county.name %> County</h2>
 
     <% st = "" %>
     <% @item.aliases.each do |a| %>
-      <% st += " " + a.name %>
+      <% if a.name != @item.name %>
+        <% st += " " + a.name %>
+      <% end %>
     <% end %>
-    <h6>Also known as: <%= st  %> </h6>
+    <% if st != "" %>
+      <h6>Also known as: <%= st %> </h6>
+    <% end %>
     <br>
 
     <div class="large-7 columns"  align = 'left'>
         <h4><%= @item.name.capitalize %></h4>
 
-        <p><%= @item.name %> is very useful and can be recycled. </p>
+        <p><%= @item.description %> </p>
     </div>
 
     <div class="large-5 columns"  align = 'left'>
 
         <h4><%= @county.name %> County</h4>
-        <p><%= @county.name %> can recycle <%= @item.name %>
-        <br> <br>
+        <p> County information specific to item. Still need to add a way to edit. </p>
+        <!-- <p><%= @county.name %> can recycle <%= @item.name %> -->
+        <br> 
 
-          County Coordinator: <br>
-          <%= @county.coordinator %><br>
-          <%= @county.phone%><br>
-          <% link = @county.website%>
-          <% if link != 'N/A' %>
-            <%= link_to "County Recycling Website", "#{link}", :target => "_blank" %>
+          <h6>County Coordinator:</h6>
+          <% if @county.coordinator != nil %>
+            <%= @county.coordinator %><br>
           <% else %>
-            <%= "There is no county website." %>
+            <%= "There is no county coordinator." %><br>
           <% end %>
-
+          <% if @county.coordinator != nil %>
+            <%= @county.phone%><br>
+          <% else %>
+            <%= "There is no county phone." %><br>
+          <% end %>
+          <% link = @county.website%>
+          <% if link != nil %>
+            <%= link_to "County Recycling Website", "#{link}", :target => "_blank" %><br>
+          <% else %>
+            <%= "There is no county website." %><br>
+          <% end %>
+          <td><%= link_to 'Edit County Information', edit_county_path(@county) %></td>
         </p>
 
     </div>
@@ -51,14 +64,15 @@
           <tr>
 
 
-            <th><%= button_to "Name", search_path, method: :get, params: { :county => params[:county], :item => params[:item], :zip => params[:zip], :sortby => "name" }%></th>
+            <th><%= button_to "by Name", search_path, method: :get, params: { :county => params[:county], :item => params[:item], :zip => params[:zip], :sortby => "name" }%></th>
             <th>
               Address <%= button_to "by Zip Code", search_path, method: :get, params: { :county => params[:county], :item => params[:item], :zip => params[:zip], :sortby => "zipcode" }%>
             </th>
-            <th>Website</th>
-            <th>Phone</th>
-            <th><%= button_to "Verified", search_path, method: :get, params: { :county => params[:county], :item => params[:item], :zip => params[:zip], :sortby => "verified" }%></th>
+
+            <th>Contact Info</th>
+            <th width="10%"><%= button_to "by Verified", search_path, method: :get, params: { :county => params[:county], :item => params[:item], :zip => params[:zip], :sortby => "verified" }%></th>
             <th>Context </th>
+            <th> Verify </th>
 
 
           </tr>
@@ -70,9 +84,13 @@
             <% location = Location.find(addr.location_id) %>
             <td><%= link_to location.name, location%> </td>
 
-            <td><%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}" %>  </td>
-            <td><%= location.website %></td>
+
+            <td><%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}", target: :_blank %>  </td>
+
+
+
             <td>
+              <%= link_to location.website, "#{location.website}", target: :_blank %> <br/>
               <% ph = location.phone %>
               <% a = location.phone.gsub!(/\D/, "") %>
               <%= "(#{ph[0..2]})" %>&nbsp;<%="#{ph[3..5]}"%>&nbsp;<%="#{ph[6..-1]}"%>
@@ -80,6 +98,8 @@
 
 
             <td>
+              <%= if location.active then "Active" else "Inactive" end %> <br/>
+              <em>Updated</em><br/>
               <% if (Time.new.to_date - location.updated_at.to_date).to_i < 0%>
 
                 0 days ago
@@ -88,7 +108,15 @@
              <% end %>
             </td>
 
-            <td> </td>
+            <td>
+              <%= location.item_locations.first.context %>
+            </td>
+            <td>
+              <%= simple_nested_form_for location, :html => { :class => 'form-horizontal' } do |f| %>
+                <%= f.input :verified, :as => :hidden, :input_html => { :value => Time.new.to_date } %>
+                <%= f.submit "Verify", class: "button radius" %>
+              <% end %>
+            </td>
 
 
 

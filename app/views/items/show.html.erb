@@ -6,6 +6,14 @@
 </p>
 
 <p>
+  <strong>Aliases:</strong>
+  <% @aliases = @item.aliases %>
+    <% @aliases.each do |a| %>
+      <%= a.name if @item.name != a.name %>
+    <% end %>
+</p>
+
+<p>
   <strong>Description:</strong>
   <%= @item.description %>
 </p>
