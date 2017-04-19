@@ -8,15 +8,19 @@
 
     <% st = "" %>
     <% @item.aliases.each do |a| %>
-      <% st += " " + a.name %>
+      <% if a.name != @item.name %>
+        <% st += " " + a.name %>
+      <% end %>
     <% end %>
-    <h6>Also known as: <%= st  %> </h6>
+    <% if st != "" %>
+      <h6>Also known as: <%= st %> </h6>
+    <% end %>
     <br>
 
     <div class="large-7 columns"  align = 'left'>
         <h4><%= @item.name.capitalize %></h4>
 
-        <p><%= @item.name %> is very useful and can be recycled. </p>
+        <p><%= @item.description %> </p>
     </div>
 
     <div class="large-5 columns"  align = 'left'>
