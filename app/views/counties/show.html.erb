@@ -14,7 +14,7 @@
 </p>
 <p>
   <strong>Website:</strong>
-  <%= @county.website %>
+  <%= link_to "#{@county.website}", "#{@county.website}", :target => "_blank" %>
 </p>
 
 <%= link_to 'Edit', edit_county_path(@county) %> |
