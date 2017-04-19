@@ -5,12 +5,11 @@ Rails.application.routes.draw do
   get 'newCall' => 'main#newCall', as: :newCall
   get 'validations' => 'validations'
   get 'settings' => 'settings#index', as: :settings
+  get "downloadPRC" => 'settings#downloadPRC', as: :downloadPRC
 
-  post 'clear_form' => 'main#clear_form'
+  post 'clear_form' => 'main#clear_form', as: :clear_form
   post 'newCall' => 'main#newCall'
   post 'submit_form' => 'main#submit_form'
-  post 'clear_form' => 'main#clear_form'
-
 
   root 'main#index'
   resources :items

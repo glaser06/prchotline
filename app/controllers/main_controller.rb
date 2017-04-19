@@ -5,6 +5,8 @@ class MainController < ApplicationController
 
   def clear_form
     session.delete(:value)
+    puts "reset"
+    puts @vals
     redirect_to :back
   end
 
@@ -21,22 +23,29 @@ class MainController < ApplicationController
     callType = params[:callType]
     if callType == "Other" then callType = params[:altOther] end
     callFor = params[:callFor]
-    session[:value] = [County.find(county).name.titleize, Item.find(item).name.titleize, callerName, method, disposition, callType, callFor]
-    vals = session[:value]
+    session[:value] = [county, item, callerName, method, disposition, callType, callFor]
+    @vals = session[:value]
 
+    # if @vals.blank? then @vals = ["Bucks", item, callerName, method, disposition, callType, callFor] end
+    # puts params[:submit_clicked].nil?
     if params[:submit_clicked]
       if callFor == "PRC"
         CSV.open('PRCcall_stats.csv', "at") do |csv|
-          csv << session[:value]
+          csv << [County.find(county).name.titleize, Item.find(item).name.titleize, callerName, method, disposition, callType, callFor]
           end
       else
         CSV.open('DEPcall_stats.csv', "at") do |csv|
-          csv << session[:value]
+          csv << [County.find(county).name.titleize, Item.find(item).name.titleize, callerName, method, disposition, callType, callFor]
         end
       end
       session.delete(:value)
       redirect_to "/", notice: "#{callerName} was added to #{callFor}'s call stats."
+    else
+      puts "save"
+      puts @vals
+      redirect_to :back
     end
+
   end
 
   def newCall
@@ -44,61 +53,18 @@ class MainController < ApplicationController
       callerName = params[:callerName]
       session[:value] = [params[:callerName]]
     end
-    @vals = session[:value]
+
   end
 
   def index
-       @items = Item.all
-       @locations = []
-       @errors = " "
-       if params[:county] && params[:item]
-         @errors = ""
-         qCounty = params[:county]
-         qItem = params[:item]
-         county = County.for_name(qCounty.capitalize)
+    if not session[:value].nil?
+      @vals = session[:value]
+    else
+      @vals = [County.all.first, Item.all.first, "","Flyer", "Referred to Verizon", "Where to recycle", "PRC"]
+    end
+    puts 'index'
+    puts @vals
 
-         item = Alias.for_name(qItem.downcase)
-
-         if item.blank?
-           @errors += "Could not find #{params[:item]}"
-           return
-         end
-         @item = Item.find(item.first.item_id)
-         if county.blank?
-           @errors += "#{params[:county]} does not exist"
-           return
-         end
-         @county = county[0]
-         if params[:zip] != ""
-           qZip = params[:zip]
-           # i,l,c = search(qItem, qCounty, qZip)
-
-           coords = Geocoder.coordinates(qZip)
-           @locations1 = Address.near(coords,50)
-
-           @locations = @item.addresses.near(coords,50).paginate(:page => params[:page]).per_page(10)
-           # @locations = @item.locations.active.addresses.active.for_zipcode(qZip).alphabetical
-
-
-         else
-
-           coords = Geocoder.coordinates("#{@county.name} County")
-           @locations = @item.addresses.near(coords, 50).paginate(:page => params[:page]).per_page(10)
-           # @locations = @item.locations.active.for_county(@county.id).alphabetical
-
-
-         end
-         contexts = []
-         @locations.each do |loc|
-           context = ItemLocation.active.for_item(@item.id).for_location(loc.id).first
-           contexts.push(context)
-         end
-         @contexts = contexts
-       end
-     end
-
-
-  def index
     @items = Item.all
     @locations = []
     @errors = " "
