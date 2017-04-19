@@ -17,21 +17,27 @@
 
 <table border= "1px solid black">
 
-
+  <thead>
+      <tr>
+        <th>County</th>
+        <th>Coordinator</th>
+        <th>Contact</th>
+        <th>Edit</th>
+      </tr>
+    </thead>
 
   <tbody>
-    <% count = 0 %>
     <% @counties.each do |county| %>
-      <% if count == 0 %>
-        <tr><td><%= county.name%></td>
-          <% count += 1 %>
-      <% elsif count < 5 %>
+      <tr>
         <td><%= county.name%></td>
-        <% count += 1 %>
-      <% elsif count == 5 %>
-        <td><%= county.name%></td></tr>
-        <% count = 0 %>
-      <% end %>
+        <td><%= county.coordinator%></td>
+        <td>
+          <%= county.phone%>
+          <br></br>
+          <%= link_to "#{county.website}", "#{county.website}", :target => "_blank" %>
+        </td>
+        <td><%= link_to 'Edit', edit_county_path(county) %></td>
+      </tr>
     <% end %>
   </tbody>
 </table>
@@ -39,4 +45,3 @@
 </div></div>
 </div>
 
-<br>
