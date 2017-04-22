@@ -6,8 +6,14 @@
   <strong>Addresses:</strong>
   <% @addresses = @location.addresses %>
   <ol>
+    <% count = 0 %>
     <% @addresses.each do |a| %>
-      <li><%= link_to a.full_address, "http://maps.google.com/?q=#{a.full_address}", target: :_blank %> <br></br></li>
+      <% count += 1 %>
+      <% if count != @addresses.size %>
+        <li><%= link_to a.full_address, "http://maps.google.com/?q=#{a.full_address}", target: :_blank %> <br></br></li>
+      <% else %>
+        <li><%= link_to a.full_address, "http://maps.google.com/?q=#{a.full_address}", target: :_blank %> </li>
+      <% end %>
     <%end%>
   </ol>
 </p>
@@ -32,13 +38,15 @@
   <b>Items:</b>
     <ul>
       <% for il in @item_locations %>
-        <li><%= il.item.name %> </li>
+        <li><%= il.item.name %> - <%= il.description %></li>
       <% end %>
     </ul>
   </p>
-
-<%= link_to 'Edit', edit_location_path(@location) %> |
-<%= link_to 'Back', locations_path %>
+  
+<div class= "row">
+  <%= link_to 'Edit', edit_location_path(@location), class: "button" %>
+  <%= link_to 'Back', locations_path, class: "button" %>
+</div>
 
 </div>
 </div>
