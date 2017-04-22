@@ -1,32 +1,31 @@
-<div class='row'>
-
+<div class="large-8 large-centered columns">
+  <div class="panel callout radius">
 <h3><%= @location.name %></h3>
 
 <p>
   <strong>Addresses:</strong>
   <% @addresses = @location.addresses %>
-  <br></br>
-  <% @addresses.each do |a| %>
-    <%= a.full_address %>
-  <%end%>
-  </div>
+  <ol>
+    <% @addresses.each do |a| %>
+      <li><%= link_to a.full_address, "http://maps.google.com/?q=#{a.full_address}", target: :_blank %> <br></br></li>
+    <%end%>
+  </ol>
 </p>
 
 <p>
   <strong>Phone:</strong>
-  <%= @location.phone %>
+  <%= number_to_phone(@location.phone, area_code: true) %>
 </p>
 
 <p>
   <strong>Website:</strong>
-  <%= @location.website %>
+  <%= link_to @location.website, "#{@location.website}", target: :_blank %>
 </p>
-
 
 
 <p>
   <strong>Active:</strong>
-  <%= @location.active %>
+  <%= @location.active ? "Yes" : "No" %>
 </p>
 
  <p>
@@ -41,4 +40,5 @@
 <%= link_to 'Edit', edit_location_path(@location) %> |
 <%= link_to 'Back', locations_path %>
 
+</div>
 </div>
