@@ -33,6 +33,12 @@ class Address < ApplicationRecord
     return address
   end
 
+  def street_address
+    return "#{self.address}"
+  end
 
+  def extra_details
+    return "#{self.city}, PA #{self.zipcode}"
+  end
 
 end

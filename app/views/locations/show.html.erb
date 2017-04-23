@@ -38,14 +38,15 @@
   <b>Items:</b>
     <ul>
       <% for il in @item_locations %>
-        <li><%= il.item.name %> - <%= il.description %></li>
+        <% puts il.description.nil? %>
+        <li><%= il.item.name %> <%= il.description == "" ? "" : "-"%> <%= il.description %>  </li>
       <% end %>
     </ul>
   </p>
-  
+
 <div class= "row">
   <%= link_to 'Edit', edit_location_path(@location), class: "button" %>
-  <%= link_to 'Back', locations_path, class: "button" %>
+  <%= link_to 'See All', locations_path, class: "button" %>
 </div>
 
 </div>
