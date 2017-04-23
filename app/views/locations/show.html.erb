@@ -38,7 +38,6 @@
   <b>Items:</b>
     <ul>
       <% for il in @item_locations %>
-        <% puts il.description.nil? %>
         <li><%= il.item.name %> <%= il.description == "" ? "" : "-"%> <%= il.description %>  </li>
       <% end %>
     </ul>
