@@ -1,11 +1,22 @@
       
       <%= form_tag("/submit_form", method: "post") do %>
 
+      <script>
+     $( function() {
+       $( "#countyMatch" ).autocomplete({
+         source: '<%= counties_path(:json) %>'
+       });
+       $( "#itemMatch" ).autocomplete({
+         source: '<%= items_path(:json) %>'
+       });
+     } );
+</script>
+
       County
-      <%= select_tag 'county', options_for_select(County.all.alphabetical.map { |a| [a.name, a.id]}, @vals[0]), :required => true %>
+      <%= text_field_tag :county, params[:county], :placeholder => 'Enter County', id:'countyMatch', :required => true %>
 
       Item
-      <%= select_tag 'item', options_for_select(Item.all.alphabetical.map { |a| [a.name.capitalize, a.id]}, @vals[1]), :required => true %>
+      <%= text_field_tag :item, params[:item], :placeholder => 'Enter Item', id:'itemMatch', :required => true %>
 
       Caller Name
       <%= text_field_tag :callerName, @vals[2] %>
