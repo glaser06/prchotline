@@ -33,7 +33,7 @@
       <% @items.each do |item| %>
       <% @aliases = item.aliases %>
         <tr>
-          <td><%= item.name %></td>
+          <td><%= link_to item.name, item%></td>
           <td>
             <% @aliases.each do |a| %>
               <%= a.name if item.name != a.name %>
