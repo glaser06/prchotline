@@ -183,10 +183,11 @@ end
 #     end
 #   end
 # end
-fileNames = ['BucksCountyData.csv', 'Alla.csv']
+fileNames = ['BucksCountyData.csv', 'Alle3.csv', 'Philadelphia.csv','Montgomery.csv','Lehigh.csv', 'Butler.csv']
 
 fileNames.each do |fname|
-  csv_text = File.read(fname)
+  # csv_text = File.read(fname)
+  csv_text = File.open(fname, "r:ISO-8859-1")
   csv = CSV.parse(csv_text, :headers => true)
   countyZip = []
   locations = {}
@@ -194,20 +195,26 @@ fileNames.each do |fname|
 
     if row['Location Name']
       name = row['Location Name'].rstrip
-      item = row["Item"].downcase.rstrip
-      county = row['County'].split(' ')[0]
-      if !locations.key?(name)
-        locations[name] = {}
-        locations[name]["Addr"] = [row['City'],row["Address"], row["Location Name"], row['Phone'], row['Website'],row["Details"], county]
+      if row["Item"] && row["County"]
+        item = row["Item"].downcase.rstrip
+        # puts item
+        county = row['County'].split(' ')[0]
+        # puts county
+        # puts county
+        if row["Address"]
+          if !locations.key?(name)
+            locations[name] = {}
+
+            locations[name]["Addr"] = [row['City'],row["Address"], row["Location Name"], row['Phone'], row['Website'],row["Details"], county]
+            locations[name][item] = []
+          end
+        end
+
+
+
       end
-
-      locations[name][item] = []
-      # locations[name].push([row['City'],row["Address"], row["Location Name"], row["Item"], row['Phone'], row['Website'], row["Details"], county])
-
-
-
-
-        # countyZip[county] = [[row['City'],row["Address"], row["Location Name"], row["Item"], row['Phone'], row['Website'], row["Details"]]]
+    else
+      puts row
 
     end
 
