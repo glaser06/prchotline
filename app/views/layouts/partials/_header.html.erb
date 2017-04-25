@@ -29,10 +29,11 @@
         <%= form_tag("/search", :method => "get", id: "search-form") do %>
             <div class="row">
               <div class="medium-3 columns">
-                <%= text_field_tag :item, params[:item], :placeholder => 'Enter Item', id:'items' %>
+                <%= text_field_tag :county, params[:county], :placeholder => 'Enter County', id:'counties' %>
               </div>
               <div class="medium-3 columns">
-                <%= text_field_tag :county, params[:county], :placeholder => 'Enter County', id:'counties' %>
+                <%= text_field_tag :item, params[:item], :placeholder => 'Enter Item', id:'items' %>
+
               </div>
               <div class="medium-3 columns">
                 <%= text_field_tag :zip, params[:zip], placeholder: "Zip (Optional)", maxlength: 5, class: 'input-small'%>
