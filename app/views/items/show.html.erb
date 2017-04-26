@@ -2,16 +2,19 @@
   <div class="panel callout radius">
 <p id="notice"><%= notice %></p>
 
-<h3><%= @item.name %></h3>
+<h3><%= @item.name.titleize %></h3>
 
-<% if @item.aliases.size > 0 %>
+<% if @item.aliases.size > 1 %>
 <p>
-  <strong>Aliases:</strong>
-  <% @aliases = @item.aliases %>
-    <% @aliases.each do |a| %>
-      <%= a.name if @item.name != a.name %>
+  <strong>Aliases</strong>
+    <% @item.aliases.drop(1).each do |a| %>
+
+      <li><%=  a.name %></li>
     <% end %>
 </p>
+<% else %>
+  <p><strong>No Aliases</strong></p>
+
 <% end %>
 
 <p>

@@ -8,6 +8,7 @@
             <%= l.input :zipcode %>
         </div>
         <div class="large-4 columns">
+          County
             <%= l.collection_select(:county_id, County.all.alphabetical, :id, :name, :prompt => "Choose a county...") %>
         </div>
         <div class="large-1 columns">
@@ -16,4 +17,3 @@
 
     </div>
 </div>
-
