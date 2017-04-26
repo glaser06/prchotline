@@ -63,8 +63,11 @@
   </p>
 
 <div class= "row">
+
   <%= link_to "Edit #{@location.name}", edit_location_path(@location), class: "button" %>
   <%= link_to 'See All Locations', locations_path, class: "button" %>
+  <%= link_to 'Delete', location_path(@location), method: 'delete', class: "alert button" %>
+
 </div>
 
 </div>
