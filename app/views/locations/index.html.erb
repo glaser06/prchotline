@@ -1,23 +1,32 @@
 
 <p id="notice"><%= notice %></p>
-
 <div class="row">
-  <div class="left">
+  <div class="large-1 columns">
+
     <h1>Locations</h1>
   </div>
 
-  <div class="right">
+  <div class="large-4 columns button-group">
 
     <% if params[:validate] == "true" %>
-      <%= button_to "All Locations", locations_path, method: :get, params: { validate: "", sortby: params[:sortby], county: params[:county] }  %>
+      <%= button_to "All Locations", locations_path,class: "button", method: :get, params: { validate: "", sortby: params[:sortby], county: params[:county] }  %>
     <% else %>
-      <%= button_to "Validate Mode", locations_path, method: :get, params: { validate: "true", sortby: params[:sortby], county: params[:county] }  %>
+      <%= button_to "Validate Mode", locations_path,class: "button", method: :get, params: { validate: "true", sortby: params[:sortby], county: params[:county] }  %>
     <% end %>
 
 
-    <%= link_to '<i class="fa fa-plus-square" aria-hidden="true"></i> Add Location'.html_safe, new_location_path %>
-    <%= button_to "Clear Filters", locations_path, method: :get, params: { validate: params[:validate], sortby: "", county: ""} %>
+    <%= link_to '<i class="fa fa-plus-square" aria-hidden="true"></i> Add Location'.html_safe, new_location_path,class: "button" %>
+    <%= button_to "Clear Filters", locations_path,class: "button", method: :get, params: { validate: params[:validate], sortby: "", county: ""} %>
+
   </div>
+</div>
+<div class="column row">
+
+
+
+
+
+
 
 </div>
 <div class="row">
@@ -68,11 +77,31 @@
 
   <div class="large-6 columns button-group">
     <legend>Sort by </legend>
-    <%= button_to "County", locations_path, class: "button",  method: :get, params: {  sortby: "county", validated: params[:validated], county: params[:county] }  %>
-    <%= button_to "Name", locations_path,  class: "button",  method: :get, params: {  sortby: "name", validated: params[:validated], county: params[:county] }  %>
-    <%= button_to "Last Validated", locations_path,  class: "button", method: :get, params: {  sortby: "verified", validated: params[:validated], county: params[:county] }  %>
-    <%= button_to "City", locations_path,  class: "button", method: :get, params: {  sortby: "city", validated: params[:validated], county: params[:county] }  %>
-    <%= button_to "Active", locations_path,  class: "button", method: :get, params: {  sortby: "active", validated: params[:validated], county: params[:county]}  %>
+    <% sort = params[:sortby] %>
+    <% countyClass = "secondary button" %>
+    <% nameClass = "secondary button" %>
+    <% verifiedClass = "secondary button" %>
+    <% cityClass = "secondary button" %>
+    <% activeClass = "secondary button" %>
+    <% if sort == "county" %>
+
+      <% countyClass = "button" %>
+    <% elsif sort == "name" %>
+      <% nameClass = "button" %>
+    <% elsif sort == "verified" %>
+      <% verifiedClass = "button" %>
+    <% elsif sort == "city" %>
+      <% cityClass = "button" %>
+    <% elsif sort == "active" %>
+      <% activeClass = "button" %>
+    <% else %>
+      <% nameClass = "button" %>
+    <% end %>
+    <%= button_to "Name", locations_path,  class: nameClass,  method: :get, params: {  sortby: "name", validate: params[:validate], county: params[:county] }  %>
+    <%= button_to "County", locations_path, class: countyClass,  method: :get, params: {  sortby: "county", validate: params[:validate], county: params[:county] }  %>
+    <%= button_to "Last Validated", locations_path,  class: verifiedClass, method: :get, params: {  sortby: "verified", validate: params[:validate], county: params[:county] }  %>
+    <%= button_to "City", locations_path,  class: cityClass, method: :get, params: {  sortby: "city", validate: params[:validate], county: params[:county] }  %>
+    <%= button_to "Active", locations_path,  class: activeClass, method: :get, params: {  sortby: "active", validate: params[:validate], county: params[:county]}  %>
 
   </div>
 </div>
@@ -96,7 +125,7 @@
         </div>
       <% else %>
         <% if params[:county] && params[:county] != "" %>
-          <h5> <%= params[:county] %> </h5>
+          <h5> <%= params[:county].capitalize %> County </h5>
         <% end %>
         <table border= "1px solid black">
           <thead>
@@ -129,9 +158,17 @@
                   <% unless params[:county] && params[:county] != "" %>
                     <td>
                       <% if location.addresses.count > 1 %>
-
+                        <% location.addresses.each do |addr_row| %>
+                          <%= addr_row.county.name %> </br></br>
+                        <% end %>
                       <% else %>
-                        <%= location.addresses.first.county.name %>
+                        <% if !@countyId.nil? %>
+                          <%= location.addresses.for_county(@countyId).count %>
+                        <% else %>
+                          <%= location.addresses.first.county.name %>
+                        <% end %>
+
+
                       <% end %>
 
 
@@ -139,8 +176,41 @@
                   <% end %>
 
 
-                  <% addr = location.addresses.first %>
-                  <td><%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}", target: :_blank %> </td>
+
+
+                  <td>
+                    <% if location.addresses.count > 1 %>
+                      <% if !@countyId.nil? %>
+                        <% addr = location.addresses.for_county(@countyId).first %>
+                      <% else %>
+                        <% addr = location.addresses.first %>
+                      <% end %>
+                      <%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}", target: :_blank %>
+                      <div class="reveal" id="exampleModal1" data-reveal>
+                        <h3> Addresses </h3>
+                        <% location.addresses.each do |addr_row| %>
+                          <% addr = addr_row %>
+                          <%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}", target: :_blank %> <br/><br/>
+                        <% end %>
+
+                        <button class="close-button" data-close aria-label="Close modal" type="button">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <br/><br/>
+                      <p><a data-open="exampleModal1">More Addresses</a></p>
+                    <% else %>
+                      <% if !@countyId.nil? %>
+                        <% addr = location.addresses.for_county(@countyId).first %>
+                      <% else %>
+                        <% addr = location.addresses.first %>
+                      <% end %>
+
+                      <%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}", target: :_blank %>
+                    <% end %>
+
+                 </td>
+
 
 
 

@@ -18,13 +18,13 @@ class Location < ApplicationRecord
   scope :alphabetical , -> { order('name') }
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
-  scope :for_county, -> (id) {Location.joins(:addresses).where(addresses: {county_id: id})}
+  scope :for_county, -> (id) {joins(:addresses).where(addresses: {county_id: id})}
 
-  scope :for_item, -> (id) {Location.joins(:item_locations).where(item_locations: {item_id: id})}
+  scope :for_item, -> (id) {joins(:item_locations).where(item_locations: {item_id: id})}
 
-  scope :by_county, -> {Location.joins(:addresses).order("addresses.county_id")}
-  scope :by_city, -> {Location.joins(:addresses).order("addresses.city")}
-  scope :by_zipcode, -> {Location.joins(:addresses).order("addresses.zipcode")}
+  scope :by_county, -> {joins(:addresses).order("addresses.county_id")}
+  scope :by_city, -> {joins(:addresses).order("addresses.city")}
+  scope :by_zipcode, -> {joins(:addresses).order("addresses.zipcode")}
   scope :by_updated, ->  {order('updated_at')}
   scope :by_active, ->  {order('active')}
 

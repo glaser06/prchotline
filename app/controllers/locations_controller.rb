@@ -23,7 +23,7 @@ class LocationsController < ApplicationController
     locations = []
     if params[:county] && params[:county] != ""
 
-      @county = County.where(name: params[:county]).first
+      @county = County.where(name: params[:county].capitalize).first
       if not @county.nil?
         @countyName = @county.name
         @countyId = @county.id
@@ -37,7 +37,7 @@ class LocationsController < ApplicationController
         return
       end
     else
-      puts "don't reach here ----------------------------"
+      
       locations = Location.all
     end
     if params[:sortby] && params[:sortby] != ""
