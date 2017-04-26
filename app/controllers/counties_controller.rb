@@ -1,21 +1,24 @@
 class CountiesController < ApplicationController
+
+
   before_action :set_county, only: [:show, :edit, :update, :destroy]
+
 
   # GET /counties
   # GET /counties.json
-  def index  
+  def index
   if params[:term]
     @counties = County.where("name ilike ?", "%#{params[:term]}%").limit(10).alphabetical
     arr = []
     # adds possible counties into an array of options to select
     @counties_autocomplete = @counties.map do |c|
       arr.push(c.name)
-    end   
+    end
   else
     @counties = County.all.alphabetical
   end
 
-  respond_to do |format|  
+  respond_to do |format|
     format.html
     format.json { render :json => @counties_autocomplete[0]}
     end

@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'secret/index'
+
   get 'main/index'
   get 'search' => 'main#index', as: :search
   get 'newCall' => 'main#newCall', as: :newCall
