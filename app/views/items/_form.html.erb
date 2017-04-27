@@ -13,36 +13,23 @@
   </div>
 <% end %>
 
-    <div class="row">
-      <div class="span7">
-        <fieldset>
+
           <!-- TO DO DO WE NEED THIS CONTROLLER ACTION -->
-          <legend><%= controller.action_name.capitalize %> item</legend>
           <%= render :partial => "item_form", :locals => { :f => item_form } %>
-        </fieldset>
-      </div>
 
 
-    <div class="span5">
-    <% if @item.aliases.size > 1 %>
         <legend>aliases for this item</legend>
           <div id="item_aliases">
             <%= item_form.simple_fields_for :aliases do |alias_form| %>
-              <%= render :partial => "alias_field", :locals => { :f => alias_form } %>
-            <% end %>
-            <p>
-              <br /><%= item_form.link_to_add("Add alias", :aliases, :class => 'button tiny') %>
-            </p>
+                  <%= render :partial => "alias_field", :locals => { :f => alias_form } %>
+              <% end %>
+              <p>
+                  <br /><%= item_form.link_to_add("Add alias", :aliases, :class => 'button tiny') %>
+                </p>
+
           </div>
-      <% else %>
-      <!-- TO DO WHY DOESNT THIS ADDING ALIASES HERE NOT WORK -->
-
-      <strong>No aliases for this item</strong>
-      <% end %>
-    </div>
 
 
-    </div>
     <div class="form-actions">
       <br />
       <%= item_form.submit nil, :class => 'button radius' %>
