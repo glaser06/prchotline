@@ -12,6 +12,7 @@
 //
 //= require_tree .
 //= require jquery
+//= require best_in_place
 //= require jquery_ujs
 //= require jquery-ui
 //= require foundation
@@ -26,6 +27,9 @@ $(function(){
   $(document).foundation();
 
   $(document).ready(function(){
+
+      /* Activating Best In Place */
+      jQuery(".best_in_place").best_in_place();
 
       var _scroll = true, _timer = false, _floatbox = $("#contact_form"), _floatbox_opener = $(".contact-opener") ;
       _floatbox.css("right", "0px"); //initial contact form position

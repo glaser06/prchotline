@@ -32,6 +32,7 @@
           <%= link_to "Add Details", new_item_county_path(:county=> @county.id, :item=> @item.id), class: "button radius" %>
         <% else %>
           <%= i.description %><br></br>
+          <%= best_in_place i, :description, :as => :textarea %>
           <%= link_to "Edit Details", new_item_county_path(:county=> @county.id, :item=> @item.id), class: "button radius" %>
         <% end %>
         <br></br>
