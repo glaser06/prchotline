@@ -20,16 +20,37 @@
 
   </div>
 </div>
-<div class="column row">
 
-
-
-
-
-
-
-</div>
 <div class="row">
+  <div class="large-6 columns button-group">
+    <legend>Sort by </legend>
+    <% sort = params[:sortby] %>
+    <% countyClass = "secondary button" %>
+    <% nameClass = "secondary button" %>
+    <% verifiedClass = "secondary button" %>
+    <% cityClass = "secondary button" %>
+    <% activeClass = "secondary button" %>
+    <% if sort == "county" %>
+
+      <% countyClass = "button" %>
+    <% elsif sort == "name" %>
+      <% nameClass = "button" %>
+    <% elsif sort == "verified" %>
+      <% verifiedClass = "button" %>
+    <% elsif sort == "city" %>
+      <% cityClass = "button" %>
+    <% elsif sort == "active" %>
+      <% activeClass = "button" %>
+    <% else %>
+      <% nameClass = "button" %>
+    <% end %>
+    <%= button_to "Name", locations_path,  class: nameClass,  method: :get, params: {  sortby: "name", validate: params[:validate], county: params[:county] }  %>
+    <%= button_to "County", locations_path, class: countyClass,  method: :get, params: {  sortby: "county", validate: params[:validate], county: params[:county] }  %>
+    <%= button_to "Last Validated", locations_path,  class: verifiedClass, method: :get, params: {  sortby: "verified", validate: params[:validate], county: params[:county] }  %>
+    <%= button_to "City", locations_path,  class: cityClass, method: :get, params: {  sortby: "city", validate: params[:validate], county: params[:county] }  %>
+    <%= button_to "Active", locations_path,  class: activeClass, method: :get, params: {  sortby: "active", validate: params[:validate], county: params[:county]}  %>
+
+  </div>
   <%= form_tag("", :method => "get", id: "search-form") do %>
   <fieldset class="large-6 columns">
 
@@ -75,41 +96,11 @@
 
   <% end %>
 
-  <div class="large-6 columns button-group">
-    <legend>Sort by </legend>
-    <% sort = params[:sortby] %>
-    <% countyClass = "secondary button" %>
-    <% nameClass = "secondary button" %>
-    <% verifiedClass = "secondary button" %>
-    <% cityClass = "secondary button" %>
-    <% activeClass = "secondary button" %>
-    <% if sort == "county" %>
 
-      <% countyClass = "button" %>
-    <% elsif sort == "name" %>
-      <% nameClass = "button" %>
-    <% elsif sort == "verified" %>
-      <% verifiedClass = "button" %>
-    <% elsif sort == "city" %>
-      <% cityClass = "button" %>
-    <% elsif sort == "active" %>
-      <% activeClass = "button" %>
-    <% else %>
-      <% nameClass = "button" %>
-    <% end %>
-    <%= button_to "Name", locations_path,  class: nameClass,  method: :get, params: {  sortby: "name", validate: params[:validate], county: params[:county] }  %>
-    <%= button_to "County", locations_path, class: countyClass,  method: :get, params: {  sortby: "county", validate: params[:validate], county: params[:county] }  %>
-    <%= button_to "Last Validated", locations_path,  class: verifiedClass, method: :get, params: {  sortby: "verified", validate: params[:validate], county: params[:county] }  %>
-    <%= button_to "City", locations_path,  class: cityClass, method: :get, params: {  sortby: "city", validate: params[:validate], county: params[:county] }  %>
-    <%= button_to "Active", locations_path,  class: activeClass, method: :get, params: {  sortby: "active", validate: params[:validate], county: params[:county]}  %>
-
-  </div>
 </div>
-<% if params[:validate] && params[:validate] != "" %>
-  <div class="expanded row" style="width: 90%;">
-<% else %>
-  <div class="row">
-<% end %>
+
+<div class="expanded row" style="width: 90%;">
+
 
 
   <div class="panel">
@@ -131,9 +122,7 @@
           <thead>
             <tr>
               <th>Name</th>
-              <% unless params[:county] && params[:county] != "" %>
-                <th>County</th>
-              <% end %>
+
 
               <th>Address</th>
 
@@ -155,59 +144,72 @@
                   <%= f.input :verified, :as => :hidden, :input_html => { :value => Time.new.to_date } %>
                 <tr>
                   <td><%= link_to location.name, location, target: :_blank %></td>
-                  <% unless params[:county] && params[:county] != "" %>
-                    <td>
-                      <% if location.addresses.count > 1 %>
-                        <% location.addresses.each do |addr_row| %>
-                          <%= addr_row.county.name %> </br></br>
-                        <% end %>
-                      <% else %>
-                        <% if !@countyId.nil? %>
-                          <%= location.addresses.for_county(@countyId).count %>
-                        <% else %>
-                          <%= location.addresses.first.county.name %>
-                        <% end %>
 
-
-                      <% end %>
-
-
-                    </td>
-                  <% end %>
 
 
 
 
                   <td>
-                    <% if location.addresses.count > 1 %>
-                      <% if !@countyId.nil? %>
-                        <% addr = location.addresses.for_county(@countyId).first %>
-                      <% else %>
-                        <% addr = location.addresses.first %>
-                      <% end %>
-                      <%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}", target: :_blank %>
-                      <div class="reveal" id="exampleModal1" data-reveal>
-                        <h3> Addresses </h3>
-                        <% location.addresses.each do |addr_row| %>
-                          <% addr = addr_row %>
-                          <%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}", target: :_blank %> <br/><br/>
+
+                    <ul class="tabs" data-tabs id="example-tabs">
+                      <% count = 0 %>
+                      <% location.counties.distinct.each do |county| %>
+                        <% if count == 0 %>
+                          <li class="tabs-title is-active"><a href="#<%= "panel#{count}-#{location.id}" %>" aria-selected="true"><%= county.name %></a></li>
+                        <% else %>
+                          <li class="tabs-title"><a href="#<%= "panel#{count}-#{location.id}" %>"><%= county.name %></a></li>
+
                         <% end %>
 
-                        <button class="close-button" data-close aria-label="Close modal" type="button">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <br/><br/>
-                      <p><a data-open="exampleModal1">More Addresses</a></p>
-                    <% else %>
-                      <% if !@countyId.nil? %>
-                        <% addr = location.addresses.for_county(@countyId).first %>
-                      <% else %>
-                        <% addr = location.addresses.first %>
+                        <% count += 1 %>
                       <% end %>
 
-                      <%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}", target: :_blank %>
-                    <% end %>
+                    </ul>
+
+                    <div class="tabs-content" data-tabs-content="example-tabs">
+                      <% count = 0 %>
+
+                      <% location.counties.distinct.each do |county| %>
+                        <% shouldDisplay = " is-active" %>
+                        <% if count != 0 %>
+                          <% shouldDisplay = "" %>
+                        <% end %>
+
+                            <div class="tabs-panel<%=shouldDisplay%>" id="<%= "panel#{count}-#{location.id}" %>">
+                              <ul>
+                              <% if params[:validate] && params[:validate] != "" %>
+                                  <% count1 = 0 %>
+                                  <%= f.simple_fields_for :addresses do |addrForm| %>
+
+
+                                    <% if addrForm.object.county.id == county.id %>
+                                      <%= render :partial => "locations/loc_address_active", :locals => { :l => addrForm } %>
+                                      <%= addrForm.input :active, label: addrForm.object.full_address, input_html: { id: "addressForm#{location.id}#{count1}" }%>
+
+                                    <% end %>
+                                    <% count1 += 1 %>
+                                  <% end %>
+
+                              <% else %>
+                                <% location.addresses.for_county(county.id).each do |addr| %>
+
+                                  <li><%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}", target: :_blank %></li>
+                                <% end %>
+                              <% end %>
+                              </ul>
+                            </div>
+
+
+                        <% count += 1 %>
+                      <% end %>
+                      <!-- <div class="tabs-panel is-active" id="<%= "panel1-#{location.id}" %>">
+                        <p>Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus.</p>
+                      </div>
+                      <div class="tabs-panel" id="<%= "panel2-#{location.id}" %>">
+                        <p>Suspendisse dictum feugiat nisl ut dapibus.  Vivamus hendrerit arcu sed erat molestie vehicula. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor.  Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor.</p>
+                      </div> -->
+                    </div>
+
 
                  </td>
 
@@ -260,6 +262,7 @@
                     </td>
                     <td>
                       <% if params[:validate] && params[:validate] != "" %>
+                        <%= hidden_field_tag(:redirect, 'true') %>
                         <%= f.submit "Verify", class: "button radius" %>
                         <%= link_to 'Edit', edit_location_path(location), target: :_blank %>
 

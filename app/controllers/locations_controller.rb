@@ -27,7 +27,7 @@ class LocationsController < ApplicationController
       if not @county.nil?
         @countyName = @county.name
         @countyId = @county.id
-        locations = Location.all.for_county(@countyId)
+        locations = Location.all.for_county(@countyId).distinct
         puts @countyName
       else
         locations = Location.all
@@ -37,7 +37,7 @@ class LocationsController < ApplicationController
         return
       end
     else
-      
+
       locations = Location.all
     end
     if params[:sortby] && params[:sortby] != ""
@@ -106,10 +106,17 @@ class LocationsController < ApplicationController
   # PATCH/PUT /locations/1.json
   def update
     respond_to do |format|
+      
       if @location.update(location_params)
         puts "was success"
-        format.html { redirect_to @location, notice: 'Location was successfully updated.' }
-        format.json { render :show, status: :ok, location: @location }
+        if params[:redirect] == "true"
+          format.html { redirect_to :back, notice: 'Location was successfully validated.' }
+          format.json { render :show, status: :ok, location: @location }
+        else
+          format.html { redirect_to @location, notice: 'Location was successfully updated.' }
+          format.json { render :show, status: :ok, location: @location }
+        end
+
       else
         puts "location was not successful"
         format.html { render :edit }

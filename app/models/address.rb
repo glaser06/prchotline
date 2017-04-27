@@ -4,7 +4,9 @@ class Address < ApplicationRecord
   belongs_to :location, required: false
   belongs_to :county
 
-  # validates :address, :city, :zipcode, :county, presence: true
+
+
+  validates :address, :county, presence: true
 
 
   scope :active, -> { where(active: true) }
@@ -24,10 +26,16 @@ class Address < ApplicationRecord
 
 
 
+
+
   geocoded_by :full_address
   # after_validation :geocode
   # after_validation :geocode
+  def require_one_address
+    puts location.addresses.count > 1
+    return location.addresses.count > 1
 
+  end
   def full_address
     address = "#{self.address}, #{self.city}, PA #{self.zipcode}"
     return address
