@@ -117,7 +117,7 @@ item_list = ["Air Conditioners", "Aluminum", "Ammunition", "Antifreeze", "Applia
 item_list.each do |name|
   @item = Item.create( name: name.downcase, description: "Nothing just yet", active: true)
 
-  @item.aliases.create(name: name.downcase, active: true)
+  # @item.aliases.create(name: name.downcase, active: true)
   if name == "Mobile Phones"
     @item.aliases.create(name: "Cellphones".downcase, active: true)
   elsif name == "Televisions"
