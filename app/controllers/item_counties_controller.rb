@@ -15,6 +15,10 @@ class ItemCountiesController < ApplicationController
   # GET /item_counties/new
   def new
     @item_county = ItemCounty.new
+    puts params[:county]
+    puts params[:item]
+    # @item_county.county_id = params[:county]
+    # @item_county.item_id = params[:item]
   end
 
   # GET /item_counties/1/edit
@@ -24,8 +28,10 @@ class ItemCountiesController < ApplicationController
   # POST /item_counties
   # POST /item_counties.json
   def create
+    # puts "in create"
+    # puts params[:county]
+    # puts params[:item]
     @item_county = ItemCounty.new(item_county_params)
-
     respond_to do |format|
       if @item_county.save
         format.html { redirect_to @item_county, notice: 'Item county was successfully created.' }
@@ -69,6 +75,6 @@ class ItemCountiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_county_params
-      params.require(:item_county).permit(:description)
+      params.require(:item_county).permit(:description, :county_id, :item_id)
     end
 end
