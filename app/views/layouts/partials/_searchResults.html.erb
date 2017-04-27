@@ -28,7 +28,7 @@
         <h4><%= @county.name %> County</h4>
         <p> County information specific to item. Still need to add a way to edit. </p>
         <!-- <p><%= @county.name %> can recycle <%= @item.name %> -->
-        <br> 
+        <br>
 
           <h6>County Coordinator:</h6>
           <% if @county.coordinator != nil %>
@@ -66,7 +66,7 @@
 
             <th><%= button_to "by Name", search_path, method: :get, params: { :county => params[:county], :item => params[:item], :zip => params[:zip], :sortby => "name" }%></th>
             <th>
-              Address <%= button_to "by Zip Code", search_path, method: :get, params: { :county => params[:county], :item => params[:item], :zip => params[:zip], :sortby => "zipcode" }%>
+              Address 
             </th>
 
             <th>Contact Info</th>
@@ -98,14 +98,16 @@
 
 
             <td>
-              <%= if location.active then "Active" else "Inactive" end %> <br/>
-              <em>Updated</em><br/>
+              <em> <%= if location.active then "Active" else "Inactive" end %> </em><br/>
+              Updated<br/>
               <% if (Time.new.to_date - location.updated_at.to_date).to_i < 0%>
 
                 0 days ago
-             <% else %>
+              <% elsif (Time.new.to_date - location.updated_at.to_date).to_i == 1 %>
+                1 day ago
+              <% else %>
                   <%= (Time.new.to_date - location.updated_at.to_date).to_i %> days ago
-             <% end %>
+              <% end %>
             </td>
 
             <td>

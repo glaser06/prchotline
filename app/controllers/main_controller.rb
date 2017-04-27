@@ -77,13 +77,21 @@ class MainController < ApplicationController
       item = Alias.for_name(qItem.downcase)
       if county.blank?
         puts "ereror"
-        @errors += "#{params[:county]} does not exist"
+        @errors += "#{params[:county]} county does not exist"
         return
       end
       if item.blank?
-        @errors += "Could not find #{params[:item]}"
-        redirect_to controller: 'locations', action: 'index', county: county[0].name
-        return
+        if params[:item] && params[:item] != ""
+          @errors += "Could not find item: #{params[:item]}"
+          return
+        else
+          redirect_to controller: 'locations', action: 'index', county: county[0].name
+          return
+        end
+
+
+
+
       end
       @item = Item.find(item.first.item_id)
 

@@ -1,22 +1,41 @@
 
 <p id="notice"><%= notice %></p>
-
 <div class="row">
-  <div class="left">
+  <div class="large-1 columns">
+
     <h1>Locations</h1>
   </div>
 
-  <div class="right">
-    <%= button_to "Verify Mode", locations_path, method: :get, params: { validate: "true" }, class: "button"  %>
-    <%= link_to '<i class="fa fa-plus-square" aria-hidden="true"></i> Add Location'.html_safe, new_location_path %>
+  <div class="large-4 columns button-group">
+
+    <% if params[:validate] == "true" %>
+      <%= button_to "All Locations", locations_path,class: "button", method: :get, params: { validate: "", sortby: params[:sortby], county: params[:county] }  %>
+    <% else %>
+      <%= button_to "Validate Mode", locations_path,class: "button", method: :get, params: { validate: "true", sortby: params[:sortby], county: params[:county] }  %>
+    <% end %>
+
+
+    <%= link_to '<i class="fa fa-plus-square" aria-hidden="true"></i> Add Location'.html_safe, new_location_path,class: "button" %>
+    <%= button_to "Clear Filters", locations_path,class: "button", method: :get, params: { validate: params[:validate], sortby: "", county: ""} %>
+
   </div>
+</div>
+<div class="column row">
+
+
+
+
+
+
 
 </div>
 <div class="row">
   <%= form_tag("", :method => "get", id: "search-form") do %>
   <fieldset class="large-6 columns">
-    <div class = "row">
-    <legend>Filter by </legend>
+
+
+
+
     <script>
     $( function() {
       $( "#tags" ).autocomplete({
@@ -27,8 +46,10 @@
 
 
     <div class="ui-widget">
+      <legend>Filter by </legend>
       <input id="tags" name="county" placeholder = 'Enter County' value='<%= params[:county] if params[:county]%>'>
       <input style="display: none" name="validate" value='<%= params[:validate] if params[:validate]%>'>
+      <input style="display: none" name="sortby" value='<%= params[:sortby] if params[:sortby]%>'>
     </div>
     <div >
       <%= submit_tag "Search", :name => nil, class: "button" %>
@@ -38,23 +59,53 @@
 
 
 
-  <fieldset class="large-6 columns">
-    <legend>Sort by </legend>
-    <input type="radio" name="sortby" value="county" id="countySort"><label for="countySort">County</label>
+
+
+    <!-- <input type="radio" name="sortby" value="county" id="countySort"><label for="countySort">County</label>
     <input type="radio" name="sortby" value="name" id="nameSort"><label for="nameSort">Name</label>
     <input type="radio" name="sortby" value="verified" id="verifySort"><label for="verifySort">Last Verified</label>
     <input type="radio" name="sortby" value="city" id="citySort"><label for="citySort">City</label>
-    <input type="radio" name="sortby" value="zipcode" id="zipSort"><label for="zipSort">Zip code</label>
-    <input type="radio" name="sortby" value="active" id="activeSort"><label for="activeSort">Active</label>
-    <%= submit_tag "Sort", :name => nil %>
 
-  </fieldset>
+    <input type="radio" name="sortby" value="active" id="activeSort"><label for="activeSort">Active</label> -->
+
+
+
 
 
 
   <% end %>
+
+  <div class="large-6 columns button-group">
+    <legend>Sort by </legend>
+    <% sort = params[:sortby] %>
+    <% countyClass = "secondary button" %>
+    <% nameClass = "secondary button" %>
+    <% verifiedClass = "secondary button" %>
+    <% cityClass = "secondary button" %>
+    <% activeClass = "secondary button" %>
+    <% if sort == "county" %>
+
+      <% countyClass = "button" %>
+    <% elsif sort == "name" %>
+      <% nameClass = "button" %>
+    <% elsif sort == "verified" %>
+      <% verifiedClass = "button" %>
+    <% elsif sort == "city" %>
+      <% cityClass = "button" %>
+    <% elsif sort == "active" %>
+      <% activeClass = "button" %>
+    <% else %>
+      <% nameClass = "button" %>
+    <% end %>
+    <%= button_to "Name", locations_path,  class: nameClass,  method: :get, params: {  sortby: "name", validate: params[:validate], county: params[:county] }  %>
+    <%= button_to "County", locations_path, class: countyClass,  method: :get, params: {  sortby: "county", validate: params[:validate], county: params[:county] }  %>
+    <%= button_to "Last Validated", locations_path,  class: verifiedClass, method: :get, params: {  sortby: "verified", validate: params[:validate], county: params[:county] }  %>
+    <%= button_to "City", locations_path,  class: cityClass, method: :get, params: {  sortby: "city", validate: params[:validate], county: params[:county] }  %>
+    <%= button_to "Active", locations_path,  class: activeClass, method: :get, params: {  sortby: "active", validate: params[:validate], county: params[:county]}  %>
+
+  </div>
 </div>
-<% if params[:validate] %>
+<% if params[:validate] && params[:validate] != "" %>
   <div class="expanded row" style="width: 90%;">
 <% else %>
   <div class="row">
@@ -62,100 +113,179 @@
 
 
   <div class="panel">
+    <% if @errors != "" %>
+      <div class="small-3 small-centered columns">
+        <h5> <%= @errors %> </h5>
+      </div>
 
-    <table border= "1px solid black">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>County</th>
-          <th>Address</th>
-
-
-
-          <th>Contact Info</th>
-          <th width="18%;">Items</th>
-          <th width="8%;">Active</th>
-          <th>Last Verified</th>
-          <th>Edit</th>
-
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @locations.each do |location| %>
-
-            <%= simple_nested_form_for location, :html => { :class => 'form-horizontal' } do |f| %>
-              <%= f.input :verified, :as => :hidden, :input_html => { :value => Time.new.to_date } %>
-            <tr>
-              <td><%= link_to location.name, location, target: :_blank %></td>
-              <td><%= location.addresses.first.county.name %></td>
-              <% addr = location.addresses.first %>
-              <td><%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}", target: :_blank %> </td>
-
-
-              <td>
-                <%= link_to location.website, "#{location.website}", target: :_blank %> <br/>
-
-                <%= number_to_phone location.phone %>
-              </td>
-              <td>
-                <% if params[:validate] && params[:validate] != "" %>
-                  <% count = 0 %>
-                  <%= f.simple_fields_for :item_locations do |il| %>
-                    <%= render :partial => "locations/item_loc_active", :locals => { :l => il } %>
-
-                    <%= il.input :active, label: il.object.item.name.capitalize, input_html: { id: "itemcheck#{location.id}#{count}" }%>
-                    <% count += 1 %>
-                  <% end %>
-
-                <% else %>
-                  <% @item_locations.for_location(location.id).each do |il| %>
-                    <%= il.item.name.titleize %> <br/>
-                  <% end %>
-                <% end %>
-
-              </td>
-
-
-
-                <td>
-                  <% if params[:validate] && params[:validate] != "" %>
-                    <%= f.input :active, label: "",  as: :radio_buttons, :collection => [['Active', true],['Inactive', false]], :input_html => {  id: "active#{location.id}" }  %>
-                    <!-- <%= f.input :active, as: :boolean, checked_value: true, unchecked_value: false %> -->
-                  <% else %>
-                    <%= location.active ? "Active" : "Inactive" %>
-                  <% end %>
-
-                </td>
-                <td>
-                  <% if (Time.new.to_date - location.updated_at.to_date).to_i < 0%>
-
-                  0 days ago
-                  <% else %>
-                  <%= (Time.new.to_date - location.updated_at.to_date).to_i %> days ago
-                  <% end %>
-                </td>
-                <td>
-                  <% if params[:validate] && params[:validate] != "" %>
-                    <%= f.submit "Verify", class: "button radius" %>
-                    <%= link_to 'Edit', edit_location_path(location), target: :_blank %>
-
-                  <% else %>
-                    <%= link_to 'Edit', edit_location_path(location), target: :_blank %>
-                  <% end %>
-
-                </td>
-
-              <% end %>
-            </tr>
-
-
+    <% else %>
+      <% if @locations == [] %>
+        <div class="small-3 small-centered columns">
+          <h5> <%= params[:county] %> has no locations right now. </h5>
+        </div>
+      <% else %>
+        <% if params[:county] && params[:county] != "" %>
+          <h5> <%= params[:county].capitalize %> County </h5>
         <% end %>
-      </tbody>
-    </table>
+        <table border= "1px solid black">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <% unless params[:county] && params[:county] != "" %>
+                <th>County</th>
+              <% end %>
+
+              <th>Address</th>
+
+
+
+              <th>Contact Info</th>
+              <th width="18%;">Items</th>
+              <th width="7%;">Active</th>
+              <th width="8%;">Last Verified</th>
+              <th>Edit</th>
+
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @locations.each do |location| %>
+
+                <%= simple_nested_form_for location, :html => { :class => 'form-horizontal' } do |f| %>
+                  <%= f.input :verified, :as => :hidden, :input_html => { :value => Time.new.to_date } %>
+                <tr>
+                  <td><%= link_to location.name, location, target: :_blank %></td>
+                  <% unless params[:county] && params[:county] != "" %>
+                    <td>
+                      <% if location.addresses.count > 1 %>
+                        <% location.addresses.each do |addr_row| %>
+                          <%= addr_row.county.name %> </br></br>
+                        <% end %>
+                      <% else %>
+                        <% if !@countyId.nil? %>
+                          <%= location.addresses.for_county(@countyId).count %>
+                        <% else %>
+                          <%= location.addresses.first.county.name %>
+                        <% end %>
+
+
+                      <% end %>
+
+
+                    </td>
+                  <% end %>
+
+
+
+
+                  <td>
+                    <% if location.addresses.count > 1 %>
+                      <% if !@countyId.nil? %>
+                        <% addr = location.addresses.for_county(@countyId).first %>
+                      <% else %>
+                        <% addr = location.addresses.first %>
+                      <% end %>
+                      <%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}", target: :_blank %>
+                      <div class="reveal" id="exampleModal1" data-reveal>
+                        <h3> Addresses </h3>
+                        <% location.addresses.each do |addr_row| %>
+                          <% addr = addr_row %>
+                          <%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}", target: :_blank %> <br/><br/>
+                        <% end %>
+
+                        <button class="close-button" data-close aria-label="Close modal" type="button">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <br/><br/>
+                      <p><a data-open="exampleModal1">More Addresses</a></p>
+                    <% else %>
+                      <% if !@countyId.nil? %>
+                        <% addr = location.addresses.for_county(@countyId).first %>
+                      <% else %>
+                        <% addr = location.addresses.first %>
+                      <% end %>
+
+                      <%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}", target: :_blank %>
+                    <% end %>
+
+                 </td>
+
+
+
+
+                  <td>
+                    <%= link_to location.website, "#{location.website}", target: :_blank %> <br/>
+
+                    <%= number_to_phone location.phone %>
+                  </td>
+                  <td>
+                    <% if params[:validate] && params[:validate] != "" %>
+                      <% count = 0 %>
+                      <%= f.simple_fields_for :item_locations do |il| %>
+                        <%= render :partial => "locations/item_loc_active", :locals => { :l => il } %>
+
+                        <%= il.input :active, label: il.object.item.name.capitalize, input_html: { id: "itemcheck#{location.id}#{count}" }%>
+                        <% count += 1 %>
+                      <% end %>
+
+                    <% else %>
+                      <% @item_locations.for_location(location.id).each do |il| %>
+                        <%= il.item.name.capitalize %> <br/>
+                      <% end %>
+                    <% end %>
+
+                  </td>
+
+
+
+                    <td>
+                      <% if params[:validate] && params[:validate] != "" %>
+                        <%= f.input :active, label: "",  as: :radio_buttons, :collection => [['Active', true],['Inactive', false]], :input_html => {  id: "active#{location.id}" }  %>
+                        <!-- <%= f.input :active, as: :boolean, checked_value: true, unchecked_value: false %> -->
+                      <% else %>
+                        <%= location.active ? "Active" : "Inactive" %>
+                      <% end %>
+
+                    </td>
+                    <td>
+                      <% if (Time.new.to_date - location.updated_at.to_date).to_i < 0%>
+
+                      0 days ago
+                      <% elsif (Time.new.to_date - location.updated_at.to_date).to_i == 1 %>
+                        1 day ago
+                      <% else %>
+                        <%= (Time.new.to_date - location.updated_at.to_date).to_i %> days ago
+                      <% end %>
+                    </td>
+                    <td>
+                      <% if params[:validate] && params[:validate] != "" %>
+                        <%= f.submit "Verify", class: "button radius" %>
+                        <%= link_to 'Edit', edit_location_path(location), target: :_blank %>
+
+                      <% else %>
+                        <%= link_to 'Edit', edit_location_path(location), target: :_blank %>
+                      <% end %>
+
+                    </td>
+
+                  <% end %>
+                </tr>
+
+
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+
+
+    <% end %>
+
 
   </div></div>
   <div class="row">
-    <%= will_paginate @locations, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
+    <% if @errors == "" %>
+      <%= will_paginate @locations, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
+    <% end %>
   </div>
   <br>

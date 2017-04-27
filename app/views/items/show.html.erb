@@ -25,6 +25,7 @@
 <div class = "row">
   <%= link_to 'Edit', edit_item_path(@item), class: "button" %>
   <%= link_to 'See All', items_path, class: "button" %>
+  <%= link_to 'Delete', item_path(@item), method: 'delete', class: "alert button" %>
 </div>
 
 </div>

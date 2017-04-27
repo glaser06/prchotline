@@ -3,9 +3,9 @@ class County < ApplicationRecord
   before_save :reformat_county_name
 
   # Relationships
-  has_many :item_counties
+  has_many :item_counties, dependent: :destroy
   has_many :items, through: :item_counties
-  has_many :addresses
+  has_many :addresses, dependent: :destroy
 
   # Validations
   validates_presence_of :name
