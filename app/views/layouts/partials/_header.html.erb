@@ -9,38 +9,46 @@
      } );
 </script>
 
-<div class="top-bar" data-topbar role="navigation">
-  <ul class="dropdown menu" data-dropdown-menu>
+<div class="top-bar">
+  <div class="top-bar-title">
+    <span data-responsive-toggle="responsive-menu" data-hide-for="medium">
+      <button class="menu-icon dark" type="button" data-toggle></button>
+    </span>
+    <class="name"><%= link_to image_tag("logo.jpg", size: "70x70"), search_path, class: "active" %>
 
+  </div>
+  <div id="responsive-menu">
+    <div class="top-bar-left">
+      <ul class="dropdown menu" data-dropdown-menu>
+        <div class="medium-3 columns"> <h4><%= link_to "Locations", locations_path%></h4></div>
+      </ul>
+    </div>
+    <div class="top-bar-right">
+      <ul class="menu">
 
-      <li class="name"><h4><%= link_to image_tag("logo.png", size: "50x50"), search_path, class: "active" %></h4></li>
-
-      <li><%= link_to "Locations", locations_path, class: "active" %></li>
-  </ul>
-  <div class="top-bar-right">
         <%= form_tag("/search", :method => "get", id: "search-form") do %>
             <div class="row">
               <div class="medium-3 columns">
+                <%= text_field_tag :county, params[:county], :placeholder => 'Enter County', id:'counties' %>
+              </div>
+              <div class="medium-3 columns">
                 <%= text_field_tag :item, params[:item], :placeholder => 'Enter Item', id:'items' %>
-              </div>
-              <div class="medium-3 columns">
-                    <%= text_field_tag :county, params[:county], :placeholder => 'Enter County', id:'counties' %>
-              </div>
 
-              <div class="medium-3 columns">
-                <%= text_field_tag :zip, params[:zip], placeholder: "(Optional) Zipcode", maxlength: 5, class: 'input-small'%>
               </div>
-
               <div class="medium-3 columns">
+                <%= text_field_tag :zip, params[:zip], placeholder: "Zip (Optional)", maxlength: 5, class: 'input-small'%>
+              </div>
+              <div class="medium-1 columns">
                 <%= submit_tag "Search", :name => nil, class: "button" %>
               </div>
-
-              <div class="medium-3 columns">
-                <%= link_to image_tag("settings.png", :size => "30x30"), settings_path  %>
-              </div>
+            <% end %>
+            <div class="medium-2 columns">
+               <h4><%= link_to "Settings", settings_path%> </h4>
+              <!-- <%= link_to image_tag("settings.png", :size => "30x30"), settings_path%> -->
             </div>
-        <% end %>
+      </ul>
 
-      </div>
-    </ul>
+    </div>
+
   </div>
+</div>

@@ -2,13 +2,13 @@
       <%= form_tag("/submit_form", method: "post") do %>
 
       County
-      <%= select_tag 'county', options_for_select(County.all.alphabetical.map { |a| [a.name, a.id]}, @vals[0]), :required => true %>
+      <%= select_tag 'county', options_for_select(County.all.alphabetical.map { |a| [a.name, a.id]}), prompt:"Select a county", :required => true %>
 
       Item
-      <%= select_tag 'item', options_for_select(Item.all.alphabetical.map { |a| [a.name.capitalize, a.id]}, @vals[1]), :required => true %>
+      <%= select_tag 'item', options_for_select(Item.all.alphabetical.map { |a| [a.name.capitalize, a.id]}), prompt:"Select an item", :required => true %>
 
       Caller Name
-      <%= text_field_tag :callerName, @vals[2] %>
+      <%= text_field_tag :callerName, @vals[2], placeholder: "Enter caller name" %>
 
       How did you find out about the hotline?
       <script type="text/javascript">
@@ -18,7 +18,8 @@
       }
       </script>
 
-      <select name="method" id="method" onchange="showfield2(this.options[this.selectedIndex].value)">
+      <select required name="method" id="method" onchange="showfield2(this.options[this.selectedIndex].value)">
+      <option value="" disabled selected>Select the method</option>
       <option value="Flyer">Flyer</option>
       <option value="Hauler">Hauler</option>
       <option value="Internet">Internet</option>
@@ -29,7 +30,7 @@
       </select>
       <div id="div2"></div>
 
-      Call Disposition
+      What was the disposition?
       <script type="text/javascript">
       function showfield3(name){
         if(name=='other3')document.getElementById('div3').innerHTML='Referred to Other: <input type="text" name="altOther3" />';
@@ -38,7 +39,8 @@
       }
       </script>
 
-      <select name="disposition" id="disposition" onchange="showfield3(this.options[this.selectedIndex].value)">
+      <select required name="disposition" id="disposition" onchange="showfield3(this.options[this.selectedIndex].value)">
+      <option value="" disabled selected>Select the disposition</option>
       <option value="Referred to Verizon">Referred to Verizon</option>
       <option value="Referred to County Coordinator">Referred to County Coordinator</option>
       <option value="Referred to CDRA Manufacturer">Referred to CDRA Manufacturer</option>
@@ -49,7 +51,7 @@
       <div id="div3"></div>
 
 
-      Call Type
+      What was the call type?
       <script type="text/javascript">
       function showfield(name){
         if(name=='Other')document.getElementById('div1').innerHTML='Other type: <input type="text" name="altOther" />';
@@ -57,7 +59,8 @@
       }
       </script>
 
-      <select name="callType" id="callType" onchange="showfield(this.options[this.selectedIndex].value)">
+      <select required name="callType" id="callType" onchange="showfield(this.options[this.selectedIndex].value)">
+      <option value="" disabled selected>Select the call type</option>
       <option value="Where to recycle">Where to recycle?</option>
       <option value="How to recycle">How to recycle?</option>
       <option value="Why can't I recycle?">Why can't I recycle?</option>
@@ -78,4 +81,4 @@
       <%= submit_tag "Save", class: "button" %>
 
       <% end %>
-      <%= button_to 'Reset', clear_form_path, method: :post, class: "button" %>
+      <%= button_to 'Clear', clear_form_path, method: :post, class: "button secondary" %>

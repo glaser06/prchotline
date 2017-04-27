@@ -7,7 +7,7 @@
   </div>
 
   <div class="right">
-    <%= button_to "Validate Mode", locations_path, method: :get, params: { validate: "true" }  %>
+    <%= button_to "Verify Mode", locations_path, method: :get, params: { validate: "true" }, class: "button"  %>
     <%= link_to '<i class="fa fa-plus-square" aria-hidden="true"></i> Add Location'.html_safe, new_location_path %>
   </div>
 
@@ -15,7 +15,7 @@
 <div class="row">
   <%= form_tag("", :method => "get", id: "search-form") do %>
   <fieldset class="large-6 columns">
-
+    <div class = "row">
     <legend>Filter by </legend>
     <script>
     $( function() {
@@ -31,9 +31,9 @@
       <input style="display: none" name="validate" value='<%= params[:validate] if params[:validate]%>'>
     </div>
     <div >
-      <%= submit_tag "Search", :name => nil %>
+      <%= submit_tag "Search", :name => nil, class: "button" %>
     </div>
-
+  </div>
   </fieldset>
 
 
@@ -110,7 +110,7 @@
 
                 <% else %>
                   <% @item_locations.for_location(location.id).each do |il| %>
-                    <%= il.item.name.capitalize %> <br/>
+                    <%= il.item.name.titleize %> <br/>
                   <% end %>
                 <% end %>
 

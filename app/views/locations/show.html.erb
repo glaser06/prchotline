@@ -37,18 +37,34 @@
   <%= @location.active ? "Yes" : "No" %>
 </p>
 
- <p>
-  <b>Items:</b>
-    <ul>
+ <br>
+  <h5>Items</h5>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Active</th>
+    </tr>
       <% for il in @item_locations %>
+      <tr>
+        <td><%= il.item.name.titleize%></td>
+        <td><%=il.description.nil? ? "None" : il.description %></td>
+        <td><%= il.active ? "Active" : "Inactive" %></td>
+      </tr>
+      <% end %>
+  </table>
+
+    <!-- <ul>
+      <% for il in @item_locations %>
+
         <li><%= il.item.name %> <%= il.description == "" ? "" : "-"%> <%= il.description %>  </li>
       <% end %>
-    </ul>
+    </ul> -->
   </p>
 
 <div class= "row">
-  <%= link_to 'Edit', edit_location_path(@location), class: "button" %>
-  <%= link_to 'See All', locations_path, class: "button" %>
+  <%= link_to "Edit #{@location.name}", edit_location_path(@location), class: "button" %>
+  <%= link_to 'See All Locations', locations_path, class: "button" %>
 </div>
 
 </div>

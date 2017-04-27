@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- saved from url=(0030)http://localhost:3000/settings -->
+<!-- saved from url=(0022)http://localhost:3000/ -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,7 +31,7 @@
 <link rel="stylesheet" media="screen" href="./PRC Hotline_files/jquery-ui.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css">
 <link rel="stylesheet" media="screen" href="./PRC Hotline_files/_settings.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css">
 <link rel="stylesheet" media="screen" href="./PRC Hotline_files/counties.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css">
-<link rel="stylesheet" media="screen" href="./PRC Hotline_files/foundation_and_overrides.self-aa94839c342f30ea9f41e50ac1d7788a93aa9d0a8238d7f5fa911928ef468f89.css">
+<link rel="stylesheet" media="screen" href="./PRC Hotline_files/foundation_and_overrides.self-099f4b8174139ac7c92984d82d5fd32ce54064d40de17c43db4c0b943894789e.css">
 <link rel="stylesheet" media="screen" href="./PRC Hotline_files/item_counties.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css">
 <link rel="stylesheet" media="screen" href="./PRC Hotline_files/item_locations.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css">
 <link rel="stylesheet" media="screen" href="./PRC Hotline_files/items.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css">
@@ -39,7 +39,7 @@
 <link rel="stylesheet" media="screen" href="./PRC Hotline_files/main.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css">
 <link rel="stylesheet" media="screen" href="./PRC Hotline_files/scaffolds.self-df1a748ca3847e955f76cf61884e9c51384dbcd9d7fb0a6b90475c00422cf290.css">
 <link rel="stylesheet" media="screen" href="./PRC Hotline_files/syssettings.self-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855.css">
-<link rel="stylesheet" media="screen" href="./PRC Hotline_files/application.self-2f1c1e25031d314fcb74e4d6ff34a16e751957a3ff19969c529e4c1c1b0f214c.css">
+<link rel="stylesheet" media="screen" href="./PRC Hotline_files/application.self-612aba6f8081cb3e2cb8691e34469882d380fde4e352c9e4f813c32fb478d361.css">
 <link rel="stylesheet" media="screen" href="./PRC Hotline_files/foundation.self-adc0156b91fe762ad9930d3db94057d2a1d1b7efea2e2f500a16c1ab46b554af.css">
 <link rel="stylesheet" media="screen" href="./PRC Hotline_files/font-awesome.self-a68a433274f8af6a9997bc1ed4076921f48545ebd66d157b04c49e24b0b786f4.css">
     <script src="./PRC Hotline_files/action_cable.self-17ebe4af84895fa064a951f57476799066237d7bb5dc4dc351a8b01cca19cce9.js" data-turbolinks-track="true"></script>
@@ -143,47 +143,64 @@
 <script src="./PRC Hotline_files/jquery_nested_form.self-d38045d10ebdd28aac44152cb451796232091957b86b47bedad1ab171a3a12cd.js" data-turbolinks-track="true"></script>
 <script src="./PRC Hotline_files/application.self-6b649e50735b94b1d1cd8aad6765750a98021fa20b3bfd77aba630cac1a1cce7.js" data-turbolinks-track="true"></script>
     <meta name="csrf-param" content="authenticity_token">
-<meta name="csrf-token" content="RVtLJh+Ak9XnMXc8TK8696oGgPD7XEhRUBIrqrKpQg59vYmUkGx5bbulxwv+OTbb0Db5u0Iej3Gg0ToS888O3w==">
+<meta name="csrf-token" content="m0ZkxtHBuzj9n6bU/4IlJbhqNMxDb6c3wo0BDLubEOWjoKZ0Xi1RgKELFuNNFCkJwlpNh/otYBcyThC0+v1cNA==">
   <meta class="foundation-mq"></head>
 
   <body>
 
-        
-<div class="top-bar" data-topbar="" role="navigation">
-  <ul class="dropdown menu" data-dropdown-menu="r2mnx9-dropdown-menu" role="menubar">
+        <script>
+     $( function() {
+       $( "#counties" ).autocomplete({
+         source: '/counties.json'
+       });
+       $( "#items" ).autocomplete({
+         source: '/items.json'
+       });
+     } );
+</script>
 
+<div class="top-bar">
+  <div class="top-bar-title">
+    <span data-responsive-toggle="responsive-menu" data-hide-for="medium" style="display: none;">
+      <button class="menu-icon dark" type="button" data-toggle=""></button>
+    </span>
+    <class="name"><a class="active" href="http://localhost:3000/search"><img src="./PRC Hotline_files/logo-8d5b9492fc31f24bce8daf64cd48749df2ce7a88154b48e6a499f0d033c7c3e4.jpg" alt="Logo" width="70" height="70"></a>
 
-      <li class="name" role="menuitem"><h4><a class="active" href="http://localhost:3000/search" tabindex="0"><img src="./PRC Hotline_files/logo-e71e422ad1d9aadf6636e387c61fbac92518f7835c7b1696df6b8d6140deb244.png" alt="Logo" width="50" height="50"></a></h4></li>
+  </class="name"></div>
+  <div id="responsive-menu">
+    <div class="top-bar-left">
+      <ul class="dropdown menu" data-dropdown-menu="q08y61-dropdown-menu" role="menubar">
+        <div class="medium-3 columns"> <h4><a href="http://localhost:3000/locations" tabindex="0">Locations</a></h4></div>
+      </ul>
+    </div>
+    <div class="top-bar-right">
+      <ul class="menu">
 
-      <li role="menuitem"><a class="active" href="http://localhost:3000/locations">Locations</a></li>
-      <li role="menuitem"><a class="active" href="http://localhost:3000/validations">Validations</a></li>
-  </ul>
-  <div class="top-bar-right">
         <form id="search-form" action="http://localhost:3000/search" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="✓">
             <div class="row">
               <div class="medium-3 columns">
-                <input type="text" name="item" id="item" placeholder="Items">
+                <input type="text" name="county" id="counties" placeholder="Enter County" class="ui-autocomplete-input" autocomplete="off">
               </div>
               <div class="medium-3 columns">
-                <input type="text" name="county" id="county" placeholder="Counties" class="input-small">
-              </div>
+                <input type="text" name="item" id="items" placeholder="Enter Item" class="ui-autocomplete-input" autocomplete="off">
 
-              <div class="medium-3 columns">
-                <input type="text" name="zip" id="zip" placeholder="Zipcodes" maxlength="5" class="input-small">
               </div>
-
               <div class="medium-3 columns">
-                <input type="submit" value="Search" data-disable-with="Search">
+                <input type="text" name="zip" id="zip" placeholder="Zip (Optional)" maxlength="5" class="input-small">
               </div>
-
-              <div class="medium-3 columns">
-                <a href="http://localhost:3000/settings"><img src="./PRC Hotline_files/settings-7d26a9373854f1119108c542236eff92862e473b041bd456d72d0c8c799918fc.png" alt="Settings" width="40" height="40"></a>
+              <div class="medium-1 columns">
+                <input type="submit" value="Search" class="button" data-disable-with="Search">
               </div>
+            <div class="medium-2 columns">
+               <h4><a href="http://localhost:3000/locations">Settings</a> </h4>
+              <!-- <a href="/settings"><img src="/assets/settings-7d26a9373854f1119108c542236eff92862e473b041bd456d72d0c8c799918fc.png" alt="Settings" width="30" height="30" /></a> -->
             </div>
-</form>
-      </div>
-    
+      </div></form></ul>
+
+    </div>
+
   </div>
+</div>
 
         <br>
 
@@ -193,42 +210,311 @@
       <div id="body">
         <!--  -->
 
-        
+        <script>
+     $( function() {
+       $( "#counties" ).autocomplete({
+         source: '/counties.json'
+       });
+       $( "#items" ).autocomplete({
+         source: '/items.json'
+       });
+     } );
+</script>
+
+<p id="notice"></p>
+
+
 <div class="row">
 
-    <h2>System Settings</h2>
-     <div class="large-6 columns">
-       <h4>Counties</h4>
-       Add
-       View All
-     </div>
+ <div class="large-6 columns">
+   <div class="panel">
+     <h3> Search </h3>
 
-     <div class="large-6 columns">
-       <div class="panel">
-         <h4>Items</h4>
-         Add
-         View All
-       </div>
-    </div>
+     <h4>   </h4>
+     <form id="search-form" action="http://localhost:3000/" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="✓">
+     <input type="text" name="item" id="items" placeholder="Enter Item">
+     <input type="text" name="county" id="counties" placeholder="Enter County">
 
-<hr>
+     <input type="text" name="zip" id="zip" placeholder="Zipcodes" maxlength="5" class="input-small">
+     <input type="submit" value="Search" class="button" data-disable-with="Search">
+</form>   </div>
+ </div>
 
 
+ <div class="large-6 columns">
+   <div class="panel">
+
+           <h3> New Call </h3>
+      <form action="http://localhost:3000/submit_form" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="m0ZkxtHBuzj9n6bU/4IlJbhqNMxDb6c3wo0BDLubEOWjoKZ0Xi1RgKELFuNNFCkJwlpNh/otYBcyThC0+v1cNA==">
+
+      County
+      <select name="county" id="county" required="required"><option value="">Select a county</option><option value="1">Adams</option>
+<option value="2">Allegheny</option>
+<option value="3">Armstrong</option>
+<option value="4">Beaver</option>
+<option value="5">Bedford</option>
+<option value="6">Berks</option>
+<option value="7">Blair</option>
+<option value="8">Bradford</option>
+<option value="9">Bucks</option>
+<option value="10">Butler</option>
+<option value="11">Cambria</option>
+<option value="12">Cameron</option>
+<option value="13">Carbon</option>
+<option value="14">Centre</option>
+<option value="15">Chester</option>
+<option value="16">Clarion</option>
+<option value="17">Clearfield</option>
+<option value="18">Clinton</option>
+<option value="19">Columbia</option>
+<option value="20">Crawford</option>
+<option value="21">Cumberland</option>
+<option value="22">Dauphin</option>
+<option value="23">Delaware</option>
+<option value="24">Elk</option>
+<option value="25">Erie</option>
+<option value="26">Fayette</option>
+<option value="27">Forest</option>
+<option value="28">Franklin</option>
+<option value="29">Fulton</option>
+<option value="30">Greene</option>
+<option value="31">Huntingdon</option>
+<option value="32">Indiana</option>
+<option value="33">Jefferson</option>
+<option value="34">Juniata</option>
+<option value="35">Lackawanna</option>
+<option value="36">Lancaster</option>
+<option value="37">Lawrence</option>
+<option value="38">Lebanon</option>
+<option value="39">Lehigh</option>
+<option value="40">Luzerne</option>
+<option value="41">Lycoming</option>
+<option value="42">Mckean</option>
+<option value="43">Mercer</option>
+<option value="44">Mifflin</option>
+<option value="45">Monroe</option>
+<option value="46">Montgomery</option>
+<option value="47">Montour</option>
+<option value="48">Northampton</option>
+<option value="49">Northumberland</option>
+<option value="50">Perry</option>
+<option value="51">Philadelphia</option>
+<option value="52">Pike</option>
+<option value="53">Potter</option>
+<option value="54">Schuylkill</option>
+<option value="55">Snyder</option>
+<option value="56">Somerset</option>
+<option value="57">Sullivan</option>
+<option value="58">Susquehanna</option>
+<option value="59">Tioga</option>
+<option value="60">Union</option>
+<option value="61">Venango</option>
+<option value="62">Warren</option>
+<option value="63">Washington</option>
+<option value="64">Wayne</option>
+<option value="65">Westmoreland</option>
+<option value="66">Wyoming</option>
+<option value="67">York</option></select>
+
+      Item
+      <select name="item" id="item" required="required"><option value="">Select an item</option><option value="1">Air conditioners</option>
+<option value="2">Aluminum</option>
+<option value="3">Ammunition</option>
+<option value="4">Antifreeze</option>
+<option value="6">Appliances (no freon)</option>
+<option value="5">Appliances (with freon)</option>
+<option value="7">Art &amp; education materials</option>
+<option value="8">Asbestos</option>
+<option value="9">Aseptic packaging (drink boxes/milk cartons)</option>
+<option value="10">Asphalt, brick, concrete, gravel, &amp; porcelain</option>
+<option value="11">Audio/videotapes, cds, dvds, &amp; records</option>
+<option value="12">Automotive parts &amp; liquids</option>
+<option value="13">Ballast</option>
+<option value="14">Batteries (alkaline/zinc carbon)</option>
+<option value="15">Batteries (button cell)</option>
+<option value="16">Batteries (lead acid)</option>
+<option value="17">Batteries (rechargable)</option>
+<option value="18">Biohazardous waste</option>
+<option value="19">Books</option>
+<option value="20">Bricks</option>
+<option value="21">Building materials</option>
+<option value="22">Bulbs</option>
+<option value="24">Car seats</option>
+<option value="23">Car/vehicle donations</option>
+<option value="25">Cardboard</option>
+<option value="26">Carpet</option>
+<option value="27">Cartons</option>
+<option value="28">Cell phones</option>
+<option value="32">Cfl bulbs</option>
+<option value="29">Christmas lights</option>
+<option value="30">Christmas trees</option>
+<option value="31">Clothing/textiles</option>
+<option value="33">Compost</option>
+<option value="34">Computers</option>
+<option value="35">Concrete</option>
+<option value="36">Construction/demolition materials</option>
+<option value="37">Cooking oil</option>
+<option value="38">Cork</option>
+<option value="39">Couches</option>
+<option value="40">Cylinders</option>
+<option value="41">Data destruction</option>
+<option value="42">Dehumidifier</option>
+<option value="43">Donations</option>
+<option value="45">Driveway sealer</option>
+<option value="44">Drugs</option>
+<option value="46">Drywall</option>
+<option value="47">Electronic equiptment</option>
+<option value="48">Eyeglasses</option>
+<option value="49">Filters</option>
+<option value="50">Fire extinguishers</option>
+<option value="51">Fishing lines</option>
+<option value="52">Flares</option>
+<option value="53">Fluorescent lights</option>
+<option value="54">Foam</option>
+<option value="55">Food</option>
+<option value="56">Freon</option>
+<option value="57">Fuels/solvents</option>
+<option value="58">Furniture</option>
+<option value="59">Glass</option>
+<option value="60">Grease</option>
+<option value="61">Greeting cards</option>
+<option value="62">Grocery bags</option>
+<option value="63">Hangers</option>
+<option value="64">Hazardous waste</option>
+<option value="65">Helium tanks</option>
+<option value="66">Humidifier</option>
+<option value="67">Ink cartridges</option>
+<option value="69">Junk mail</option>
+<option value="68">Junk removal</option>
+<option value="70">Kerosene</option>
+<option value="71">Medicine</option>
+<option value="72">Mercury</option>
+<option value="73">Microwaves</option>
+<option value="74">Milk cartons &amp; drink boxes</option>
+<option value="75">Mobile phones</option>
+<option value="76">Monofilament (fishing line)</option>
+<option value="77">Motor oil</option>
+<option value="78">Needles</option>
+<option value="79">Oil</option>
+<option value="80">Packaging peanuts</option>
+<option value="81">Paint (oil/solvent base)</option>
+<option value="82">Paper</option>
+<option value="83">Paper shredding</option>
+<option value="84">Pesticides</option>
+<option value="85">Pet supplies</option>
+<option value="86">Phone books</option>
+<option value="87">Phones</option>
+<option value="89">Plastic bottle caps</option>
+<option value="88">Plastics</option>
+<option value="90">Polystyrene</option>
+<option value="91">Pool chemicals</option>
+<option value="92">Prom dresses</option>
+<option value="93">Propane tanks</option>
+<option value="94">Railroad ties</option>
+<option value="95">Rain barrels</option>
+<option value="96">Refrigerators</option>
+<option value="97">Scrap &amp; metal</option>
+<option value="98">Sharps/syringes</option>
+<option value="99">Shoes</option>
+<option value="100">Smoke detectors</option>
+<option value="101">Solvents</option>
+<option value="102">Sporting goods</option>
+<option value="103">Styrofoam/expanded polystyrene</option>
+<option value="104">Syringes</option>
+<option value="105">Tanks</option>
+<option value="106">Telephone books</option>
+<option value="107">Televisions</option>
+<option value="108">Thermostats</option>
+<option value="109">Tires</option>
+<option value="110">Toner/laser cartridges</option>
+<option value="111">Wood</option>
+<option value="112">X-ray &amp; mri film</option>
+<option value="113">Yard waste</option></select>
+
+      Caller Name
+      <input type="text" name="callerName" id="callerName" value="" placeholder="Enter caller name">
+
+      How did you find out about the hotline?
+      <script type="text/javascript">
+      function showfield2(name){
+        if(name=='other2')document.getElementById('div2').innerHTML='Other method: <input type="text" name="altOther2" />';
+        else document.getElementById('div2').innerHTML='';
+      }
+      </script>
+
+      <select required="" name="method" id="method" onchange="showfield2(this.options[this.selectedIndex].value)">
+      <option value="" disabled="" selected="">Select the method</option>
+      <option value="Flyer">Flyer</option>
+      <option value="Hauler">Hauler</option>
+      <option value="Internet">Internet</option>
+      <option value="Municipality">Municipality</option>
+      <option value="Recycling Center">Recycling Center</option>
+      <option value="Verizon">Verizon</option>
+      <option value="other2">Other</option>
+      </select>
+      <div id="div2"></div>
+
+      What was the disposition?
+      <script type="text/javascript">
+      function showfield3(name){
+        if(name=='other3')document.getElementById('div3').innerHTML='Referred to Other: <input type="text" name="altOther3" />';
+        else if(name=='directly')document.getElementById('div3').innerHTML='Answered Directly: <input type="text" name="directly" />';
+        else document.getElementById('div3').innerHTML='';
+      }
+      </script>
+
+      <select required="" name="disposition" id="disposition" onchange="showfield3(this.options[this.selectedIndex].value)">
+      <option value="" disabled="" selected="">Select the disposition</option>
+      <option value="Referred to Verizon">Referred to Verizon</option>
+      <option value="Referred to County Coordinator">Referred to County Coordinator</option>
+      <option value="Referred to CDRA Manufacturer">Referred to CDRA Manufacturer</option>
+      <option value="Referred to DEP">Referred to DEP</option>
+      <option value="directly">Answered Directly</option>
+      <option value="other3">Referred to Other</option>
+      </select>
+      <div id="div3"></div>
+
+
+      What was the call type?
+      <script type="text/javascript">
+      function showfield(name){
+        if(name=='Other')document.getElementById('div1').innerHTML='Other type: <input type="text" name="altOther" />';
+        else document.getElementById('div1').innerHTML='';
+      }
+      </script>
+
+      <select required="" name="callType" id="callType" onchange="showfield(this.options[this.selectedIndex].value)">
+      <option value="" disabled="" selected="">Select the call type</option>
+      <option value="Where to recycle">Where to recycle?</option>
+      <option value="How to recycle">How to recycle?</option>
+      <option value="Why can&#39;t I recycle?">Why can't I recycle?</option>
+      <option value="Verizon Inquiry">Verizon Inquiry</option>
+      <option value="Other">Other</option>
+      </select>
+      <div id="div1">Other type: <input type="text" name="altOther"></div>
+
+      Call for <br>
+      <input type="radio" name="callFor" id="callFor_PRC" value="PRC" checked="checked">
+      <label for="callFor_prc">PRC</label>
+
+      <input type="radio" name="callFor" id="callFor_DEP" value="DEP">
+      <label for="callFor_dep">DEP</label>
+      <br>
+
+      <input type="submit" name="submit_clicked" value="Submit" class="button" data-disable-with="Submit">
+      <input type="submit" name="commit" value="Save" class="button" data-disable-with="Save">
+
+</form>      <form class="button_to" method="post" action="http://localhost:3000/clear_form"><input class="button secondary" type="submit" value="Reset"><input type="hidden" name="authenticity_token" value="m0ZkxtHBuzj9n6bU/4IlJbhqNMxDb6c3wo0BDLubEOWjoKZ0Xi1RgKELFuNNFCkJwlpNh/otYBcyThC0+v1cNA=="></form>
+
+
+   </div>
   </div>
+
+</div>
+   <br>
 
       </div>
     </div>
-
-
-    <!-- <div class="floating-form" id="contact_form">
-    <div class="contact-opener">Open Contact Form</div>
-        <div class="floating-form-heading"></div>
-        <div id="contact_results"></div>
-        <div id="contact_body">
-
-        </div>
-    </div> -->
-
   
 
-</body></html>
+<ul id="ui-id-1" tabindex="0" class="ui-menu ui-widget ui-widget-content ui-autocomplete ui-front" style="display: none;"></ul><div role="status" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></div><ul id="ui-id-2" tabindex="0" class="ui-menu ui-widget ui-widget-content ui-autocomplete ui-front" style="display: none;"></ul><div role="status" aria-live="assertive" aria-relevant="additions" class="ui-helper-hidden-accessible"></div></body></html>
