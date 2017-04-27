@@ -26,10 +26,15 @@
     <div class="large-5 columns"  align = 'left'>
 
         <h4>County Specific Details</h4>
-        <p> County information specific to item. Still need to add a way to edit. </p>
-        <%= link_to "Edit Details", new_item_county_path(:county=> @county.id, :item=> @item.id) %>
-        <!-- <p><%= @county.name %> can recycle <%= @item.name %> -->
-        <br>
+        <% i = ItemCounty.by_item(@item.id).by_county(@county.id).first %>
+        <% if i == nil %>
+          <p> There are not yet any specific details for <%= "#{@item.name}" %> in <%= "#{@county.name}" %> County. </p>
+          <%= link_to "Add Details", new_item_county_path(:county=> @county.id, :item=> @item.id), class: "button radius" %>
+        <% else %>
+          <%= i.description %><br></br>
+          <%= link_to "Edit Details", new_item_county_path(:county=> @county.id, :item=> @item.id), class: "button radius" %>
+        <% end %>
+        <br></br>
 
           <h6>County Coordinator:</h6>
           <% if @county.coordinator != nil %>
