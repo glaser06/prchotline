@@ -25,9 +25,9 @@
 
     <div class="large-5 columns"  align = 'left'>
 
-        <h4><%= @county.name %> County</h4>
+        <h4>County Specific Details</h4>
         <p> County information specific to item. Still need to add a way to edit. </p>
-        <%= link_to 'New Item County', new_item_county_path(:county=> @county.id, :item=> @item.id) %>
+        <%= link_to "Edit Details", new_item_county_path(:county=> @county.id, :item=> @item.id) %>
         <!-- <p><%= @county.name %> can recycle <%= @item.name %> -->
         <br>
 
