@@ -7,6 +7,7 @@ class LocationsController < ApplicationController
     # @l = Location.all.to_a
     # @locations = Location.all.paginate(:page => params[:page]).per_page(20)
     # @item_locations = ItemLocation.by_item.all
+    @errors = ""
     @l = Location.all.to_a
     @locations = Location.all.paginate(:page => params[:page]).per_page(20)
     @item_locations = ItemLocation.by_item.all
@@ -20,21 +21,26 @@ class LocationsController < ApplicationController
     @counties = County.all
     @item_locations = ItemLocation.all
     locations = []
-    if params[:county]
-      @county = County.where(name: params[:county]).first
+    if params[:county] && params[:county] != ""
+
+      @county = County.where(name: params[:county].capitalize).first
       if not @county.nil?
         @countyName = @county.name
         @countyId = @county.id
         locations = Location.all.for_county(@countyId)
-
+        puts @countyName
       else
         locations = Location.all
-        @locations = "errorMessage"
+        @errors = "#{params[:county]} does not exist"
+        @locations = []
+
+        return
       end
     else
+      
       locations = Location.all
     end
-    if params[:sortby]
+    if params[:sortby] && params[:sortby] != ""
       sort = params[:sortby]
       if sort == "county"
         @locations = locations.by_county.alphabetical.paginate(:page => params[:page]).per_page(10)

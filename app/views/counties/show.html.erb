@@ -21,6 +21,7 @@
 <div class = "row">
   <%= link_to 'Edit', edit_county_path(@county), class: "button" %>
   <%= link_to 'See All', counties_path, class: "button" %>
+  <%= link_to 'Delete', county_path(@county), method: 'delete',  class: "alert button" %>
 </div>
 
 </div>
