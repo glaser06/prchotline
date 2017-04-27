@@ -69,3 +69,15 @@ h2 {
 .row a:hover, a:focus {
     color: black;
 }
+
+// color no longer changes when clicked
+a:visited{
+  color:#1d9650;
+}
+
+// color for button needs to remain the same to be readable
+a.button:visited{
+  color:#fff;
+}
+
+
