@@ -5,11 +5,13 @@ class Location < ApplicationRecord
   has_many :item_locations, dependent: :destroy
   has_many :items, through: :item_locations
   has_many :addresses, :autosave => true, dependent: :destroy
+  has_many :counties, through: :addresses
 
   accepts_nested_attributes_for :item_locations, reject_if: lambda { |item_location| item_location[:item_id].blank? }, allow_destroy: true
   accepts_nested_attributes_for :addresses, reject_if: lambda { |addr| addr[:address].blank? }, allow_destroy: true
 
   validates :name, presence: true
+  validates :addresses, presence: true
   validates_format_of :phone, with: /\A\(?\d{3}\)?[-. ]?\d{3}[-.]?\d{4}\z/, message: "should be 10 digits (area code needed) and delimited with dashes only", allow_blank: true
   #TO DO validates format of website
 
@@ -38,11 +40,23 @@ class Location < ApplicationRecord
     collection.any? ? collection : item_locations.build
   end
 
+
   private
 
   def require_one_address
+
     errors.add(:base, "You must provide at least one address") if addresses.size < 1
+
   end
+  def rejectable?(addr)
+    if addr[:address].blank?
+      return true
+    elsif addr[:_destroy] == '1'
+      return address.size <= 1
+    else return false
+    end
+  end
+
 
   def reformat_phone
     phone = self.phone.to_s  # change to string in case input as all numbers

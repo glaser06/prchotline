@@ -73,27 +73,33 @@ class MainController < ApplicationController
       qCounty = params[:county]
       qItem = params[:item]
       county = County.for_name(qCounty.capitalize)
-
-      item = Alias.for_name(qItem.downcase)
       if county.blank?
         puts "ereror"
         @errors += "#{params[:county]} county does not exist"
         return
       end
+      item = Item.for_name(qItem.downcase)
+      id = 0
       if item.blank?
-        if params[:item] && params[:item] != ""
-          @errors += "Could not find item: #{params[:item]}"
-          return
+        item = Alias.for_name(qItem.downcase)
+        if item.blank?
+          if params[:item] && params[:item] != ""
+            @errors += "Could not find item: #{params[:item]}"
+            return
+          else
+            redirect_to controller: 'locations', action: 'index', county: county[0].name
+            return
+          end
         else
-          redirect_to controller: 'locations', action: 'index', county: county[0].name
-          return
+          id = item.first.item_id
         end
-
-
-
+      else
+        id = item.first.id
 
       end
-      @item = Item.find(item.first.item_id)
+
+
+      @item = Item.find(id)
 
       @county = county[0]
       if params[:zip] != ""
