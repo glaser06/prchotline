@@ -6,7 +6,7 @@
     <h1>Locations</h1>
   </div>
 
-  <div class="large-4 columns button-group">
+  <div class="large-3 columns button-group">
 
     <% if params[:validate] == "true" %>
       <%= button_to "All Locations", locations_path,class: "button", method: :get, params: { validate: "", sortby: params[:sortby], county: params[:county] }  %>
@@ -16,13 +16,14 @@
 
 
     <%= link_to '<i class="fa fa-plus-square" aria-hidden="true"></i> Add Location'.html_safe, new_location_path,class: "button" %>
-    <%= button_to "Clear Filters", locations_path,class: "button", method: :get, params: { validate: params[:validate], sortby: "", county: ""} %>
+
 
   </div>
 </div>
 
 <div class="row">
-  <div class="large-6 columns button-group">
+
+  <div class="large-5 columns button-group">
     <legend>Sort by </legend>
     <% sort = params[:sortby] %>
     <% countyClass = "secondary button" %>
@@ -51,52 +52,46 @@
     <%= button_to "Active", locations_path,  class: activeClass, method: :get, params: {  sortby: "active", validate: params[:validate], county: params[:county]}  %>
 
   </div>
+  <div class="large-4 columns">
   <%= form_tag("", :method => "get", id: "search-form") do %>
-  <fieldset class="large-6 columns">
+
+      <fieldset >
 
 
 
 
-    <script>
-    $( function() {
-      $( "#tags" ).autocomplete({
-        source: '<%= counties_path(:json) %>'
-      });
-    } );
-    </script>
+        <script>
+        $( function() {
+          $( "#tags" ).autocomplete({
+            source: '<%= counties_path(:json) %>'
+          });
+        } );
+        </script>
 
 
-    <div class="ui-widget">
-      <legend>Filter by </legend>
-      <input id="tags" name="county" placeholder = 'Enter County' value='<%= params[:county] if params[:county]%>'>
-      <input style="display: none" name="validate" value='<%= params[:validate] if params[:validate]%>'>
-      <input style="display: none" name="sortby" value='<%= params[:sortby] if params[:sortby]%>'>
-    </div>
-    <div >
-      <%= submit_tag "Search", :name => nil, class: "button" %>
-    </div>
-  </div>
-  </fieldset>
-
-
-
-
-
-    <!-- <input type="radio" name="sortby" value="county" id="countySort"><label for="countySort">County</label>
-    <input type="radio" name="sortby" value="name" id="nameSort"><label for="nameSort">Name</label>
-    <input type="radio" name="sortby" value="verified" id="verifySort"><label for="verifySort">Last Verified</label>
-    <input type="radio" name="sortby" value="city" id="citySort"><label for="citySort">City</label>
-
-    <input type="radio" name="sortby" value="active" id="activeSort"><label for="activeSort">Active</label> -->
-
-
-
+        <div class="ui-widget">
+          <legend>Filter by </legend>
+          <input id="tags" name="county" placeholder = 'Enter County' value='<%= params[:county] if params[:county]%>'>
+          <input style="display: none" name="validate" value='<%= params[:validate] if params[:validate]%>'>
+          <input style="display: none" name="sortby" value='<%= params[:sortby] if params[:sortby]%>'>
+        </div>
+        <div >
+          <%= submit_tag "Search", :name => nil, class: "button" %>
+        </div>
+      </div>
+      </fieldset>
 
 
 
   <% end %>
+  </div>
 
 
+
+</div>
+<div class="columns row">
+
+  <%= button_to "Clear Filters", locations_path,class: "alert button", method: :get, params: { validate: params[:validate], sortby: "", county: ""} %>
 </div>
 
 <div class="expanded row" style="width: 90%;">
