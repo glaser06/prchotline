@@ -28,11 +28,11 @@
         <h4>County Specific Details</h4>
         <% i = ItemCounty.by_item(@item.id).by_county(@county.id).first %>
         <% if i == nil %>
-          <p> There are not yet any specific details for <%= "#{@item.name}" %> in <%= "#{@county.name}" %> County. </p>
-          <%= link_to "Add Details", new_item_county_path(:county=> @county.id, :item=> @item.id), class: "button radius" %>
+        <% ItemCounty.create(:item_id => @item.id, :county_id => @county.id, :description => 'There is no information for this item in this county. Click to add.') %>
+        <% i = ItemCounty.by_item(@item.id).by_county(@county.id).first %>
+        <%= best_in_place i, :description, :as => :textarea %><br></br>
         <% else %>
-          <%= i.description %><br></br>
-          <%= best_in_place i, :description, :as => :textarea %>
+          <%= best_in_place i, :description, :as => :textarea %><br></br>
           <%= link_to "Edit Details", new_item_county_path(:county=> @county.id, :item=> @item.id), class: "button radius" %>
         <% end %>
         <br></br>
