@@ -31,7 +31,7 @@
           <% ItemCounty.create(:item_id => @item.id, :county_id => @county.id, :description => 'There is no information for this item in this county. Click to add.') %>
           <% i = ItemCounty.by_item(@item.id).by_county(@county.id).first %>
         <% end %>
-          <%= best_in_place i, :description, :as => :textarea %><br></br>
+          <%= best_in_place i, :description, :as => :textarea, :inner_class => "best_in_place"%><br></br>
         
         <br></br>
 
