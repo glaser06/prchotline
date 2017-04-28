@@ -20,10 +20,13 @@
 
 // $(function(){ $(document).foundation(); });
 // $(document).foundation();
+$(document).on('turbolinks:load', function() {
+  $(document).foundation();
 
+})
 $(function(){
 
-  $(document).foundation();
+
 
   $(document).ready(function(){
 
