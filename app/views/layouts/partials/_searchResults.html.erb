@@ -25,10 +25,15 @@
 
     <div class="large-5 columns"  align = 'left'>
 
-        <h4><%= @county.name %> County</h4>
-        <p> County information specific to item. Still need to add a way to edit. </p>
-        <!-- <p><%= @county.name %> can recycle <%= @item.name %> -->
-        <br>
+        <h4>County Specific Details</h4>
+        <% i = ItemCounty.by_item(@item.id).by_county(@county.id).first %>
+        <% if i == nil %>
+          <% ItemCounty.create(:item_id => @item.id, :county_id => @county.id, :description => 'There is no information for this item in this county. Click to add.') %>
+          <% i = ItemCounty.by_item(@item.id).by_county(@county.id).first %>
+        <% end %>
+          <%= best_in_place i, :description, :as => :textarea, :inner_class => "best_in_place"%><br></br>
+        
+        <br></br>
 
           <h6>County Coordinator:</h6>
           <% if @county.coordinator != nil %>

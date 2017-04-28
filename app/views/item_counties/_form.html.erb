@@ -16,6 +16,9 @@
     <%= f.text_field :description %>
   </div>
 
+  <%= f.hidden_field :county_id, value: params[:county] %>
+  <%= f.hidden_field :item_id, value: params[:item] %>
+
   <div class="actions">
     <%= f.submit %>
   </div>

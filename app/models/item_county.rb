@@ -9,5 +9,6 @@ class ItemCounty < ApplicationRecord
 
   # Scopes
   scope :by_county, -> (county_id) { where("county_id = ?", county_id) }
+  scope :by_item, -> (item_id) { where("item_id = ?", item_id) }
 
 end
