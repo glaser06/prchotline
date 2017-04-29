@@ -22,6 +22,16 @@
 </p>
 
 <p>
+  <strong>Counties:</strong>
+  <ul>
+  <% @counties = @location.counties %>
+  <% @counties.each do |c| %>
+    <li><%= c.name %></li>
+  <% end %>
+  </ul>
+</p>
+
+<p>
   <strong>Phone:</strong>
   <%= number_to_phone(@location.phone, area_code: true) %>
 </p>
@@ -30,7 +40,6 @@
   <strong>Website:</strong>
   <%= link_to @location.website, "#{@location.website}", target: :_blank %>
 </p>
-
 
 <p>
   <strong>Active:</strong>
