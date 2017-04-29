@@ -17,7 +17,7 @@ gem 'faker'
 gem "font-awesome-rails"
 
 gem "jquery-ui-rails"
-
+gem 'dropbox_api'
 
 group :test do
   gem 'shoulda'

@@ -1,5 +1,6 @@
 require 'csv'
 
+
 class MainController < ApplicationController
 
 
@@ -29,15 +30,71 @@ class MainController < ApplicationController
     # if @vals.blank? then @vals = ["Bucks", item, callerName, method, disposition, callType, callFor] end
     # puts params[:submit_clicked].nil?
     if params[:submit_clicked]
+
+      client = DropboxApi::Client.new
+
+      ifInTmpFolder = false
+
+      currentYear = Time.now.year
+      currentMonth = Time.now.month
+      prcFileName = ""
       if callFor == "PRC"
-        CSV.open('PRCcall_stats.csv', "at") do |csv|
-          csv << [County.find(county).name.titleize, Item.find(item).name.titleize, callerName, method, disposition, callType, callFor]
-          end
+        prcFileName = "PRCHotlineStatsMonth#{currentMonth}.csv"
       else
-        CSV.open('DEPcall_stats.csv', "at") do |csv|
-          csv << [County.find(county).name.titleize, Item.find(item).name.titleize, callerName, method, disposition, callType, callFor]
-        end
+        prcFileName = "DEPHotlineStatsMonth#{currentMonth}.csv"
       end
+
+      path = "/#{currentYear}/#{prcFileName}"
+      tmpPath = Rails.root.join("tmp/#{prcFileName}")
+
+
+      if File.exist?(tmpPath) || File.symlink?(tmpPath)
+        puts "do something here?"
+      else
+
+        results = client.search(prcFileName,"/#{currentYear}")
+
+        if results.matches.count > 0
+          path = results.matches.first.resource.path_lower
+          monthCSV = ""
+          file = client.download(path) do |chunk|
+            monthCSV << chunk
+          end
+          CSV.open(tmpPath, "at") do |csv|
+            csv << monthCSV
+
+          end
+
+
+
+        end
+
+      end
+      # check if file is in tmp folder
+      # if not
+      # list folder
+      # check if current year folder exists
+      #   if not create it
+      # check if current month file exists
+      #   if not create it
+      # download file
+      # write data to csv
+      # upload and override file to dropbox
+      CSV.open(tmpPath, "at") do |csv|
+        csv << [County.find(county).name.titleize, Item.find(item).name.titleize, callerName, method, disposition, callType, callFor]
+
+      end
+      file_content = IO.read tmpPath
+      client.upload path, file_content, :mode => :overwrite
+      # if callFor == "PRC"
+      #
+      # else
+      #   CSV.open('DEPcall_stats.csv', "at") do |csv|
+      #     csv << [County.find(county).name.titleize, Item.find(item).name.titleize, callerName, method, disposition, callType, callFor]
+      #     client.upload path, csv, :mode => :overwrite
+      #   end
+      # end
+
       session.delete(:value)
       redirect_to "/", notice: "#{callerName} was added to #{callFor}'s call stats."
     else
