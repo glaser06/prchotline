@@ -36,7 +36,7 @@ end
 item_list = ["Paper", "Television"]
 
 item_list = ["Air Conditioners", "Aluminum", "Ammunition", "Antifreeze", "Appliances (with Freon)", "Appliances (No Freon)", "Art & Education Materials", "Asbestos", "Aseptic Packaging (Drink Boxes/Milk Cartons)", "Asphalt, Brick, Concrete, Gravel, & Porcelain", "Audio/Videotapes, CDs, DVDs, & Records", "Automotive Parts & Liquids",
-"Ballast", "Batteries (Alkaline/Zinc Carbon)", "Batteries (Button Cell)", "Batteries (Lead Acid)", "Batteries (Rechargable)", "Biohazardous Waste", "Books","Bricks","Building Materials","Bulbs",
+"Ballast", "Batteries (Alkaline/Zinc Carbon)", "Batteries (Button Cell)", "Batteries (Lead Acid)", "Batteries (Rechargable)", "Biohazardous Waste", "Books","Bricks","Building Materials","Light Bulbs",
 "Car/Vehicle Donations", "Car Seats", "Cardboard","Carpet","Cartons","Cell Phones","Christmas Lights","Christmas Trees","Clothing/Textiles","CFL Bulbs","Compost","Computers","Concrete","Construction/Demolition Materials","Cooking Oil",
 "Cork",
 "Couches",
@@ -80,6 +80,7 @@ item_list = ["Air Conditioners", "Aluminum", "Ammunition", "Antifreeze", "Applia
 "Motor Oil",
 "Needles",
 "Oil",
+"Oil Heaters",
 "Packaging Peanuts",
 "Paint (Oil/Solvent Base)",
 "Paper",
@@ -115,13 +116,19 @@ item_list = ["Air Conditioners", "Aluminum", "Ammunition", "Antifreeze", "Applia
 "X-Ray & MRI Film",
 "Yard Waste"]
 item_list.each do |name|
-  @item = Item.create( name: name.downcase, description: "Nothing just yet", active: true)
+  index = name
+  if name.split(" ").count == 1
+    index = name.singularize
+  end
+  @item = Item.create( name: index.downcase, description: "Nothing just yet", active: true)
 
   # @item.aliases.create(name: name.downcase, active: true)
   if name == "Mobile Phones"
-    @item.aliases.create(name: "Cellphones".downcase, active: true)
+    @item.aliases.create(name: "Cellphone".downcase, active: true)
   elsif name == "Televisions"
     @item.aliases.create(name: "TV".downcase, active: true)
+  elsif name == "Light Bulbs"
+    @item.aliases.create(name: "Bulb".downcase, active: true)
   end
   Rails.logger.info(@item.errors.inspect)
 end
@@ -195,11 +202,11 @@ fileNames.each do |fname|
   csv.each do |row|
 
     if row['Location Name']
-      name = row['Location Name'].rstrip
+      name = row['Location Name'].strip
       if row["Item"] && row["County"]
-        item = row["Item"].downcase.rstrip
+        item = row["Item"].downcase.strip
         # puts item
-        county = row['County'].split(' ')[0]
+        county = row['County'].strip.split(' ')[0]
         # puts county
         # puts county
         if row["Address"]
@@ -248,17 +255,35 @@ locations.each do |addr, items|
       end
     end
     if !flag
-      @loc1.addresses.build(address: row[1], city: row[0], zipcode: "", state: 'PA', county_id: c.id, location_id: @loc1.id, active: true)
+      city = ""
+      address1 = ""
+      unless row[0].nil?
+
+        city = row[0].strip
+      end
+      unless row[1].nil?
+        address1 = row[1].strip
+      end
+      @loc1.addresses.build(address: address1, city: city, zipcode: "", state: 'PA', county_id: c.id, location_id: @loc1.id, active: true)
     end
 
 
   end
   items.each do |item, emp|
     if item != "Addr"
-
-      i = Item.for_name(item).first
+      index = item
+      if item.split(" ").count == 1
+        index = item.singularize
+      end
+      i = Item.for_name(index.downcase).first
       if i.nil?
-        puts "#{item} is nil"
+        a = Alias.for_name(index.downcase).first
+        if a.nil?
+          puts "#{item} is nil"
+        else
+          @loc1.item_locations.build(item_id: a.item.id, location_id: @loc1.id, context: emp ,active: true)
+        end
+
       else
         @loc1.item_locations.build(item_id: i.id, location_id: @loc1.id, context: emp ,active: true)
       end

@@ -135,11 +135,13 @@ class MainController < ApplicationController
         @errors += "#{params[:county]} county does not exist"
         return
       end
+
       item = Item.for_name(qItem.downcase)
       id = 0
       if item.blank?
         item = Alias.for_name(qItem.downcase)
         if item.blank?
+
           if params[:item] && params[:item] != ""
             @errors += "Could not find item: #{params[:item]}"
             return
