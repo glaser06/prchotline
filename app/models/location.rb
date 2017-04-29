@@ -40,6 +40,18 @@ class Location < ApplicationRecord
     collection.any? ? collection : item_locations.build
   end
 
+  def link_to_website
+    puts "asdfadswf#{website}"
+    if self.website && self.website.length > 5
+      if self.website[0...4] == "http"
+        return self.website
+      else
+        return "http://#{website}"
+      end
+    end
+
+  end
+
 
   private
 
