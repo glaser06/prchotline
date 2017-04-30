@@ -1,5 +1,5 @@
 class ItemDatatable < AjaxDatatablesRails::Base
-
+# https://github.com/antillas21/ajax-datatables-rails
   def_delegator :@view, :link_to
   def_delegator :@view, :item_path
 
@@ -25,7 +25,7 @@ class ItemDatatable < AjaxDatatablesRails::Base
         activeString = "Closed"
       end
       [
-        link_to(record.name, item_path(record), :target => :_blank),
+        link_to(record.name, item_path(record)),
         record.description,
         activeString
         # comma separated list of the values for each cell of a table row

@@ -1,17 +1,31 @@
 <p id="notice"><%= notice %></p>
 <script>
+items_table = null
 $(document).on('turbolinks:load', function() {
-  $('#items-table').dataTable({
+  items_table = $('#items-table').DataTable({
+    "destroy": true,
     "processing": true,
     "serverSide": true,
     "ajax": $('#items-table').data('source'),
     "pagingType": "full_numbers",
+    "iDisplayLength": 75,
+    "bLengthChange": false,
     // optional, if you want full pagination controls.
     // Check dataTables documentation to learn more about
     // available options.
   });
 
 })
+$(document).on('turbolinks:before-cache', function() {
+  if ( $.fn.dataTable.isDataTable('#items-table') ) {
+      items_table.destroy();
+      // console.log("wtf is happening1")
+  }
+  // console.log("wtf is happening")
+
+})
+
+
 
 </script>
 

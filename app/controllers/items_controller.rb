@@ -17,7 +17,7 @@ class ItemsController < ApplicationController
       return
     else
       @items = Item.alphabetical.all.paginate(:page => params[:page]).per_page(20)
-      puts "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      
       respond_to do |format|
         format.html
         format.json { render json: ItemDatatable.new(view_context) }
