@@ -1,6 +1,16 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  config.exception_handler = {
 
+    layouts: {
+      500 => nil,
+      501 => nil,
+      502 => nil,
+      503 => nil,
+      504 => nil,
+
+    }
+  }
   # Code is not reloaded between requests.
   config.cache_classes = true
 

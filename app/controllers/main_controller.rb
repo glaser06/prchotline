@@ -119,7 +119,7 @@ class MainController < ApplicationController
     else
       @vals = [County.all.first, Item.all.first, "","Flyer", "Referred to Verizon", "Where to recycle", "PRC"]
     end
-    
+
 
     @items = Item.all
     @locations = []
@@ -142,7 +142,32 @@ class MainController < ApplicationController
         if item.blank?
 
           if params[:item] && params[:item] != ""
-            @errors += "Could not find item: #{params[:item]}"
+
+            names = []
+            Item.all.each do |item_row|
+              names.push(item_row.name)
+            end
+            Alias.all.each do |row|
+              names.push(row.name)
+            end
+            item_match = FuzzyMatch.new(Item.all, :read => :name)
+            alias_match = FuzzyMatch.new(Alias.all, :read => :name)
+            items = item_match.find(params[:item])
+            aliases = alias_match.find(params[:item])
+            if !items.nil?
+              @errors = "ERROR_MATCH_FOUND"
+              @item = items
+            elsif !aliases.nil?
+              @errors = "ERROR_MATCH_FOUND"
+              @item = aliases.item
+            else
+              @errors += "Could not find #{params[:item]}"
+            end
+
+
+
+
+
             return
           else
             redirect_to controller: 'locations', action: 'index', county: county[0].name

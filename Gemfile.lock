@@ -93,6 +93,10 @@ GEM
       launchy (~> 2.1)
       mail (~> 2.6.3)
     erubis (2.7.0)
+    exception_handler (0.7.6.0)
+      bundler
+      rails (>= 4.2.0)
+      responders
     execjs (2.7.0)
     factory_girl (4.8.0)
       activesupport (>= 3.0.0)
@@ -109,6 +113,7 @@ GEM
     foundation-rails (6.1.2.0)
       railties (>= 3.1.0)
       sass (>= 3.3.0, < 3.5)
+    fuzzy_match (2.1.0)
     geocoder (1.4.3)
     gherkin (4.1.1)
     globalid (0.3.7)
@@ -204,6 +209,9 @@ GEM
     rb-fsevent (0.9.8)
     rb-inotify (0.9.8)
       ffi (>= 0.5.0)
+    responders (2.4.0)
+      actionpack (>= 4.2.0, < 5.3)
+      railties (>= 4.2.0, < 5.3)
     ruby-progressbar (1.8.1)
     sass (3.4.23)
     sass-rails (5.0.6)
@@ -275,10 +283,12 @@ DEPENDENCIES
   database_cleaner
   dropbox_api
   email_spec
+  exception_handler (~> 0.7.6.0)
   factory_girl_rails
   faker
   font-awesome-rails
   foundation-rails
+  fuzzy_match (~> 2.1)
   geocoder
   jbuilder (~> 2.5)
   jquery-datatables-rails (~> 3.4.0)
