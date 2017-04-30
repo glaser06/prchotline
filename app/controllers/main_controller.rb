@@ -119,8 +119,7 @@ class MainController < ApplicationController
     else
       @vals = [County.all.first, Item.all.first, "","Flyer", "Referred to Verizon", "Where to recycle", "PRC"]
     end
-    puts 'index'
-    puts @vals
+    
 
     @items = Item.all
     @locations = []
@@ -186,12 +185,7 @@ class MainController < ApplicationController
 
 
       end
-      contexts = []
-      @locations.each do |loc|
-        context = ItemLocation.for_item(@item.id).for_location(loc.location_id).first
-        contexts.push(context)
-      end
-      @contexts = contexts
+
       @locations = @locations.by_active
     end
     if params[:sortby]

@@ -10,11 +10,11 @@ class ItemsController < ApplicationController
       # adds possible counties into an array of options to select
       @items_autocomplete = @items.map do |i|
         arr.push(i.name)
-      end   
+      end
     else
       @items = Item.alphabetical.all.paginate(:page => params[:page]).per_page(20)
     end
-    respond_to do |format|  
+    respond_to do |format|
       format.html
       format.json { render :json => @items_autocomplete[0]}
     end

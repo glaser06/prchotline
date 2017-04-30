@@ -12,12 +12,17 @@ gem "nested_form"
 gem 'will_paginate', '~> 3.1.0'
 gem 'geocoder'
 
+
 gem 'faker'
 
 gem "font-awesome-rails"
 
 gem "jquery-ui-rails"
+
 gem 'dropbox_api'
+
+gem 'best_in_place', '~> 3.0.1'
+
 
 group :test do
   gem 'shoulda'

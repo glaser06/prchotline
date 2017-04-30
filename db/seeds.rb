@@ -250,7 +250,7 @@ locations.each do |addr, items|
     @loc1.addresses.each do |addr_rows|
       addr1 = addr_rows.address
       # addr1 = addr_rows[1]
-      if row[1] == addr1
+      if row[1].strip == addr1.strip
         flag = true
       end
     end
