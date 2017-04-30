@@ -23,6 +23,8 @@ gem 'dropbox_api'
 
 gem 'best_in_place', '~> 3.0.1'
 
+gem 'jquery-datatables-rails', '~> 3.4.0'
+gem 'ajax-datatables-rails'
 
 group :test do
   gem 'shoulda'

@@ -1,4 +1,19 @@
 <p id="notice"><%= notice %></p>
+<script>
+$(document).on('turbolinks:load', function() {
+  $('#items-table').dataTable({
+    "processing": true,
+    "serverSide": true,
+    "ajax": $('#items-table').data('source'),
+    "pagingType": "full_numbers",
+    // optional, if you want full pagination controls.
+    // Check dataTables documentation to learn more about
+    // available options.
+  });
+
+})
+
+</script>
 
 <div class="row">
   <div class="large-12 columns">
@@ -13,44 +28,26 @@
 </div>
 
 <div class="row">
-<div class="large-12 columns">
-<div class="panel">
-<% if @items.blank? %>
-  <h4> No item available.</h4>
-<% else %>
-  <table border= "1px solid black">
-
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Aliases</th>
-        <th>Description</th>
-        <th>Edit</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @items.each do |item| %>
-      <% @aliases = item.aliases %>
-        <tr>
-          <td><%= link_to item.name.titleize, item%></td>
-          <td>
-            <% @aliases.each do |a| %>
-              <%= a.name if item.name != a.name %>
-            <% end %>
-          </td>
-          <td><%= item.description %></td>
-          <td><%= link_to 'Edit', edit_item_path(item) %></td>
-        </tr>
+  <div class="large-12 columns">
+    <div class="panel">
+      <% if @items.blank? %>
+        <h4> No item available.</h4>
+      <% else %>
+        <table id="items-table" data-source="<%= items_path(format: :json) %>">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th data-sortable="false">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        </table>
       <% end %>
-    </tbody>
 
+    <br>
 
-
-  </table>
-<% end %>
-<br>
-
-</div></div></div>
-
-<%= will_paginate @items, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
+    </div>
+  </div>
+</div>

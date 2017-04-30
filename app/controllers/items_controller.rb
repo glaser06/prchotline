@@ -11,12 +11,22 @@ class ItemsController < ApplicationController
       @items_autocomplete = @items.map do |i|
         arr.push(i.name)
       end
+      respond_to do |format|
+        format.json { render :json => @items_autocomplete[0]}
+      end
+      return
     else
       @items = Item.alphabetical.all.paginate(:page => params[:page]).per_page(20)
+      puts "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+      respond_to do |format|
+        format.html
+        format.json { render json: ItemDatatable.new(view_context) }
+
+      end
+      return
     end
     respond_to do |format|
       format.html
-      format.json { render :json => @items_autocomplete[0]}
     end
   end
 
