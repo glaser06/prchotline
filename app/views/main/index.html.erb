@@ -29,9 +29,9 @@
      <% end %>
      <%= form_tag("", :method => "get", id: "search-form") do %>
      <%= text_field_tag :item, params[:item], :placeholder => 'Enter Item', id:'items1' %>
-     <%= text_field_tag :county, params[:county], :placeholder => 'Enter County', id:'counties1' %>
+     <%= text_field_tag :county, params[:county], :placeholder => 'County (Optional)', id:'counties1' %>
 
-     <%= text_field_tag :zip, params[:zip], placeholder: "Zipcodes", maxlength: 5, class: 'input-small' %>
+     <%= text_field_tag :zip, params[:zip], placeholder: "Zipcode (Optional)", maxlength: 5, class: 'input-small' %>
      <%= submit_tag "Search", :name => nil, class: "button" %>
      <% end %>
    </div>
