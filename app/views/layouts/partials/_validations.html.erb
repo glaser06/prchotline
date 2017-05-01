@@ -36,7 +36,6 @@
         </div>
         <div class="row" style="padding-left: 15px;">
           Addresses: <br/>
-
           <%= location.addresses.first.address %>
           <%= location.addresses.first.city %>,
           PA
@@ -57,7 +56,6 @@
           </div>
           <%= location_form.input :verified, :as => :hidden, :input_html => { :value => Time.new.to_date } %>
 
-          <!-- <%= location.addresses.first.address %><br/> <br/> -->
         </div> <br/>
         <div class="row">
           <div class="large-10 column">

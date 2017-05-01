@@ -108,7 +108,6 @@ class LocationsController < ApplicationController
     respond_to do |format|
       
       if @location.update(location_params)
-        puts "was success"
         if params[:redirect] == "true"
           format.html { redirect_to :back, notice: 'Location was successfully validated.' }
           format.json { render :show, status: :ok, location: @location }
@@ -118,7 +117,7 @@ class LocationsController < ApplicationController
         end
 
       else
-        puts "location was not successful"
+        @location.reload
         format.html { render :edit }
         format.json { render json: @location.errors, status: :unprocessable_entity }
       end

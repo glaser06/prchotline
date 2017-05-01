@@ -197,17 +197,9 @@ class MainController < ApplicationController
 
 
       else
-        #for_county, -> (id) { where('county_id=?', id) }
         @county = County.find(county.first.id)
-        #@locations = Location.for_county(@county).for_item(@item).joins(:addresses)
 
         @locations = @item.addresses.for_county(@county).paginate(:page => params[:page]).per_page(10)
-        #@locations = @item.addresses.paginate(:page => params[:page]).per_page(10)
-        #coords = Geocoder.coordinates("#{@county.name} County")
-        #puts coords
-        #@locations = @item.addresses.near(coords, 50).paginate(:page => params[:page]).per_page(10)
-        # @locations = @item.locations.active.for_county(@county.id).alphabetical
-
 
       end
 
