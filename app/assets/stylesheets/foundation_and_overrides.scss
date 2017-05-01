@@ -49,6 +49,12 @@
 //
 // @include motion-ui-transitions;
 // @include motion-ui-animations;
+.filter input{
+  float:left;
+  clear:left
+}
+
+
 .medium-3 {
     width: 20%;
 }
