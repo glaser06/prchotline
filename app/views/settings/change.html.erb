@@ -1,0 +1,17 @@
+<div class="row">
+
+    <h2>Change Password</h2>
+
+
+    <%= form_tag(changePassword_path) do |f| %>
+    Enter Username
+    <%= text_field_tag :user %>
+    Enter Password
+    <%= text_field_tag :password %>
+    <%= submit_tag "Submit", class: "button" %>
+    <%= link_to 'Back', settings_path, class: "button" %>
+    <% end %>
+
+
+
+</div>

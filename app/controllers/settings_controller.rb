@@ -1,6 +1,9 @@
 class SettingsController < ApplicationController
 
+<<<<<<< e57fc59f082d63c6cd41106aba9376f818b263ef
 
+=======
+>>>>>>> password changes, needs DropBox Auth
   def change
     puts "change"
     client = DropboxApi::Client.new
