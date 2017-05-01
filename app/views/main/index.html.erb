@@ -1,9 +1,9 @@
 <script>
      $( function() {
-       $( "#counties" ).autocomplete({
+       $( "#counties1" ).autocomplete({
          source: '<%= counties_path(:json) %>'
        });
-       $( "#items" ).autocomplete({
+       $( "#items1" ).autocomplete({
          source: '<%= items_path(:json) %>'
        });
      } );
@@ -13,16 +13,23 @@
 
 
 <% if @errors != "" %>
+
+
 <div class="row">
 
  <div class="large-6 columns">
    <div class="panel">
      <h3> Search </h3>
 
-     <h4> <%= @errors %> </h4>
+
+     <% if @errors == "ERROR_MATCH_FOUND" %>
+       <h4> Did you mean <%= link_to @item.name, search_path(:item => @item.name, :county => params[:county], :zip => params[:zip])  %>? </h4>
+     <% else %>
+       <h4> <%= @errors %> </h4>
+     <% end %>
      <%= form_tag("", :method => "get", id: "search-form") do %>
-     <%= text_field_tag :item, params[:item], :placeholder => 'Enter Item', id:'items' %>
-     <%= text_field_tag :county, params[:county], :placeholder => 'Enter County', id:'counties' %>
+     <%= text_field_tag :item, params[:item], :placeholder => 'Enter Item', id:'items1' %>
+     <%= text_field_tag :county, params[:county], :placeholder => 'Enter County', id:'counties1' %>
 
      <%= text_field_tag :zip, params[:zip], placeholder: "Zipcodes", maxlength: 5, class: 'input-small' %>
      <%= submit_tag "Search", :name => nil, class: "button" %>

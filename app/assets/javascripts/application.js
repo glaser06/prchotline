@@ -14,6 +14,8 @@
 //= require jquery
 //= require best_in_place
 //= require jquery_ujs
+//= require dataTables/jquery.dataTables
+//= require dataTables/jquery.dataTables.foundation
 //= require jquery-ui
 //= require foundation
 //= require turbolinks
@@ -21,10 +23,13 @@
 
 // $(function(){ $(document).foundation(); });
 // $(document).foundation();
+$(document).on('turbolinks:load', function() {
+  $(document).foundation();
 
+})
 $(function(){
 
-  $(document).foundation();
+
 
   $(document).ready(function(){
 

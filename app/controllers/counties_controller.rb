@@ -13,15 +13,26 @@ class CountiesController < ApplicationController
     # adds possible counties into an array of options to select
     @counties_autocomplete = @counties.map do |c|
       arr.push(c.name)
+
     end
+    respond_to do |format|
+      format.html
+      format.json { render :json => @counties_autocomplete[0]}
+    end
+    return
   else
     @counties = County.all.alphabetical
+    respond_to do |format|
+      format.html
+      format.json { render :json => CountyDatatable.new(view_context)}
+    end
+    return
   end
 
   respond_to do |format|
     format.html
     format.json { render :json => @counties_autocomplete[0]}
-    end
+  end
 end
 
   # GET /counties/1

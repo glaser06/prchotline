@@ -1,4 +1,41 @@
 <p id="notice"><%= notice %></p>
+<script>
+counties_table = null
+$(document).on('turbolinks:load', function() {
+  counties_table = $('#counties-table').DataTable({
+    "destroy": true,
+    "processing": true,
+    "serverSide": true,
+    "ajax": $('#counties-table').data('source'),
+    "paging": false,
+    "columnDefs": [
+
+
+      {
+        "render": function (data, type, row) {
+            return "<br/>" + data[0]+ "<br/><br/>" +  data[1] + "<br/><br/>";
+        },
+        "targets": 2,
+      }
+
+    ]
+
+    // optional, if you want full pagination controls.
+    // Check dataTables documentation to learn more about
+    // available options.
+  });
+
+})
+$(document).on('turbolinks:before-cache', function() {
+  if ( $.fn.dataTable.isDataTable('#counties-table') ) {
+      counties_table.destroy();
+      // console.log("wtf is happening1")
+  }
+  // console.log("wtf is happening")
+
+})
+
+</script>
 
 <div class="row">
   <div class="large-12 columns">
@@ -11,37 +48,25 @@
 </div>
 
 <div class="row">
-<div class="large-12 columns">
+  <div class="large-12 columns">
 
-<div class="panel">
+    <div class="panel">
+      <table id="counties-table" data-source="<%= counties_path(format: :json) %>">
+        <thead>
+          <tr>
+            <th>County</th>
+            <th>County Coordinator</th>
+            <th data-sortable="false">Contact Information</th>
 
-<table border= "1px solid black">
+            <th data-sortable="false">Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
 
-  <thead>
-      <tr>
-        <th>County</th>
-        <th>Coordinator</th>
-        <th>Contact</th>
-        <th>Edit</th>
-      </tr>
-    </thead>
 
-  <tbody>
-    <% @counties.each do |county| %>
-      <tr>
-        <td><%= link_to county.name, county%></td>
-        <td><%= county.coordinator%></td>
-        <td>
-          <%= county.phone%>
-          <br></br>
-          <%= link_to "#{county.website}", "#{county.website}", :target => "_blank" %>
-        </td>
-        <td><%= link_to 'Edit', edit_county_path(county) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
 
-</div></div>
+    </div>
+  </div>
 </div>
-

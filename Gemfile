@@ -18,7 +18,16 @@ gem 'faker'
 gem "font-awesome-rails"
 
 gem "jquery-ui-rails"
+
+gem 'dropbox_api'
+
 gem 'best_in_place', '~> 3.0.1'
+
+gem 'jquery-datatables-rails', '~> 3.4.0'
+gem 'ajax-datatables-rails'
+
+gem 'exception_handler', '~> 0.7.6.0'
+gem 'fuzzy_match', '~> 2.1'
 
 group :test do
   gem 'shoulda'

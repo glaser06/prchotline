@@ -71,7 +71,7 @@
 
             <th><%= button_to "by Name", search_path, method: :get, params: { :county => params[:county], :item => params[:item], :zip => params[:zip], :sortby => "name" }%></th>
             <th>
-              Address 
+              Address
             </th>
 
             <th>Contact Info</th>
@@ -95,7 +95,7 @@
 
 
             <td>
-              <%= link_to location.website, "#{location.website}", target: :_blank %> <br/>
+              <%= link_to location.website, "#{location.link_to_website}", target: :_blank %> <br/>
               <% ph = location.phone %>
               <% a = location.phone.gsub!(/\D/, "") %>
               <%= "(#{ph[0..2]})" %>&nbsp;<%="#{ph[3..5]}"%>&nbsp;<%="#{ph[6..-1]}"%>

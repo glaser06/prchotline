@@ -1,5 +1,6 @@
 require 'csv'
 
+
 class MainController < ApplicationController
 
 
@@ -29,15 +30,71 @@ class MainController < ApplicationController
     # if @vals.blank? then @vals = ["Bucks", item, callerName, method, disposition, callType, callFor] end
     # puts params[:submit_clicked].nil?
     if params[:submit_clicked]
+
+      client = DropboxApi::Client.new
+
+      ifInTmpFolder = false
+
+      currentYear = Time.now.year
+      currentMonth = Time.now.month
+      prcFileName = ""
       if callFor == "PRC"
-        CSV.open('PRCcall_stats.csv', "at") do |csv|
-          csv << [County.find(county).name.titleize, Item.find(item).name.titleize, callerName, method, disposition, callType, callFor]
-          end
+        prcFileName = "PRCHotlineStatsMonth#{currentMonth}.csv"
       else
-        CSV.open('DEPcall_stats.csv', "at") do |csv|
-          csv << [County.find(county).name.titleize, Item.find(item).name.titleize, callerName, method, disposition, callType, callFor]
-        end
+        prcFileName = "DEPHotlineStatsMonth#{currentMonth}.csv"
       end
+
+      path = "/#{currentYear}/#{prcFileName}"
+      tmpPath = Rails.root.join("tmp/#{prcFileName}")
+
+
+      if File.exist?(tmpPath) || File.symlink?(tmpPath)
+        puts "do something here?"
+      else
+
+        results = client.search(prcFileName,"/#{currentYear}")
+
+        if results.matches.count > 0
+          path = results.matches.first.resource.path_lower
+          monthCSV = ""
+          file = client.download(path) do |chunk|
+            monthCSV << chunk
+          end
+          CSV.open(tmpPath, "at") do |csv|
+            csv << monthCSV
+
+          end
+
+
+
+        end
+
+      end
+      # check if file is in tmp folder
+      # if not
+      # list folder
+      # check if current year folder exists
+      #   if not create it
+      # check if current month file exists
+      #   if not create it
+      # download file
+      # write data to csv
+      # upload and override file to dropbox
+      CSV.open(tmpPath, "at") do |csv|
+        csv << [County.find(county).name.titleize, Item.find(item).name.titleize, callerName, method, disposition, callType, callFor]
+
+      end
+      file_content = IO.read tmpPath
+      client.upload path, file_content, :mode => :overwrite
+      # if callFor == "PRC"
+      #
+      # else
+      #   CSV.open('DEPcall_stats.csv', "at") do |csv|
+      #     csv << [County.find(county).name.titleize, Item.find(item).name.titleize, callerName, method, disposition, callType, callFor]
+      #     client.upload path, csv, :mode => :overwrite
+      #   end
+      # end
+
       session.delete(:value)
       redirect_to "/", notice: "#{callerName} was added to #{callFor}'s call stats."
     else
@@ -62,8 +119,7 @@ class MainController < ApplicationController
     else
       @vals = [County.all.first, Item.all.first, "","Flyer", "Referred to Verizon", "Where to recycle", "PRC"]
     end
-    puts 'index'
-    puts @vals
+
 
     @items = Item.all
     @locations = []
@@ -78,13 +134,40 @@ class MainController < ApplicationController
         @errors += "#{params[:county]} county does not exist"
         return
       end
+
       item = Item.for_name(qItem.downcase)
       id = 0
       if item.blank?
         item = Alias.for_name(qItem.downcase)
         if item.blank?
+
           if params[:item] && params[:item] != ""
-            @errors += "Could not find item: #{params[:item]}"
+
+            names = []
+            Item.all.each do |item_row|
+              names.push(item_row.name)
+            end
+            Alias.all.each do |row|
+              names.push(row.name)
+            end
+            item_match = FuzzyMatch.new(Item.all, :read => :name)
+            alias_match = FuzzyMatch.new(Alias.all, :read => :name)
+            items = item_match.find(params[:item])
+            aliases = alias_match.find(params[:item])
+            if !items.nil?
+              @errors = "ERROR_MATCH_FOUND"
+              @item = items
+            elsif !aliases.nil?
+              @errors = "ERROR_MATCH_FOUND"
+              @item = aliases.item
+            else
+              @errors += "Could not find #{params[:item]}"
+            end
+
+
+
+
+
             return
           else
             redirect_to controller: 'locations', action: 'index', county: county[0].name
@@ -119,12 +202,7 @@ class MainController < ApplicationController
         @locations = @item.addresses.for_county(@county).paginate(:page => params[:page]).per_page(10)
 
       end
-      contexts = []
-      @locations.each do |loc|
-        context = ItemLocation.for_item(@item.id).for_location(loc.location_id).first
-        contexts.push(context)
-      end
-      @contexts = contexts
+
       @locations = @locations.by_active
     end
     if params[:sortby]
