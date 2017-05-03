@@ -78,8 +78,9 @@
   <% end %>
 </div>
 </div>
+<div class="row" >
 <%= button_to "Clear Filters", locations_path,class: "alert button", method: :get, params: { validate: params[:validate], sortby: "", county: ""} %>
-
+</div>
 
 <div class="expanded row" style="width: 90%;">
 
