@@ -4,10 +4,10 @@
 
 <h3><%= @item.name.titleize %></h3>
 
-<% if @item.aliases.size > 1 %>
+<% if @item.aliases.size > 0 %>
 <p>
   <strong>Aliases</strong>
-    <% @item.aliases.drop(1).each do |a| %>
+    <% @item.aliases.each do |a| %>
 
       <li><%=  a.name %></li>
     <% end %>

@@ -20,5 +20,9 @@
 # Ignore Byebug command history file.
 .byebug_history
 
+<<<<<<< ba37640feaff124b2d8c134b6ced9715b42d8f19
 # Ignore secrets
 
+=======
+/config/application.yml
+>>>>>>> password app.rb made

@@ -6,8 +6,6 @@ class MainController < ApplicationController
 
   def clear_form
     session.delete(:value)
-    puts "reset"
-    puts @vals
     redirect_to :back
   end
 
@@ -18,17 +16,14 @@ class MainController < ApplicationController
     if callerName == "" then callerName = "Anonymous" end
     method = params[:method]
     if method == "other2" then method = params[:altOther2] end
-    disposition = params[:disposition]
+      disposition = params[:disposition]
     if disposition == "other3" then disposition = params[:altOther3] end
     if disposition == "directly" then disposition = params[:directly] end
-    callType = params[:callType]
+      callType = params[:callType]
     if callType == "Other" then callType = params[:altOther] end
     callFor = params[:callFor]
     session[:value] = [county, item, callerName, method, disposition, callType, callFor]
     @vals = session[:value]
-
-    # if @vals.blank? then @vals = ["Bucks", item, callerName, method, disposition, callType, callFor] end
-    # puts params[:submit_clicked].nil?
     if params[:submit_clicked]
 
       client = DropboxApi::Client.new
@@ -86,21 +81,13 @@ class MainController < ApplicationController
       end
       file_content = IO.read tmpPath
       client.upload path, file_content, :mode => :overwrite
-      # if callFor == "PRC"
-      #
-      # else
-      #   CSV.open('DEPcall_stats.csv', "at") do |csv|
-      #     csv << [County.find(county).name.titleize, Item.find(item).name.titleize, callerName, method, disposition, callType, callFor]
-      #     client.upload path, csv, :mode => :overwrite
-      #   end
-      # end
 
       session.delete(:value)
       redirect_to "/", notice: "#{callerName} was added to #{callFor}'s call stats."
     else
-      puts "save"
-      puts @vals
-      redirect_to :back
+        puts "save"
+        puts @vals
+        redirect_to :back
     end
 
   end
