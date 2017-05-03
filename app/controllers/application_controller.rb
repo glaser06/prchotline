@@ -12,10 +12,8 @@ class ApplicationController < ActionController::Base
       file_contents << chunk
     end
     contentArr = file_contents.split(',')
-    user = file_contents[0]
-    puts user
-    pass = file_contents[1]
-    puts pass
+    user = contentArr[0]
+    pass = contentArr[1]
     http_basic_authenticate_with :name => user, :password => pass
   end
 

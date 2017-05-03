@@ -6,7 +6,7 @@ class SettingsController < ApplicationController
       client = DropboxApi::Client.new
       file_content = "#{params[:user]},#{params[:password]}"
       client.upload "/credentials.csv", file_content, :mode => :overwrite
-      redirect_to settings_path
+      redirect_to settings_path, notice: 'Password settings were successfully updated.'
     end
   end
 

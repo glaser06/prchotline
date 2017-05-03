@@ -51,12 +51,16 @@
 // @include motion-ui-animations;
 .filter input{
   float:left;
-  clear:left
+  clear:left;
 }
 
 
 .medium-3 {
     width: 20%;
+}
+
+.medium-2 {
+  float: right;
 }
 
 h2 {
@@ -67,11 +71,10 @@ h2 {
     display: inline;
 }
 
-// .callout {
-//   border: 1px solid green;
-//   // display: inline-block;
-// }
+.form {
+  max-width: 50%;
 
+}
 .row a:hover, a:focus {
     color: black;
 }

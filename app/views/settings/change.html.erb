@@ -2,7 +2,7 @@
 
     <h2>Change Password</h2>
 
-
+    <div class = "form"> 
     <%= form_tag(changePassword_path) do |f| %>
     Enter Username
     <%= text_field_tag :user %>
@@ -11,7 +11,7 @@
     <%= submit_tag "Submit", class: "button" %>
     <%= link_to 'Back', settings_path, class: "button" %>
     <% end %>
-
+  </div>
 
 
 </div>
