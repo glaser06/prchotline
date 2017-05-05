@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   get 'validations' => 'validations'
   get 'settings' => 'settings#index', as: :settings
   get "downloadPRC" => 'settings#downloadPRC', as: :downloadPRC
+  get "changePassword" => 'settings#change', as: :passwordForm
+
+  post "changePassword" => 'settings#change', as: :changePassword
 
   post 'clear_form' => 'main#clear_form', as: :clear_form
   post 'newCall' => 'main#newCall'

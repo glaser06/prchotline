@@ -190,12 +190,14 @@ end
 #     end
 #   end
 # end
-fileNames = ['BucksCountyData.csv', 'Alle3.csv', 'Philadelphia.csv','Montgomery.csv','Lehigh.csv', 'Butler.csv']
-
+# fileNames = ['BucksCountyData.csv', 'Alle3.csv', 'Philadelphia.csv','Montgomery.csv','Lehigh.csv', 'Butler.csv','Beaver.csv', ]
 locations = {}
-fileNames.each do |fname|
-  # csv_text = File.read(fname)
-  csv_text = File.open(fname, "r:ISO-8859-1")
+tmpPath = Rails.root.join("county-data")
+Dir.foreach(tmpPath) do |fname|
+  next if fname == '.' or fname == '..'
+  # do work on real items
+  path = Rails.root.join("county-data/#{fname}")
+  csv_text = File.open(path, "r:ISO-8859-1")
   csv = CSV.parse(csv_text, :headers => true)
   countyZip = []
 
@@ -239,8 +241,13 @@ fileNames.each do |fname|
     end
 
   end
-
 end
+
+# fileNames.each do |fname|
+#   # csv_text = File.read(fname)
+#
+#
+# end
 locations.each do |addr, items|
   row1 = items["Addr"][0]
   @loc1 = Location.new(name: row1[2], phone: row1[3], website: row1[4], active: true)

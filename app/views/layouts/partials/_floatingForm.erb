@@ -1,11 +1,10 @@
       <h3> New Call </h3>
       <%= form_tag("/submit_form", method: "post") do %>
-
       County
-      <%= select_tag 'county', options_for_select(County.all.alphabetical.map { |a| [a.name, a.id]}), prompt:"Select a county", :required => true %>
+      <%= select_tag 'county', options_for_select(County.all.alphabetical.map { |a| [a.name, a.id]}, @vals[0]), prompt:"Select a county", :required => true %>
 
       Item
-      <%= select_tag 'item', options_for_select(Item.all.alphabetical.map { |a| [a.name.capitalize, a.id]}), prompt:"Select an item", :required => true %>
+      <%= select_tag 'item', options_for_select(Item.all.alphabetical.map { |a| [a.name.capitalize, a.id]}, @vals[1]), prompt:"Select an item", :required => true %>
 
       Caller Name
       <%= text_field_tag :callerName, @vals[2], placeholder: "Enter caller name" %>
@@ -16,6 +15,15 @@
         if(name=='other2')document.getElementById('div2').innerHTML='Other method: <input type="text" name="altOther2" />';
         else document.getElementById('div2').innerHTML='';
       }
+      $(function() {
+          var mySelect = document.getElementById('method');
+          for(var i, j = 0; i = mySelect.options[j]; j++) {
+            if(i.value == "<%= @vals[3]%>") {
+              mySelect.selectedIndex = j;
+              break;
+            }
+          }
+          });
       </script>
 
       <select required name="method" id="method" onchange="showfield2(this.options[this.selectedIndex].value)">
@@ -37,6 +45,15 @@
         else if(name=='directly')document.getElementById('div3').innerHTML='Answered Directly: <input type="text" name="directly" />';
         else document.getElementById('div3').innerHTML='';
       }
+      $(function() {
+          var mySelect1 = document.getElementById('disposition');
+          for(var i, j = 0; i = mySelect1.options[j]; j++) {
+            if(i.value == "<%= @vals[4]%>") {
+              mySelect1.selectedIndex = j;
+              break;
+            }
+          }
+          });
       </script>
 
       <select required name="disposition" id="disposition" onchange="showfield3(this.options[this.selectedIndex].value)">
@@ -57,6 +74,15 @@
         if(name=='Other')document.getElementById('div1').innerHTML='Other type: <input type="text" name="altOther" />';
         else document.getElementById('div1').innerHTML='';
       }
+      $(function() {
+          var mySelect2 = document.getElementById('callType');
+          for(var i, j = 0; i = mySelect2.options[j]; j++) {
+            if(i.value == "<%= @vals[5]%>") {
+              mySelect2.selectedIndex = j;
+              break;
+            }
+          }
+          });
       </script>
 
       <select required name="callType" id="callType" onchange="showfield(this.options[this.selectedIndex].value)">
@@ -70,10 +96,10 @@
       <div id="div1"></div>
 
       Call for <br>
-      <%= radio_button_tag(:callFor, "PRC", required: true) %>
+      <%= radio_button_tag(:callFor, "PRC", if @vals[6] == "PRC" then true end) %>
       <%= label_tag(:callFor_prc, "PRC") %>
 
-      <%= radio_button_tag(:callFor, "DEP") %>
+      <%= radio_button_tag(:callFor, "DEP", if @vals[6] == "DEP" then true end) %>
       <%= label_tag(:callFor_dep, "DEP") %>
       <br>
 

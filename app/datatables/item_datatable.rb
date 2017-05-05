@@ -5,7 +5,7 @@ class ItemDatatable < AjaxDatatablesRails::Base
 
   def sortable_columns
     # Declare strings in this format: ModelName.column_name
-    @sortable_columns ||= ['Item.name','Item.description']
+    @sortable_columns ||= ['Item.name']
   end
 
   def searchable_columns
@@ -18,16 +18,14 @@ class ItemDatatable < AjaxDatatablesRails::Base
   def data
 
     records.map do |record|
-      activeString = ""
-      if record.active
-        activeString = "Open"
-      else
-        activeString = "Closed"
+      alises = []
+      record.aliases.each do | alis |
+        alises.push(" " + alis.name)
       end
       [
         link_to(record.name, item_path(record)),
         record.description,
-        activeString
+        alises
         # comma separated list of the values for each cell of a table row
         # example: record.attribute,
       ]

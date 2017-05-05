@@ -9,9 +9,9 @@
   <div class="large-3 columns button-group">
 
     <% if params[:validate] == "true" %>
-      <%= button_to "All Locations", locations_path,class: "button", method: :get, params: { validate: "", sortby: params[:sortby], county: params[:county] }  %>
+      <%= button_to "Normal Mode", locations_path,class: "button", method: :get, params: { validate: "", sortby: params[:sortby], county: params[:county] }  %>
     <% else %>
-      <%= button_to "Validate Mode", locations_path,class: "button", method: :get, params: { validate: "true", sortby: params[:sortby], county: params[:county] }  %>
+      <%= button_to "Verify Mode", locations_path,class: "button", method: :get, params: { validate: "true", sortby: params[:sortby], county: params[:county] }  %>
     <% end %>
 
 
@@ -22,44 +22,38 @@
 </div>
 
 <div class="row">
+    <div class="large-6 columns button-group">
+      <legend>Sort by </legend>
+      <% sort = params[:sortby] %>
+      <% countyClass = "secondary button" %>
+      <% nameClass = "secondary button" %>
+      <% verifiedClass = "secondary button" %>
+      <% cityClass = "secondary button" %>
+      <% activeClass = "secondary button" %>
+      <% if sort == "county" %>
 
-  <div class="large-5 columns button-group">
-    <legend>Sort by </legend>
-    <% sort = params[:sortby] %>
-    <% countyClass = "secondary button" %>
-    <% nameClass = "secondary button" %>
-    <% verifiedClass = "secondary button" %>
-    <% cityClass = "secondary button" %>
-    <% activeClass = "secondary button" %>
-    <% if sort == "county" %>
+        <% countyClass = "button" %>
+      <% elsif sort == "name" %>
+        <% nameClass = "button" %>
+      <% elsif sort == "verified" %>
+        <% verifiedClass = "button" %>
+      <% elsif sort == "city" %>
+        <% cityClass = "button" %>
+      <% elsif sort == "active" %>
+        <% activeClass = "button" %>
+      <% else %>
+        <% nameClass = "button" %>
+      <% end %>
+      <%= button_to "Name", locations_path,  class: nameClass,  method: :get, params: {  sortby: "name", validate: params[:validate], county: params[:county] }  %>
+      <%= button_to "County", locations_path, class: countyClass,  method: :get, params: {  sortby: "county", validate: params[:validate], county: params[:county] }  %>
+      <%= button_to "Last Verified", locations_path,  class: verifiedClass, method: :get, params: {  sortby: "verified", validate: params[:validate], county: params[:county] }  %>
+      <%= button_to "City", locations_path,  class: cityClass, method: :get, params: {  sortby: "city", validate: params[:validate], county: params[:county] }  %>
+      <%= button_to "Active", locations_path,  class: activeClass, method: :get, params: {  sortby: "active", validate: params[:validate], county: params[:county]}  %>
 
-      <% countyClass = "button" %>
-    <% elsif sort == "name" %>
-      <% nameClass = "button" %>
-    <% elsif sort == "verified" %>
-      <% verifiedClass = "button" %>
-    <% elsif sort == "city" %>
-      <% cityClass = "button" %>
-    <% elsif sort == "active" %>
-      <% activeClass = "button" %>
-    <% else %>
-      <% nameClass = "button" %>
-    <% end %>
-    <%= button_to "Name", locations_path,  class: nameClass,  method: :get, params: {  sortby: "name", validate: params[:validate], county: params[:county] }  %>
-    <%= button_to "County", locations_path, class: countyClass,  method: :get, params: {  sortby: "county", validate: params[:validate], county: params[:county] }  %>
-    <%= button_to "Last Validated", locations_path,  class: verifiedClass, method: :get, params: {  sortby: "verified", validate: params[:validate], county: params[:county] }  %>
-    <%= button_to "City", locations_path,  class: cityClass, method: :get, params: {  sortby: "city", validate: params[:validate], county: params[:county] }  %>
-    <%= button_to "Active", locations_path,  class: activeClass, method: :get, params: {  sortby: "active", validate: params[:validate], county: params[:county]}  %>
+    </div>
 
-  </div>
-  <div class="large-4 columns">
   <%= form_tag("", :method => "get", id: "search-form") do %>
-
-      <fieldset >
-
-
-
-
+    <fieldset class="large-6 columns">
         <script>
         $( function() {
           $( "#tags" ).autocomplete({
@@ -67,36 +61,28 @@
           });
         } );
         </script>
-
-
         <div class="ui-widget">
           <legend>Filter by </legend>
-          <input id="tags" name="county" placeholder = 'Enter County' value='<%= params[:county] if params[:county]%>'>
-          <input style="display: none" name="validate" value='<%= params[:validate] if params[:validate]%>'>
-          <input style="display: none" name="sortby" value='<%= params[:sortby] if params[:sortby]%>'>
+          <div class="filter">
+            <div class="large-6 columns">
+              <input id="tags" type="text" name="county" placeholder = 'Enter County' value='<%= params[:county] if params[:county]%>'>
+              <input style="display: none" name="validate" value='<%= params[:validate] if params[:validate]%>'>
+              <input style="display: none" name="sortby" value='<%= params[:sortby] if params[:sortby]%>'>
+            </div>
+            <div class="small-6 columns">
+              <%= submit_tag "Search", :name => nil, class: "button" %>
+            </div>
+          </div >
         </div>
-        <div >
-          <%= submit_tag "Search", :name => nil, class: "button" %>
-        </div>
-      </div>
-      </fieldset>
-
-
-
+    </fieldset>
   <% end %>
-  </div>
-
-
-
 </div>
-<div class="columns row">
-
-  <%= button_to "Clear Filters", locations_path,class: "alert button", method: :get, params: { validate: params[:validate], sortby: "", county: ""} %>
+</div>
+<div class="row" >
+<%= button_to "Clear Filters", locations_path,class: "alert button", method: :get, params: { validate: params[:validate], sortby: "", county: ""} %>
 </div>
 
 <div class="expanded row" style="width: 90%;">
-
-
 
   <div class="panel">
     <% if @errors != "" %>
@@ -117,35 +103,21 @@
           <thead>
             <tr>
               <th>Name</th>
-
-
               <th>Address</th>
-
-
-
               <th>Contact Info</th>
               <th width="18%;">Items</th>
               <th width="7%;">Active</th>
               <th width="8%;">Last Verified</th>
               <th>Edit</th>
-
             </tr>
           </thead>
-
           <tbody>
             <% @locations.each do |location| %>
-
                 <%= simple_nested_form_for location, :html => { :class => 'form-horizontal' } do |f| %>
                   <%= f.input :verified, :as => :hidden, :input_html => { :value => Time.new.to_date } %>
                 <tr>
                   <td><%= link_to location.name, location, target: :_blank %></td>
-
-
-
-
-
                   <td>
-
                     <ul class="tabs" data-tabs id="example-tabs">
                       <% count = 0 %>
                       <% location.counties.distinct.each do |county| %>
@@ -153,63 +125,40 @@
                           <li class="tabs-title is-active"><a href="#<%= "panel#{count}-#{location.id}" %>" aria-selected="true"><%= county.name %></a></li>
                         <% else %>
                           <li class="tabs-title"><a href="#<%= "panel#{count}-#{location.id}" %>"><%= county.name %></a></li>
-
                         <% end %>
-
                         <% count += 1 %>
                       <% end %>
-
                     </ul>
 
                     <div class="tabs-content" data-tabs-content="example-tabs">
                       <% count = 0 %>
-
                       <% location.counties.distinct.each do |county| %>
                         <% shouldDisplay = " is-active" %>
                         <% if count != 0 %>
                           <% shouldDisplay = "" %>
                         <% end %>
-
                             <div class="tabs-panel<%=shouldDisplay%>" id="<%= "panel#{count}-#{location.id}" %>">
                               <ul>
                               <% if params[:validate] && params[:validate] != "" %>
                                   <% count1 = 0 %>
                                   <%= f.simple_fields_for :addresses do |addrForm| %>
-
-
                                     <% if addrForm.object.county.id == county.id %>
                                       <%= render :partial => "locations/loc_address_active", :locals => { :l => addrForm } %>
                                       <%= addrForm.input :active, label: addrForm.object.full_address, input_html: { id: "addressForm#{location.id}#{count1}" }%>
-
                                     <% end %>
                                     <% count1 += 1 %>
                                   <% end %>
-
                               <% else %>
                                 <% location.addresses.for_county(county.id).each do |addr| %>
-
                                   <li><%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}", target: :_blank %></li>
                                 <% end %>
                               <% end %>
                               </ul>
                             </div>
-
-
                         <% count += 1 %>
                       <% end %>
-                      <!-- <div class="tabs-panel is-active" id="<%= "panel1-#{location.id}" %>">
-                        <p>Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus.</p>
-                      </div>
-                      <div class="tabs-panel" id="<%= "panel2-#{location.id}" %>">
-                        <p>Suspendisse dictum feugiat nisl ut dapibus.  Vivamus hendrerit arcu sed erat molestie vehicula. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor.  Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor.</p>
-                      </div> -->
                     </div>
-
-
                  </td>
-
-
-
 
                   <td>
                     <%= link_to location.website, "#{location.link_to_website}", target: :_blank %> <br/>
@@ -225,29 +174,22 @@
                         <%= il.input :active, label: il.object.item.name.capitalize, input_html: { id: "itemcheck#{location.id}#{count}" }%>
                         <% count += 1 %>
                       <% end %>
-
                     <% else %>
                       <% @item_locations.for_location(location.id).each do |il| %>
                         <%= il.item.name.capitalize %> <br/>
                       <% end %>
                     <% end %>
-
                   </td>
-
-
 
                     <td>
                       <% if params[:validate] && params[:validate] != "" %>
                         <%= f.input :active, label: "",  as: :radio_buttons, :collection => [['Active', true],['Inactive', false]], :input_html => {  id: "active#{location.id}" }  %>
-                        <!-- <%= f.input :active, as: :boolean, checked_value: true, unchecked_value: false %> -->
                       <% else %>
                         <%= location.active ? "Active" : "Inactive" %>
                       <% end %>
-
                     </td>
                     <td>
                       <% if (Time.new.to_date - location.updated_at.to_date).to_i < 0%>
-
                       0 days ago
                       <% elsif (Time.new.to_date - location.updated_at.to_date).to_i == 1 %>
                         1 day ago
@@ -260,23 +202,16 @@
                         <%= hidden_field_tag(:redirect, 'true') %>
                         <%= f.submit "Verify", class: "button radius" %>
                         <%= link_to 'Edit', edit_location_path(location), target: :_blank %>
-
                       <% else %>
                         <%= link_to 'Edit', edit_location_path(location), target: :_blank %>
                       <% end %>
-
                     </td>
-
                   <% end %>
                 </tr>
-
-
             <% end %>
           </tbody>
         </table>
       <% end %>
-
-
     <% end %>
 
 
