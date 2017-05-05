@@ -1,17 +1,8 @@
-
-      <!-- fields -->
-
-      <td>
-
-        <% if !l.object.item.nil? %>
-          <%= l.object.item.name %>
-        <% end %>
-
-      <!-- x icon to remove -->
-      </td>
-      <td>
-        <%= l.input :active, label: "" %>
-      </td>
-
-
-      <!-- x icon to remove -->
+<td>
+  <% if !l.object.item.nil? %>
+  <%= l.object.item.name %>
+  <% end %>
+</td>
+<td>
+  <%= l.input :active, label: "" %>
+</td>

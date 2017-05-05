@@ -1,19 +1,18 @@
-
 <div class="row">
-    <div class="large-4 columns">
-        <%= l.collection_select(:item_id, Item.all.alphabetical, :id, :name, { :prompt => 'Select Item' } ) %>
-    </div>
-    <div class="large-6 columns">
-        <%= l.text_area(:description) %>
-    </div>
-    <div class="large-1 columns">
-        <%= l.input(:active) %>
-    </div>
-    <div class="large-1 columns">
-        <%= l.link_to_remove("x") %>
-    </div>
+  <div class="large-4 columns">
+    <%= l.collection_select(:item_id, Item.all.alphabetical, :id, :name, { :prompt => 'Select Item' } ) %>
+  </div>
+  <div class="large-6 columns">
+    <%= l.text_area(:description) %>
+  </div>
+  <div class="large-1 columns">
+    <%= l.input(:active) %>
+  </div>
+  <div class="large-1 columns">
+    <%= l.link_to_remove("x") %>
+  </div>
 
-    <%= l.hidden_field(:verified, :value => Date.today) %>
-    <%= l.hidden_field(:context, :value => "we still tryin") %>
+  <%= l.hidden_field(:verified, :value => Date.today) %>
+  <%= l.hidden_field(:context, :value => "we still tryin") %>
 
 </div>

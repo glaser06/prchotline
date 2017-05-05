@@ -1,5 +1,4 @@
 class Alias < ApplicationRecord
-
   before_save :downcase_name
 
   belongs_to :item, required: false
@@ -9,10 +8,9 @@ class Alias < ApplicationRecord
   scope :active,       -> { where(active: true) }
   scope :inactive,     -> { where(active: false) }
 
-  private 
-
-      def downcase_name
-        self.name = self.name.downcase
-      end
+  private
+    def downcase_name
+      self.name = self.name.downcase
+    end
 
 end

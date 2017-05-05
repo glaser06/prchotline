@@ -1,148 +1,134 @@
-
 <p id="notice"><%= notice %></p>
 
 <div class="column expanded row" style="width: 80%">
-  <div class="callout"  align = 'center'>
+  <div class="callout" align='center'>
 
-    <h2><%= @item.name.capitalize %> in <%= @county.name %> County</h2>
+    <h2><%= @item.name.capitalize %>
+      in
+      <%= @county.name %>
+      County</h2>
 
     <% st = "" %>
     <% @item.aliases.each do |a| %>
-      <% if a.name != @item.name %>
-        <% st += " " + a.name %>
-      <% end %>
+    <% if a.name != @item.name %>
+    <% st += " " + a.name %>
+    <% end %>
     <% end %>
     <% if st != "" %>
-      <h6>Also known as: <%= st %> </h6>
+    <h6>Also known as:
+      <%= st %>
+    </h6>
     <% end %>
     <br>
 
-    <div class="large-7 columns"  align = 'left'>
-        <h4><%= @item.name.capitalize %></h4>
-
-        <p><%= @item.description %> </p>
+    <div class="large-7 columns" align='left'>
+      <h4><%= @item.name.capitalize %></h4>
+      <p><%= @item.descriptio n%></p>
     </div>
 
-    <div class="large-5 columns"  align = 'left'>
+    <div class="large-5 columns" align='left'>
+      <h4>County Specific Details</h4>
+      <% i = ItemCounty.by_item(@item.id).by_county(@county.id).first %>
+      <% if i == nil %>
+      <% ItemCounty.create(:item_id => @item.id, :county_id => @county.id, :description => 'There is no information for this item in this county. Click to add.') %>
+      <% i = ItemCounty.by_item(@item.id).by_county(@county.id).first %>
+      <% end %>
+      <%= best_in_place i, :description, :as => :textarea, :inner_class => "best_in_place"%>
+      <br></br>
+      <br></br>
 
-        <h4>County Specific Details</h4>
-        <% i = ItemCounty.by_item(@item.id).by_county(@county.id).first %>
-        <% if i == nil %>
-          <% ItemCounty.create(:item_id => @item.id, :county_id => @county.id, :description => 'There is no information for this item in this county. Click to add.') %>
-          <% i = ItemCounty.by_item(@item.id).by_county(@county.id).first %>
-        <% end %>
-          <%= best_in_place i, :description, :as => :textarea, :inner_class => "best_in_place"%><br></br>
-        
-        <br></br>
-
-          <h6>County Coordinator:</h6>
-          <% if @county.coordinator != nil %>
-            <%= @county.coordinator %><br>
-          <% else %>
-            <%= "There is no county coordinator." %><br>
-          <% end %>
-          <% if @county.coordinator != nil %>
-            <%= @county.phone%><br>
-          <% else %>
-            <%= "There is no county phone." %><br>
-          <% end %>
-          <% link = @county.website%>
-          <% if link != nil %>
-            <%= link_to "County Recycling Website", "#{link}", :target => "_blank" %><br>
-          <% else %>
-            <%= "There is no county website." %><br>
-          <% end %>
-          <td><%= link_to 'Edit County Information', edit_county_path(@county) %></td>
-        </p>
-
-    </div>
-
-    <br>
-
-    <div align = 'center'>
-
-    <%if @locations.size > 0 %>
-
-      <table border= "1px solid black" >
-
-        <thead>
-          <tr>
-
-
-            <th><%= button_to "by Name", search_path, method: :get, params: { :county => params[:county], :item => params[:item], :zip => params[:zip], :sortby => "name" }%></th>
-            <th>
-              Address
-            </th>
-
-            <th>Contact Info</th>
-            <th width="10%"><%= button_to "by Verified", search_path, method: :get, params: { :county => params[:county], :item => params[:item], :zip => params[:zip], :sortby => "verified" }%></th>
-            <th>Context </th>
-            <th> Verify </th>
-
-
-          </tr>
-        </thead>
-
-        <tbody>
-          <% @locations.each_with_index do |addr, index| %>
-          <tr>
-            <% location = Location.find(addr.location_id) %>
-            <td><%= link_to location.name, location%> </td>
-
-
-            <td><%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}", target: :_blank %>  </td>
-
-
-
-            <td>
-              <%= link_to location.website, "#{location.link_to_website}", target: :_blank %> <br/>
-              <% ph = location.phone %>
-              <% a = location.phone.gsub!(/\D/, "") %>
-              <%= "(#{ph[0..2]})" %>&nbsp;<%="#{ph[3..5]}"%>&nbsp;<%="#{ph[6..-1]}"%>
-            </td>
-
-
-            <td>
-              <em> <%= if location.active then "Active" else "Inactive" end %> </em><br/>
-              Updated<br/>
-              <% if (Time.new.to_date - location.updated_at.to_date).to_i < 0%>
-
-                0 days ago
-              <% elsif (Time.new.to_date - location.updated_at.to_date).to_i == 1 %>
-                1 day ago
-              <% else %>
-                  <%= (Time.new.to_date - location.updated_at.to_date).to_i %> days ago
-              <% end %>
-            </td>
-
-            <td>
-              <%= location.item_locations.first.context %>
-            </td>
-            <td>
-              <%= simple_nested_form_for location, :html => { :class => 'form-horizontal' } do |f| %>
-                <%= f.input :verified, :as => :hidden, :input_html => { :value => Time.new.to_date } %>
-                <%= f.submit "Verify", class: "button radius" %>
-              <% end %>
-            </td>
-
-
-
-          </tr>
-          <% end %>
-        </tbody>
-
-      </table>
+      <h6>County Coordinator:</h6>
+      <% if @county.coordinator != nil %>
+      <%= @county.coordinator %><br>
     <% else %>
-      <%= "There are no active locations where this item can be recycled." %>
+      <%= "There is no county coordinator." %><br>
+      <% end %>
+      <% if @county.coordinator != nil %>
+      <%= @county.phone%><br>
+    <% else %>
+      <%= "There is no county phone." %><br>
+      <% end %>
+      <% link = @county.website%>
+      <% if link != nil %>
+      <%= link_to "County Recycling Website", "#{link}", :target => "_blank" %><br>
+    <% else %>
+      <%= "There is no county website." %><br>
+      <% end %>
+      <td><%= link_to 'Edit County Information', edit_county_path(@county) %></td>
+    </p>
+  </div>
+
+  <br>
+
+  <div align='center'>
+    <%if @locations.size > 0 %>
+    <table border="1px solid black">
+      <thead>
+        <tr>
+          <th><%= button_to "by Name", search_path, method: :get, params: { :county => params[:county], :item => params[:item], :zip => params[:zip], :sortby => "name" }%></th>
+          <th>Address</th>
+          <th>Contact Info</th>
+          <th width="10%"><%= button_to "by Verified", search_path, method: :get, params: { :county => params[:county], :item => params[:item], :zip => params[:zip], :sortby => "verified" }%></th>
+          <th>Context</th>
+          <th>Verify</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @locations.each_with_index do |addr, index| %>
+        <tr>
+          <% location = Location.find(addr.location_id) %>
+          <td><%= link_to location.name, location%>
+          </td>
+          <td><%= link_to addr.full_address, "http://maps.google.com/?q=#{addr.full_address}", target: :_blank %>
+          </td>
+          <td>
+            <%= link_to location.website, "#{location.link_to_website}", target: :_blank %>
+            <br/>
+            <% ph = location.phone %>
+            <% a = location.phone.gsub!(/\D/, "") %>
+            <%= "(#{ph[0..2]})" %>&nbsp;<%="#{ph[3..5]}"%>&nbsp;<%="#{ph[6..-1]}"%>
+          </td>
+
+          <td>
+            <em>
+            <%= if location.active then "Active" else "Inactive" end %>
+            </em><br/>
+            Updated<br/>
+            <% if (Time.new.to_date - location.updated_at.to_date).to_i < 0%>
+            0 days ago
+            <% elsif (Time.new.to_date - location.updated_at.to_date).to_i == 1 %>
+            1 day ago
+          <% else %>
+            <%= (Time.new.to_date - location.updated_at.to_date).to_i %>
+            days ago
+            <% end %>
+          </td>
+
+          <td>
+            <%= location.item_locations.first.context %>
+          </td>
+          <td>
+            <%= simple_nested_form_for location, :html => { :class => 'form-horizontal' } do |f| %>
+            <%= f.input :verified, :as => :hidden, :input_html => { :value => Time.new.to_date } %>
+            <%= f.submit "Verify", class: "button radius" %>
+            <% end %>
+          </td>
+
+        </tr>
+        <% end %>
+      </tbody>
+
+    </table>
+  <% else %>
+    <%= "There are no active locations where this item can be recycled." %>
     <% end %>
-    </div>
+  </div>
 
-
-
-    </div>
+</div>
 
 </div>
 
 <% if @locations != [] %>
-        <%= will_paginate @locations, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
+<%= will_paginate @locations, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
 <% end %>

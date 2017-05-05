@@ -12,12 +12,12 @@
 
   <tbody>
     <% @item_counties.each do |item_county| %>
-      <tr>
-        <td><%= item_county.description %></td>
-        <td><%= link_to 'Show', item_county %></td>
-        <td><%= link_to 'Edit', edit_item_county_path(item_county) %></td>
-        <td><%= link_to 'Destroy', item_county, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+    <tr>
+      <td><%= item_county.description %></td>
+      <td><%= link_to 'Show', item_county %></td>
+      <td><%= link_to 'Edit', edit_item_county_path(item_county) %></td>
+      <td><%= link_to 'Destroy', item_county, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
     <% end %>
   </tbody>
 </table>
