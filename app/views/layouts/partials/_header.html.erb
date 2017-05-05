@@ -1,49 +1,49 @@
 <script>
-     $( function() {
-       $( "#counties" ).autocomplete({
-         source: '<%= counties_path(:json) %>'
-       });
-       $( "#items" ).autocomplete({
-         source: '<%= items_path(:json) %>'
-       });
-     } );
+  $(function () {
+    $("#counties").autocomplete({source: '<%= counties_path(:json) %>'});
+    $("#items").autocomplete({source: '<%= items_path(:json) %>'});
+  });
 </script>
 
 <div class="top-bar">
   <div class="top-bar-title">
     <class="name"><%= link_to image_tag("logo.jpg", size: "70x70"), search_path, class: "active" %>
 
-  </div>
-  <div id="responsive-menu">
-    <div class="top-bar-left">
-      <div class="row">
-        <div class="medium-3 columns"> <h4><%= link_to "Locations", locations_path%></h4></div></div>
     </div>
-    <div class="top-bar-right">
-      <ul class="menu">
+    <div id="responsive-menu">
+      <div class="top-bar-left">
+        <div class="row">
+          <div class="medium-3 columns">
+            <h4><%= link_to "Locations", locations_path%></h4>
+          </div>
+        </div>
+      </div>
+      <div class="top-bar-right">
+        <ul class="menu">
 
-        <%= form_tag("/search", :method => "get", id: "search-form") do %>
-            <div class="row">
-              <div class="medium-3 columns">
-                <%= text_field_tag :county, params[:county], :placeholder => 'Enter County', id:'counties' %>
-              </div>
-              <div class="medium-3 columns">
-                <%= text_field_tag :item, params[:item], :placeholder => 'Item (Optional)', id:'items' %>
+          <%= form_tag("/search", :method => "get", id: "search-form") do %>
+          <div class="row">
+            <div class="medium-3 columns">
+              <%= text_field_tag :county, params[:county], :placeholder => 'Enter County', id:'counties' %>
+            </div>
+            <div class="medium-3 columns">
+              <%= text_field_tag :item, params[:item], :placeholder => 'Item (Optional)', id:'items' %>
 
-              </div>
-              <div class="medium-3 columns">
-                <%= text_field_tag :zip, params[:zip], placeholder: "Zip (Optional)", maxlength: 5, class: 'input-small'%>
-              </div>
-              <div class="medium-1 columns">
-                <%= submit_tag "Search", :name => nil, class: "button" %>
-              </div>
+            </div>
+            <div class="medium-3 columns">
+              <%= text_field_tag :zip, params[:zip], placeholder: "Zip (Optional)", maxlength: 5, class: 'input-small'%>
+            </div>
+            <div class="medium-1 columns">
+              <%= submit_tag "Search", :name => nil, class: "button" %>
+            </div>
             <% end %>
             <div class="medium-2 columns">
-               <h4><%= link_to "Settings", settings_path%> </h4>
+              <h4><%= link_to "Settings", settings_path%>
+              </h4>
             </div>
-      </ul>
+          </ul>
 
+        </div>
+
+      </div>
     </div>
-
-  </div>
-</div>

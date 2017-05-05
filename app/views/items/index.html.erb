@@ -1,43 +1,35 @@
 <p id="notice"><%= notice %></p>
 <script>
-items_table = null
-$(document).on('turbolinks:load', function() {
-  items_table = $('#items-table').DataTable({
-    "destroy": true,
-    "processing": true,
-    "serverSide": true,
-    "ajax": $('#items-table').data('source'),
-    "pagingType": "full_numbers",
-    "iDisplayLength": 75,
-    "bLengthChange": false,
-    // optional, if you want full pagination controls.
-    // Check dataTables documentation to learn more about
-    // available options.
-  });
+  items_table = null
+  $(document).on('turbolinks:load', function () {
+    items_table = $('#items-table').DataTable({
+      "destroy": true,
+      "processing": true,
+      "serverSide": true,
+      "ajax": $('#items-table').data('source'),
+      "pagingType": "full_numbers",
+      "iDisplayLength": 75,
+      "bLengthChange": false,
+      //Check dataTables documentation to learn more about available options such as optional pagination controls.
+    });
 
-})
-$(document).on('turbolinks:before-cache', function() {
-  if ( $.fn.dataTable.isDataTable('#items-table') ) {
+  })
+  $(document).on('turbolinks:before-cache', function () {
+    if ($.fn.dataTable.isDataTable('#items-table')) {
       items_table.destroy();
-      // console.log("wtf is happening1")
-  }
-  // console.log("wtf is happening")
-
-})
-
-
-
+    }
+  })
 </script>
 
 <div class="row">
   <div class="large-12 columns">
-  <div class="left">
-    <h1>Items</h1>
-  </div>
+    <div class="left">
+      <h1>Items</h1>
+    </div>
 
-  <div class="right">
-  <%= link_to '<i class="fa fa-plus-square" aria-hidden="true"></i> Add Item'.html_safe, new_item_path %>
-  </div>
+    <div class="right">
+      <%= link_to '<i class="fa fa-plus-square" aria-hidden="true"></i> Add Item'.html_safe, new_item_path %>
+    </div>
   </div>
 </div>
 
@@ -45,9 +37,10 @@ $(document).on('turbolinks:before-cache', function() {
   <div class="large-12 columns">
     <div class="panel">
       <% if @items.blank? %>
-        <h4> No item available.</h4>
-      <% else %>
-        <table id="items-table" data-source="<%= items_path(format: :json) %>">
+      <h4>
+        No item available.</h4>
+    <% else %>
+      <table id="items-table" data-source="<%= items_path(format: :json) %>">
         <thead>
           <tr>
             <th>Name</th>
@@ -55,12 +48,11 @@ $(document).on('turbolinks:before-cache', function() {
             <th data-sortable="false">Status</th>
           </tr>
         </thead>
-        <tbody>
-        </tbody>
-        </table>
+        <tbody></tbody>
+      </table>
       <% end %>
 
-    <br>
+      <br>
 
     </div>
   </div>

@@ -1,48 +1,37 @@
 <p id="notice"><%= notice %></p>
 <script>
-counties_table = null
-$(document).on('turbolinks:load', function() {
-  counties_table = $('#counties-table').DataTable({
-    "destroy": true,
-    "processing": true,
-    "serverSide": true,
-    "ajax": $('#counties-table').data('source'),
-    "paging": false,
-    "columnDefs": [
+  counties_table = null
+  $(document).on('turbolinks:load', function () {
+    counties_table = $('#counties-table').DataTable({
+      "destroy": true,
+      "processing": true,
+      "serverSide": true,
+      "ajax": $('#counties-table').data('source'),
+      "paging": false,
+      "columnDefs": [
+        {
+          "render": function (data, type, row) {
+            return "<br/>" + data[0] + "<br/><br/>" + data[1] + "<br/><br/>";
+          },
+          "targets": 2
+        }
+      ]
+    });
 
-
-      {
-        "render": function (data, type, row) {
-            return "<br/>" + data[0]+ "<br/><br/>" +  data[1] + "<br/><br/>";
-        },
-        "targets": 2,
-      }
-
-    ]
-
-    // optional, if you want full pagination controls.
-    // Check dataTables documentation to learn more about
-    // available options.
-  });
-
-})
-$(document).on('turbolinks:before-cache', function() {
-  if ( $.fn.dataTable.isDataTable('#counties-table') ) {
+  })
+  $(document).on('turbolinks:before-cache', function () {
+    if ($.fn.dataTable.isDataTable('#counties-table')) {
       counties_table.destroy();
-      // console.log("wtf is happening1")
-  }
-  // console.log("wtf is happening")
-
-})
-
+    }
+  })
 </script>
 
 <div class="row">
   <div class="large-12 columns">
 
-  <div class="left">
-    <h1>Counties</h1>
-  </div>
+    <div class="left">
+      <h1>Counties</h1>
+    </div>
 
   </div>
 </div>
@@ -61,11 +50,8 @@ $(document).on('turbolinks:before-cache', function() {
             <th data-sortable="false">Edit</th>
           </tr>
         </thead>
-        <tbody>
-        </tbody>
+        <tbody></tbody>
       </table>
-
-
 
     </div>
   </div>

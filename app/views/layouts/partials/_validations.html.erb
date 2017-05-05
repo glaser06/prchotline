@@ -1,105 +1,113 @@
 <p id="notice"><%= notice %></p>
-<h4> <%= @countyName %> </h4>
+<h4>
+  <%= @countyName %>
+</h4>
 <% @locations.each do |location| %>
-  <div class="row"> <br/><br/> </div>
-  <div class="row" >
-    <fieldset style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); padding: 10px 10px 10px 10px;">
-      <%= simple_nested_form_for location, :html => { :class => 'form-horizontal' } do |location_form| %>
+<div class="row">
+  <br/><br/>
+</div>
+<div class="row">
+  <fieldset style="box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); padding: 10px 10px 10px 10px;">
+    <%= simple_nested_form_for location, :html => { :class => 'form-horizontal' } do |location_form| %>
 
+    <div class="row">
+      <div class="large-6 column">
+        <h4><%= location.name %></h4><br/>
+      </div>
+      <div class="large-3 small-3 column">
+        <%= location.website %>
+        <br/>
+        <% ph = location.phone %>
+        <% a = location.phone.gsub!(/\D/, "") %>
+        <%= "(#{ph[0..2]})" %>&nbsp;<%="#{ph[3..5]}"%>&nbsp;<%="#{ph[6..-1]}"%>
+      </div>
+      <div class="large-2 small-1 column">
+        <i>
+          Updated
+        </i>
+        <br/>
+        <% year = "#{location.updated_at.year}".split(//).last(2).join %>
+        <%= "#{location.updated_at.month}/#{location.updated_at.day}/#{year}" %>
+
+        <br/>
+        <% if (Time.new.to_date - location.updated_at.to_date).to_i < 0%>
+
+        0 days ago
+      <% else %>
+        <%= (Time.new.to_date - location.updated_at.to_date).to_i %>
+        days ago
+        <% end %>
+      </div>
+      <div class="large-1 small-1 column">
+        <%= location_form.input :active, label: "",  as: :radio_buttons, :collection => [['Active', true],['Inactive', false]], :input_html => {  id: "active#{location.id}" }  %>
+
+      </div>
+    </div>
+    <div class="row" style="padding-left: 15px;">
+      Addresses:
+      <br/>
+      <%= location.addresses.first.address %>
+      <%= location.addresses.first.city %>, PA
+      <%= location.addresses.first.zipcode %>
+      in
+      <%= location.addresses.first.county.name %>
+      &nbsp;&nbsp;
+      <a data-open="<%=location.id%>AddressModal">More Addresses</a>
+      <div class="reveal" id="<%=location.id%>AddressModal" data-reveal>
+
+        <h3>
+          <%= location.name %>
+          Addresses
+        </h3>
+        <% @location = location %>
+        No other addresses.
+
+        <button class="close-button" data-close type="button">
+          x
+        </button>
+
+      </div>
+      <%= location_form.input :verified, :as => :hidden, :input_html => { :value => Time.new.to_date } %>
+
+    </div>
+    <br/>
+    <div class="row">
+      <div class="large-10 column">
+
+        <% count = 1 %>
         <div class="row">
-          <div class="large-6 column">
-            <h4><%= location.name %></h4><br/>
-          </div>
-          <div class="large-3 small-3 column">
-            <%= location.website %> <br/>
-            <% ph = location.phone %>
-            <% a = location.phone.gsub!(/\D/, "") %>
-            <%= "(#{ph[0..2]})" %>&nbsp;<%="#{ph[3..5]}"%>&nbsp;<%="#{ph[6..-1]}"%>
-          </div>
-          <div class="large-2 small-1 column">
-            <i> Updated </i> <br/>
-            <% year = "#{location.updated_at.year}".split(//).last(2).join %>
-            <%= "#{location.updated_at.month}/#{location.updated_at.day}/#{year}" %>
-
-             <br/>
-             <% if (Time.new.to_date - location.updated_at.to_date).to_i < 0%>
-
-               0 days ago
-            <% else %>
-                 <%= (Time.new.to_date - location.updated_at.to_date).to_i %> days ago
-            <% end %>
-          </div>
-          <div class="large-1 small-1 column">
-            <%= location_form.input :active, label: "",  as: :radio_buttons, :collection => [['Active', true],['Inactive', false]], :input_html => {  id: "active#{location.id}" }  %>
-
-          </div>
+          <%= location_form.simple_fields_for :item_locations do |il| %>
+          <%= render :partial => "locations/item_loc_active", :locals => { :l => il } %>
+          <% if count % 5 == 0 %>
         </div>
-        <div class="row" style="padding-left: 15px;">
-          Addresses: <br/>
-          <%= location.addresses.first.address %>
-          <%= location.addresses.first.city %>,
-          PA
-          <%= location.addresses.first.zipcode %>
-           in <%= location.addresses.first.county.name %>
-          &nbsp;&nbsp;
-          <a data-open= "<%=location.id%>AddressModal" >More Addresses</a>
-          <div class="reveal" id="<%=location.id%>AddressModal" data-reveal>
-
-            <h3> <%= location.name %> Addresses </h3>
-            <% @location = location %>
-            No other addresses.
-            <!-- <button data-close> Confirm </button> -->
-
-
-            <button class="close-button"  data-close type="button"> x </button>
-
-          </div>
-          <%= location_form.input :verified, :as => :hidden, :input_html => { :value => Time.new.to_date } %>
-
-        </div> <br/>
         <div class="row">
-          <div class="large-10 column">
-
-            <% count = 1 %>
-            <div class="row">
-            <%= location_form.simple_fields_for :item_locations do |il| %>
-              <%= render :partial => "locations/item_loc_active", :locals => { :l => il } %>
-              <% if count % 5 == 0 %>
-                </div>
-                <div class="row">
-              <% end %>
-              <%= il.input :active, label: il.object.item.name, wrapper_html: { class: "large-2 column"}, input_html: { id: "itemcheck#{location.id}#{count}" }%>
-              <% count += 1 %>
-            <% end %>
-          </div>
-
-
-
-
-
-            <!-- <a data-open= "<%=location.id%>Modal" data-reveal>More Items</a> -->
-
-            <div class="reveal" id="<%=location.id%>Modal" data-reveal>
-
-              <h3> <%= location.name %> </h3>
-              <% @location = location %>
-
-              <!-- <button data-close> Confirm </button> -->
-
-
-              <button class="close-button"  data-close type="button"> x </button>
-
-            </div>
-
-          </div>
-          <div class="large-2 column">
-            <%= link_to 'Edit', edit_location_path(location), target: :_blank %>
-
-
-            <%= location_form.submit "Verify" %>
-          </div>
+          <% end %>
+          <%= il.input :active, label: il.object.item.name, wrapper_html: { class: "large-2 column"}, input_html: { id: "itemcheck#{location.id}#{count}" }%>
+          <% count += 1 %>
+          <% end %>
         </div>
-      <% end %>
-    </fieldset>
-  </div>
+
+        <div class="reveal" id="<%=location.id%>Modal" data-reveal>
+
+          <h3>
+            <%= location.name %>
+          </h3>
+          <% @location = location %>
+
+          <button class="close-button" data-close type="button">
+            x
+          </button>
+
+        </div>
+
+      </div>
+      <div class="large-2 column">
+        <%= link_to 'Edit', edit_location_path(location), target: :_blank %>
+
+        <%= location_form.submit "Verify" %>
+      </div>
+    </div>
+    <% end %>
+  </fieldset>
+</div>
 <% end %>

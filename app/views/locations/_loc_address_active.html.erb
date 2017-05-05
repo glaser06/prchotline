@@ -1,10 +1,8 @@
 <div class="fields" style="display:none;">
-     <!-- fields -->
-     <div class="large-1 columns">
-     <%= l.collection_select(:location_id, [l.object.location], :id, :name, { :prompt => 'Select Loc' } ) %>
-     <%= l.input :active %>
-     <%= l.input :address %>
-     <!-- x icon to remove -->
-     <%= l.link_to_remove("x") %>
-     </div>
+  <div class="large-1 columns">
+    <%= l.collection_select(:location_id, [l.object.location], :id, :name, { :prompt => 'Select Loc' } ) %>
+    <%= l.input :active %>
+    <%= l.input :address %>
+    <%= l.link_to_remove("x") %>
+  </div>
 </div>
