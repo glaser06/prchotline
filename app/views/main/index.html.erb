@@ -1,55 +1,45 @@
 <script>
-     $( function() {
-       $( "#counties1" ).autocomplete({
-         source: '<%= counties_path(:json) %>'
-       });
-       $( "#items1" ).autocomplete({
-         source: '<%= items_path(:json) %>'
-       });
-     } );
+  $(function () {
+    $("#counties1").autocomplete({source: '<%= counties_path(:json) %>'});
+    $("#items1").autocomplete({source: '<%= items_path(:json) %>'});
+  });
 </script>
 
 <p id="notice"><%= notice %></p>
 
-
 <% if @errors != "" %>
+  <div class="row">
+    <div class="large-6 columns">
+      <div class="panel">
+        <h3>
+          Search
+        </h3>
+        <% if @errors == "ERROR_MATCH_FOUND" %>
+        <h4>
+          Did you mean
+          <%= link_to @item.name, search_path(:item => @item.name, :county => params[:county], :zip => params[:zip])  %>?
+        </h4>
+      <% else %>
+        <h4>
+          <%= @errors %>
+        </h4>
+        <% end %>
+        <%= form_tag("", :method => "get", id: "search-form") do %>
+        <%= text_field_tag :county, params[:county], :placeholder => 'Enter County', id:'counties1' %>
+        <%= text_field_tag :item, params[:item], :placeholder => 'Item (Optional)', id:'items1' %>
+        <%= text_field_tag :zip, params[:zip], placeholder: "Zipcode (Optional)", maxlength: 5, class: 'input-small' %>
+        <%= submit_tag "Search", :name => nil, class: "button" %>
+        <% end %>
+      </div>
+    </div>
 
-
-<div class="row">
-
- <div class="large-6 columns">
-   <div class="panel">
-     <h3> Search </h3>
-
-
-     <% if @errors == "ERROR_MATCH_FOUND" %>
-       <h4> Did you mean <%= link_to @item.name, search_path(:item => @item.name, :county => params[:county], :zip => params[:zip])  %>? </h4>
-     <% else %>
-       <h4> <%= @errors %> </h4>
-     <% end %>
-     <%= form_tag("", :method => "get", id: "search-form") do %>
-     <%= text_field_tag :county, params[:county], :placeholder => 'Enter County', id:'counties1' %>
-     <%= text_field_tag :item, params[:item], :placeholder => 'Item (Optional)', id:'items1' %>
-     <%= text_field_tag :zip, params[:zip], placeholder: "Zipcode (Optional)", maxlength: 5, class: 'input-small' %>
-     <%= submit_tag "Search", :name => nil, class: "button" %>
-     <% end %>
-   </div>
- </div>
-
-
- <div class ="large-6 columns">
-   <div class="panel">
-
-     <%= render 'layouts/partials/floatingForm', vals: @vals %>
-
-   </div>
+    <div class="large-6 columns">
+      <div class="panel">
+        <%= render 'layouts/partials/floatingForm', vals: @vals %>
+      </div>
+    </div>
   </div>
-
-</div>
-   <% else %>
-
-   <%= render 'layouts/partials/searchResults' %>
-
-
-   <% end %>
-   <br>
+<% else %>
+  <%= render 'layouts/partials/searchResults' %>
+<% end %>
+<br>

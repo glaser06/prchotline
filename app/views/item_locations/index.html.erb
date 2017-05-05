@@ -14,14 +14,14 @@
 
   <tbody>
     <% @item_locations.each do |item_location| %>
-      <tr>
-        <td><%= item_location.description %></td>
-        <td><%= item_location.verified %></td>
-        <td><%= item_location.context %></td>
-        <td><%= link_to 'Show', item_location %></td>
-        <td><%= link_to 'Edit', edit_item_location_path(item_location) %></td>
-        <td><%= link_to 'Destroy', item_location, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+    <tr>
+      <td><%= item_location.description %></td>
+      <td><%= item_location.verified %></td>
+      <td><%= item_location.context %></td>
+      <td><%= link_to 'Show', item_location %></td>
+      <td><%= link_to 'Edit', edit_item_location_path(item_location) %></td>
+      <td><%= link_to 'Destroy', item_location, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
     <% end %>
   </tbody>
 </table>

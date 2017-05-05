@@ -1,30 +1,30 @@
 <p id="notice"><%= notice %></p>
 <div class="row">
-
-    <h2>System Settings</h2>
-
-    <h4>Database</h4>
-     <div class="large-6 columns">
-       <h4>Counties & Coordinators</h4>
-       <%= link_to "View All", counties_path, class: "button" %>
-       <%= link_to "Add", new_county_path, class: "button" %> <br>
-     </div>
-
-     <div class ="large-6 columns">
-       <div class="panel">
-         <h4>Items</h4>
-         <%= link_to "View All", items_path, class: "button" %>
-         <%= link_to "Add", new_item_path, class: "button" %> <br>
-       </div>
-    </div>
-    <hr>
-
-    <h4>System Password</h4>
-    <%= link_to 'Change', passwordForm_path, class: "button" %>
-    <hr>
-
-    <h4>Export Call Reports</h4>
-    <a href="#" class="button">Download Database</a>
-    <%= link_to 'Download Monthly Reports', "https://www.dropbox.com/sh/d8ut1o61gadwt3w/AAADJk3qsdy97VgdTejtS035a?dl=0",target: :_blank, class: "button" %>
-
+  <h2>System Settings</h2>
+  <h4>Database</h4>
+  <div class="large-6 columns">
+    <h4>Counties & Coordinators</h4>
+    <%= link_to "View All", counties_path, class: "button" %>
+    <%= link_to "Add", new_county_path, class: "button" %>
+    <br>
   </div>
+
+  <div class="large-6 columns">
+    <div class="panel">
+      <h4>Items</h4>
+      <%= link_to "View All", items_path, class: "button" %>
+      <%= link_to "Add", new_item_path, class: "button" %>
+      <br>
+    </div>
+  </div>
+  <hr>
+
+  <h4>System Password</h4>
+  <%= link_to 'Change', passwordForm_path, class: "button" %>
+  <hr>
+
+  <h4>Export Call Reports</h4>
+  <a href="#" class="button">Download Database</a>
+  <%= link_to 'Download Monthly Reports', "https://www.dropbox.com/sh/d8ut1o61gadwt3w/AAADJk3qsdy97VgdTejtS035a?dl=0",target: :_blank, class: "button" %>
+
+</div>
