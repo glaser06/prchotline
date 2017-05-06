@@ -2,20 +2,13 @@ require 'csv'
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
 
-#county_list = ["Adams", "Allegheny", "Armstrong", "Beaver", "Bedford", "Berks", "Blair", "Bradford", "Bucks", "Butler", "Cambria", "Cameron", "Carbon", "Centre", "Chester", "Clarion", "Clearfield", "Clinton", "Columbia", "Crawford", "Cumberland", "Dauphin", "Delaware", "Elk", "Erie", "Fayette", "Forest", "Franklin", "Fulton", "Greene", "Huntingdon", "Indiana", "Jefferson", "Juniata", "Lackawanna", "Lancaster", "Lawrence", "Lebanon", "Lehigh", "Luzerne", "Lycoming", "Mckean", "Mercer", "Mifflin", "Monroe", "Montgomery", "Montour", "Northampton", "Northumberland", "Perry", "Philadelphia", "Pike", "Potter", "Schuylkill", "Snyder", "Somerset", "Sullivan", "Susquehanna", "Tioga", "Union", "Venango", "Warren", "Washington", "Wayne", "Westmoreland", "Wyoming", "York"]
 
-# county_list.each do |name|
-#   County.create( name: name)
-# end
 
+# importing county coordinators
 csv_text = File.read('countyCoordinators.csv')
 csv = CSV.parse(csv_text, :headers => true)
-countyZip = {}
+
 csv.each do |row|
   countyName = row["County"]
   countyCoord = row["Coordinator "]
@@ -33,6 +26,7 @@ csv.each do |row|
   County.create( name: countyName, coordinator: countyCoord, phone: countyPhone, website: countyWebsite)
 end
 
+# importing items
 item_list = ["Paper", "Television"]
 
 item_list = ["Air Conditioners", "Aluminum", "Ammunition", "Antifreeze", "Appliances (with Freon)", "Appliances (No Freon)", "Art & Education Materials", "Asbestos", "Aseptic Packaging (Drink Boxes/Milk Cartons)", "Asphalt, Brick, Concrete, Gravel, & Porcelain", "Audio/Videotapes, CDs, DVDs, & Records", "Automotive Parts & Liquids",
@@ -132,65 +126,10 @@ item_list.each do |name|
   end
   Rails.logger.info(@item.errors.inspect)
 end
-# Item.create(name: 'Paint', description: 'Paint needs to be disposed of properly to protect the environment.', active: true)
-# Item.create(name: 'Television', description: 'Nothing right now', active: true)
-# Item.create(name: 'Shredded Paper', description: 'Nothing right now', active: false)
 
-# Location.create(name: 'Best Buy', address: '123 Main Street', city: 'Lancaster', phone: '4123211234', website: 'bestbuy.com', zipcode: '15123', state: 'PA')
-# Location.create(name: 'Giant Eagle', address: '321 Hello Street', city: 'Pittsburgh', phone: '4123214567', website: 'gianteagle.com', zipcode: '15289', state: 'PA')
 
-# i = 0
-# County.all.each do |county|
-#   i += 1
-  # address =
-#   Location.create(name: (county.name+'Recycling Facility'+i), address: '')
-#
-# end
 
-csv_text = File.read('zipcodes.csv')
-csv = CSV.parse(csv_text, :headers => true)
-countyZip = {}
-csv.each do |row|
 
-  if row['county']
-    county = row['county'].split(' ')[0]
-    if countyZip.key?(county)
-      countyZip[county].push([row['zip'],row['primary_city'], row['latitude'], row['longitude']])
-    else
-      countyZip[county] = [[row['zip'],row['primary_city'], row['latitude'], row['longitude']]]
-    end
-  end
-
-end
-# Faker::Config.locale = 'en-US'
-# counter = 0
-# County.all.each do |c|
-#   county = c.name
-#   zipcodes = countyZip[county]
-#   if countyZip.key?(county)
-#     count = 1
-#     zipcodes.each do |zipCity|
-#       rand(3).times do |tmp|
-#
-#         address = "#{Faker::Address.street_address} Ave."
-#         phone = (Faker::PhoneNumber.phone_number).split('x')[0]
-#         # c.locations.create(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", address: address, city: zipCity[1], phone: phone, website: 'www.example.com', zipcode: zipCity[0], state: 'PA', counties_id: c.id, active: true)
-#         @loc1 = Location.new(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", phone: phone, website: 'www.example.com', active: true)
-#
-#         @loc1.addresses.build(address: address, city: zipCity[1], zipcode: zipCity[0], state: 'PA', county_id: c.id,location_id: @loc1.id, latitude: zipCity[2], longitude: zipCity[3], active: true)
-#         @loc1.save
-#         # @loc1 = Location.create(name: "#{county} Recycling Facility ##{count} in #{zipCity[1]}", phone: phone, website: 'www.example.com', active: true)
-#
-#         # @addr1 = Address.create(address: address, city: zipCity[1], zipcode: zipCity[0], state: 'PA', county_id: c.id,location_id: @loc1.id, latitude: zipCity[2], longitude: zipCity[3], active: true)
-#         Rails.logger.info(@loc1.errors.inspect)
-#         # Rails.logger.info(@addr1.errors.inspect)
-#
-#         count += 1
-#       end
-#     end
-#   end
-# end
-# fileNames = ['BucksCountyData.csv', 'Alle3.csv', 'Philadelphia.csv','Montgomery.csv','Lehigh.csv', 'Butler.csv','Beaver.csv', ]
 locations = {}
 tmpPath = Rails.root.join("county-data")
 Dir.foreach(tmpPath) do |fname|
@@ -199,7 +138,7 @@ Dir.foreach(tmpPath) do |fname|
   path = Rails.root.join("county-data/#{fname}")
   csv_text = File.open(path, "r:ISO-8859-1")
   csv = CSV.parse(csv_text, :headers => true)
-  countyZip = []
+
 
   csv.each do |row|
 
@@ -243,11 +182,7 @@ Dir.foreach(tmpPath) do |fname|
   end
 end
 
-# fileNames.each do |fname|
-#   # csv_text = File.read(fname)
-#
-#
-# end
+
 locations.each do |addr, items|
   row1 = items["Addr"][0]
   @loc1 = Location.new(name: row1[2], phone: row1[3], website: row1[4], active: true)
@@ -304,21 +239,3 @@ locations.each do |addr, items|
 
 
 end
-
-
-
-# countyZip.each do |county, zipcodes|
-#
-# end
-
-# items = Item.all
-# locs = Location.all
-# items.each do |item|
-#   if ["paper", "televisions","mobile phones","cardboard"].include?(item.name)
-#     locs.each do |loc|
-#
-#       @asd = ItemLocation.create(item_id: item.id, location_id: loc.id, context: "This is an example context. We don't know much beyond this.",active: true)
-#       Rails.logger.info(@asd.errors.inspect)
-#     end
-#   end
-# end
