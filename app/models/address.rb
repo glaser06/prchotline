@@ -1,10 +1,13 @@
 class Address < ApplicationRecord
 
+  # Relationships
   belongs_to :location, required: false
   belongs_to :county
 
+  # Validations
   validates :address, :county, presence: true
 
+  # Scopes
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
   scope :for_zipcode, -> (zip) { where("zipcode=?", zip ) }
@@ -16,8 +19,10 @@ class Address < ApplicationRecord
   scope :by_city, -> { order('city') }
   scope :by_active, -> {order('active DESC')}
 
+  # What does this actually do?
   geocoded_by :full_address
 
+  # Shouldn't some of these actually be private methods????
   def require_one_address
     location.addresses.count > 1
   end

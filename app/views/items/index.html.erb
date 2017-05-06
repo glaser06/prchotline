@@ -37,23 +37,20 @@
   <div class="large-12 columns">
     <div class="panel">
       <% if @items.blank? %>
-      <h4>
-        No item available.</h4>
-    <% else %>
-      <table id="items-table" data-source="<%= items_path(format: :json) %>">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th data-sortable="false">Aliases</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+        <h4>No item available.</h4>
+      <% else %>
+        <table id="items-table" data-source="<%= items_path(format: :json) %>">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+              <th data-sortable="false">Aliases</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
       <% end %>
-
       <br>
-
     </div>
   </div>
 </div>

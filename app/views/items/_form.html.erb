@@ -1,33 +1,33 @@
 <%= simple_nested_form_for @item, :html => { :class => 'form-horizontal' } do |item_form| %>
 
-<% if item.errors.any? %>
-<div id="error_explanation">
-  <h2><%= pluralize(item.errors.count, "error") %>
-    prohibited this item from being saved:</h2>
-  <ul>
-    <% item.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-    <% end %>
-  </ul>
-</div>
-<% end %>
-
-<%= render :partial => "item_form", :locals => { :f => item_form } %>
-
-<legend>aliases for this item</legend>
-<div id="item_aliases">
-  <%= item_form.simple_fields_for :aliases do |alias_form| %>
-  <%= render :partial => "alias_field", :locals => { :f => alias_form } %>
+  <% if item.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(item.errors.count, "error") %>
+      prohibited this item from being saved:</h2>
+    <ul>
+      <% item.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
   <% end %>
-  <p>
-    <br/><%= item_form.link_to_add("Add alias", :aliases, :class => 'button tiny') %>
-  </p>
 
-</div>
+  <%= render :partial => "item_form", :locals => { :f => item_form } %>
 
-<div class="form-actions">
-  <br/>
-  <%= item_form.submit nil, :class => 'button radius' %>
-  <%= link_to 'Cancel', items_path, :class => 'button secondary' %>
-</div>
+  <legend>Aliases for this item:</legend>
+  <div id="item_aliases">
+    <%= item_form.simple_fields_for :aliases do |alias_form| %>
+    <%= render :partial => "alias_field", :locals => { :f => alias_form } %>
+    <% end %>
+    <p>
+      <br/><%= item_form.link_to_add("Add alias", :aliases, :class => 'button tiny') %>
+    </p>
+
+  </div>
+
+  <div class="form-actions">
+    <br/>
+    <%= item_form.submit nil, :class => 'button radius' %>
+    <%= link_to 'Cancel', items_path, :class => 'button secondary' %>
+  </div>
 <% end %>

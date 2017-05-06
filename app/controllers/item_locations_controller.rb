@@ -24,16 +24,8 @@ class ItemLocationsController < ApplicationController
   # POST /item_locations
   # POST /item_locations.json
   def create
-    # params[:verified] ||= Date.today
-    # params[:context] ||= ""
-    #item_locations_params[:verified] = Date.today   if item_locations_params[:verified].blank?
-    #item_locations_params[:context] = "" if item_locations_params[:context].blank?
-    # puts "creating a new item location"
-    # @item_location = ItemLocation.new(item_location_params)
-    # @item_location.verified = Date.today
-    # puts @item_location.verified
-    # @item_location.context = "hullo we trying"
-    # puts @item_location.context
+    #I'm wondering if this create method even works at this point
+    #### also gerry?????
     respond_to do |format|
       if @item_location.save
         format.html { redirect_to @item_location, notice: 'Item location was successfully created.' }
