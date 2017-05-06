@@ -16,11 +16,17 @@ class Address < ApplicationRecord
   scope :by_city, -> { order('city') }
   scope :by_active, -> {order('active DESC')}
 
-  geocoded_by :full_address
 
-  def require_one_address
-    location.addresses.count > 1
-  end
+  # uses the full address to find the lat and long of
+  # the Address. For use in zipcode search by distance.
+  geocoded_by :full_address
+  # updates the lat and long field after validation
+  after_validation :geocode
+
+
+
+
+
 
   def full_address
     "#{self.address}, #{self.city}, PA #{self.zipcode}"

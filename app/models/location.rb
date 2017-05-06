@@ -32,7 +32,7 @@ class Location < ApplicationRecord
   end
 
   def link_to_website
-    puts "asdfadswf#{website}"
+
     if self.website && self.website.length > 5
       if self.website[0...4] == "http"
         return self.website
@@ -49,14 +49,7 @@ class Location < ApplicationRecord
     errors.add(:base, "You must provide at least one address") if addresses.size < 1
   end
 
-  def rejectable?(addr)
-    if addr[:address].blank?
-      return true
-    elsif addr[:_destroy] == '1'
-      return address.size <= 1
-    else return false
-    end
-  end
+
 
   def reformat_phone
     phone = self.phone.to_s

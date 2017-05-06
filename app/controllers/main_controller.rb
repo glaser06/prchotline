@@ -108,105 +108,133 @@ class MainController < ApplicationController
     end
 
 
-    @items = Item.all
+
+    # @items = Item.all
+
     @locations = []
     @errors = " "
-    if params[:county] && params[:item]
+    if params[:county]
       @errors = ""
       qCounty = params[:county]
       qItem = params[:item]
       county = County.for_name(qCounty.capitalize)
+
       if county.blank?
-        puts "ereror"
-        @errors += "#{params[:county]} county does not exist"
+
+        if params[:county] == ""
+          @errors += "Please enter a county"
+        else
+          @errors += "#{params[:county]} county does not exist"
+        end
+
         return
       end
 
-      item = Item.for_name(qItem.downcase)
-      id = 0
-      if item.blank?
-        item = Alias.for_name(qItem.downcase)
-        if item.blank?
+      # find the item, if it exists
+      if params[:item] != ""
+        # item query is not empty
 
-          if params[:item] && params[:item] != ""
+        # search for query in Item names
+        item = Item.for_name(qItem.downcase)
+        # search for query in Alias names
+        aliasItem = Alias.for_name(qItem.downcase)
 
-            names = []
-            Item.all.each do |item_row|
-              names.push(item_row.name)
-            end
-            Alias.all.each do |row|
-              names.push(row.name)
-            end
-            item_match = FuzzyMatch.new(Item.all, :read => :name)
-            alias_match = FuzzyMatch.new(Alias.all, :read => :name)
-            items = item_match.find(params[:item])
-            aliases = alias_match.find(params[:item])
-            if !items.nil?
-              @errors = "ERROR_MATCH_FOUND"
-              @item = items
-            elsif !aliases.nil?
-              @errors = "ERROR_MATCH_FOUND"
-              @item = aliases.item
-            else
-              @errors += "Could not find #{params[:item]}"
-            end
-
-
-
-
-
-            return
+        # if both have not been found, fuzzymatch through both tables and
+        # return a correction
+        if item.blank? and aliasItem.blank?
+          item_match = FuzzyMatch.new(Item.all, :read => :name)
+          alias_match = FuzzyMatch.new(Alias.all, :read => :name)
+          items = item_match.find(params[:item])
+          aliases = alias_match.find(params[:item])
+          if !items.nil?
+            @errors = "ERROR_MATCH_FOUND"
+            @item = items
+          elsif !aliases.nil?
+            @errors = "ERROR_MATCH_FOUND"
+            @item = aliases.item
           else
-            redirect_to controller: 'locations', action: 'index', county: county[0].name
-            return
+            @errors += "Could not find #{params[:item]}"
+
           end
-        else
-          id = item.first.item_id
+          return
+        elsif aliasItem.blank?
+          @item = item.first
+        elsif item.blank?
+          @item = Item.find(aliasItem.first.item_id)
         end
       else
-        id = item.first.id
-
+        # If item is empty, redirect to the location page filtered by county
+        redirect_to controller: 'locations', action: 'index', county: county[0].name
+        return
       end
 
-
-      @item = Item.find(id)
-
-      @county = county[0]
-      if params[:zip] != ""
+      if params[:zip] && params[:zip] != ""
         qZip = params[:zip]
-        # i,l,c = search(qItem, qCounty, qZip)
+
 
         coords = Geocoder.coordinates(qZip)
-        @locations1 = Address.near(coords,50)
+        # @locations1 = Address.near(coords,50)
 
-        @locations = @item.addresses.near(coords,50).paginate(:page => params[:page]).per_page(10)
+        @locations = @item.addresses.near(coords,50)
+
         # @locations = @item.locations.active.addresses.active.for_zipcode(qZip).alphabetical
 
 
       else
-        @county = County.find(county.first.id)
+        @county = county.first
 
-        @locations = @item.addresses.for_county(@county).paginate(:page => params[:page]).per_page(10)
+
+        @locations = @item.addresses.for_county(@county)
+        
 
       end
 
-      @locations = @locations.by_active
-    end
-    if params[:sortby]
-      sort = params[:sortby]
-      loc = @locations
-      if sort == "name"
 
-        @locations = loc.by_name
-      elsif sort == "verified"
-        @locations = loc.by_verified
-      elsif sort == "zipcode"
-        @locations = loc.by_zipcode
-      elsif sort == "city"
-        @locations = loc.by_city
+      if @locations.blank?
+        @errors = "#{@county.name} has no locations"
+        return
+      else
+        if params[:sortby]
+          sort = params[:sortby]
+          loc = @locations
+          if sort == "name"
+
+            @locations = loc.by_name
+          elsif sort == "verified"
+            @locations = loc.by_verified
+          elsif sort == "zipcode"
+            @locations = loc.by_zipcode
+          elsif sort == "city"
+            @locations = loc.by_city
+          end
+
+        else
+          @locations = @locations.by_name
+        end
+        @locations = @locations.paginate(:page => params[:page]).per_page(10)
       end
-      @locations = @locations.by_active
+
     end
+
+
+    # if params[:sortby]
+    #   sort = params[:sortby]
+    #   loc = @locations
+    #   if sort == "name"
+    #
+    #     @locations = loc.by_name
+    #   elsif sort == "verified"
+    #     @locations = loc.by_verified
+    #   elsif sort == "zipcode"
+    #     @locations = loc.by_zipcode
+    #   elsif sort == "city"
+    #     @locations = loc.by_city
+    #   end
+    #
+    #
+    # end
+
+
 
 
   end

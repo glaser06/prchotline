@@ -29,12 +29,8 @@ class CountiesController < ApplicationController
       end
       return
   end
+
   
-  #### DO WE EVER GET HERE - Gerry, why is this here?
-  respond_to do |format|
-    format.html
-    format.json { render :json => @counties_autocomplete[0]}
-  end
 end
 
   # GET /counties/1

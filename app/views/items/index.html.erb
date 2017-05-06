@@ -22,18 +22,20 @@
 </script>
 
 <div class="row">
-  <div class="large-12 columns">
-    <div class="left">
+
+
+    <div class="large-2 columns">
       <h1>Items</h1>
     </div>
 
-    <div class="right">
-      <%= link_to '<i class="fa fa-plus-square" aria-hidden="true"></i> Add Item'.html_safe, new_item_path %>
+    <div class="large-2 columns">
+      <br/>
+    <%= button_to 'Add Item', new_item_path, :class => "button" %>
     </div>
-  </div>
+
 </div>
 
-<div class="row">
+<div class="column row">
   <div class="large-12 columns">
     <div class="panel">
       <% if @items.blank? %>
