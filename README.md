@@ -6,9 +6,9 @@ This is the Pennsylvania Resources Council hotline web app, made with Ruby on Ra
 
 ## Prerequisites
 
-To run this application, you need a Dropbox API key. The easiest way to obtain an access token is to get it from the Dropbox website. Visit https://www.dropbox.com/developers
+To run this application, you need a Dropbox API key. The easiest way to obtain an access token is to get it from the Dropbox website. Visit https://www.dropbox.com/developers and login or create an account.
 
-After you log in, go to My Apps and select your application, or create one if you haven't done so yet.
+Go to My Apps and select your application, or create one if you haven't done so yet. Under OAuth2, click generate to create an access token and save it.
 DO NOT SHARE THIS KEY WITH ANYONE ELSE
 
 
