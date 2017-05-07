@@ -1,5 +1,6 @@
 class County < ApplicationRecord
 
+  # Callbacks
   before_save :reformat_county_name
 
   has_many :item_counties, dependent: :destroy

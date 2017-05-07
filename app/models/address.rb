@@ -1,9 +1,13 @@
 class Address < ApplicationRecord
 
+  # Relationships
   belongs_to :location, required: false
   belongs_to :county
 
+  # Validations
   validates :address, :county, presence: true
+
+  # Scopes
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
@@ -17,16 +21,14 @@ class Address < ApplicationRecord
   scope :by_active, -> {order('active DESC')}
 
 
+
   # uses the full address to find the lat and long of
   # the Address. For use in zipcode search by distance.
   geocoded_by :full_address
   # updates the lat and long field after validation
-  after_validation :geocode
-
-
-
-
-
+  # DO NO ENABLE DURING SEEDING
+  # - google maps api limit is 50 requests/second
+  # after_validation :geocode
 
   def full_address
     "#{self.address}, #{self.city}, PA #{self.zipcode}"

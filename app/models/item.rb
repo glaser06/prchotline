@@ -9,11 +9,15 @@ class Item < ApplicationRecord
 
   validates_presence_of :name
 
+
   accepts_nested_attributes_for :aliases, reject_if: lambda { |attraction| attraction[:name].blank? }, allow_destroy: true
 
+
   scope :alphabetical, -> { order('name') }
-  scope :active,       -> { where(active: true) }
-  scope :inactive,     -> { where(active: false) }
+
+
+
+
   scope :for_name, -> (name) { where("name=?", name) }
 
 end

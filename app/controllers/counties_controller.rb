@@ -30,7 +30,6 @@ class CountiesController < ApplicationController
       return
   end
 
-  
 end
 
   # GET /counties/1

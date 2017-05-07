@@ -1,7 +1,9 @@
 class Location < ApplicationRecord
 
+  # Callbacks
   before_save :reformat_phone
 
+  # Relationships
   has_many :item_locations, dependent: :destroy
   has_many :items, through: :item_locations
   has_many :addresses, :autosave => true, dependent: :destroy
@@ -10,11 +12,12 @@ class Location < ApplicationRecord
   accepts_nested_attributes_for :item_locations, reject_if: lambda { |item_location| item_location[:item_id].blank? }, allow_destroy: true
   accepts_nested_attributes_for :addresses, reject_if: lambda { |addr| addr[:address].blank? }, allow_destroy: true
 
+  # Validations
   validates :name, presence: true
   validates :addresses, presence: true
   validates_format_of :phone, with: /\A\(?\d{3}\)?[-. ]?\d{3}[-.]?\d{4}\z/, message: "should be 10 digits (area code needed) and delimited with dashes only", allow_blank: true
-  validate :require_one_address
 
+  # Scopes
   scope :alphabetical , -> { order('name') }
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
@@ -45,9 +48,6 @@ class Location < ApplicationRecord
 
   private
 
-  def require_one_address
-    errors.add(:base, "You must provide at least one address") if addresses.size < 1
-  end
 
 
 

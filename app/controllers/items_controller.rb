@@ -26,7 +26,7 @@ class ItemsController < ApplicationController
       end
       return
     end
-    
+
   end
 
   # GET /items/1

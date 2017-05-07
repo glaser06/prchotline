@@ -1,22 +1,24 @@
 <%= simple_form_for @county do |f| %>
-<% if county.errors.any? %>
-<div id="error_explanation">
-  <h2><%= pluralize(county.errors.count, "error") %>
-    prohibited this county from being saved:</h2>
-  <ul>
-    <% county.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-    <% end %>
-  </ul>
-</div>
-<% end %>
 
-<% if (action_name == "new") %>
-  <%= f.input :name, input_html: { maxlength: 30 } %>
-<% end %>
-<%= f.input :coordinator %>
-<%= f.input :phone %>
-<%= f.input :website %>
-<%= link_to 'Back', counties_path, class: "button" %>
-<%= f.button :submit%>
+    <% if county.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(county.errors.count, "error") %>
+        prohibited this county from being saved:</h2>
+      <ul>
+        <% county.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+    <% end %>
+
+    <% if (action_name == "new") %>
+      <%= f.input :name, input_html: { maxlength: 30 } %>
+    <% end %>
+    <%= f.input :coordinator %>
+    <%= f.input :phone %>
+    <%= f.input :website %>
+    <%= link_to 'Back', counties_path, class: "button" %>
+    <%= f.button :submit%>
+
 <% end %>

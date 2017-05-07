@@ -20,8 +20,9 @@
   </fieldset>
 
   <fieldset class="large-6 columns">
-    <legend>Sort by
-    </legend>
+
+    <legend>Sort by </legend>
+
     <input type="radio" name="sortby" value="county" id="countySort">
     <label for="countySort">County</label>
     <input type="radio" name="sortby" value="name" id="nameSort">
@@ -40,18 +41,16 @@
 <div class="expanded row" style="width:90%;">
   <div class="panel">
     <% if @locations == "errorMessage" %>
-    <br></br>
-    <h3>
-      That county does not exist. Please try again.
-    </h3>
+
+      <br></br>
+      <h3> That county does not exist. Please try again. </h3>
     <% elsif @locations != [] %>
-    <%= render 'layouts/partials/validations' %>
-    <%= will_paginate @locations, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
-  <% else  %>
-    <br></br>
-    <h3>
-      Search for any county.
-    </h3>
+      <%= render 'layouts/partials/validations' %>
+      <%= will_paginate @locations, previous_label: "Previous&nbsp;", next_label: "&nbsp;Next" %>
+    <% else  %>
+      <br></br>
+      <h3> Search for any county.</h3>
+
     <% end %>
   </div>
 </div>

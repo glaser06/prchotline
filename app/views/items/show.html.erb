@@ -5,17 +5,17 @@
     <h3><%= @item.name.titleize %></h3>
 
     <% if @item.aliases.size > 0 %>
-    <p>
-      <strong>Aliases</strong>
-      <% @item.aliases.each do |a| %>
 
-      <li><%=  a.name %></li>
-      <% end %>
-    </p>
-  <% else %>
-    <p>
-      <strong>No Aliases</strong>
-    </p>
+      <p>
+        <strong>Aliases</strong>
+        <% @item.aliases.each do |a| %>
+          <li><%=  a.name %></li>
+        <% end %>
+      </p>
+    <% else %>
+      <p>
+        <strong>No Aliases</strong>
+      </p>
 
     <% end %>
 
