@@ -143,6 +143,7 @@ class MainController < ApplicationController
         return
       end
 
+      @county = county.first
       if params[:zip] && params[:zip] != ""
         qZip = params[:zip]
 
@@ -156,7 +157,7 @@ class MainController < ApplicationController
 
 
       else
-        @county = county.first
+
 
 
         @locations = @item.addresses.for_county(@county)
