@@ -1,5 +1,6 @@
 class Alias < ApplicationRecord
 
+
   # Callbacks
   before_save :downcase_name
 

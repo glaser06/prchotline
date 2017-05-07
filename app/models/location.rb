@@ -2,7 +2,7 @@ class Location < ApplicationRecord
 
   # Callbacks
   before_save :reformat_phone
-  
+
   # Relationships
   has_many :item_locations, dependent: :destroy
   has_many :items, through: :item_locations
@@ -16,7 +16,6 @@ class Location < ApplicationRecord
   validates :name, presence: true
   validates :addresses, presence: true
   validates_format_of :phone, with: /\A\(?\d{3}\)?[-. ]?\d{3}[-.]?\d{4}\z/, message: "should be 10 digits (area code needed) and delimited with dashes only", allow_blank: true
-  validate :require_one_address
 
   # Scopes
   scope :alphabetical , -> { order('name') }
@@ -36,6 +35,7 @@ class Location < ApplicationRecord
   end
 
   def link_to_website
+
     if self.website && self.website.length > 5
       if self.website[0...4] == "http"
         return self.website
@@ -48,20 +48,8 @@ class Location < ApplicationRecord
 
   private
 
-  # Do we still use this anymore?
-  def require_one_address
-    errors.add(:base, "You must provide at least one address") if addresses.size < 1
-  end
-  
-  # Explanation/Comments???
-  def rejectable?(addr)
-    if addr[:address].blank?
-      return true
-    elsif addr[:_destroy] == '1'
-      return address.size <= 1
-    else return false
-    end
-  end
+
+
 
   def reformat_phone
     phone = self.phone.to_s

@@ -26,10 +26,7 @@ class ItemsController < ApplicationController
       end
       return
     end
-    ### Again - why? Ask Gerry
-    respond_to do |format|
-      format.html
-    end
+
   end
 
   # GET /items/1

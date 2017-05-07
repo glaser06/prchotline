@@ -24,8 +24,6 @@ class ItemLocationsController < ApplicationController
   # POST /item_locations
   # POST /item_locations.json
   def create
-    #I'm wondering if this create method even works at this point
-    #### also gerry?????
     respond_to do |format|
       if @item_location.save
         format.html { redirect_to @item_location, notice: 'Item location was successfully created.' }

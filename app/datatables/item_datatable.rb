@@ -20,10 +20,10 @@ class ItemDatatable < AjaxDatatablesRails::Base
     records.map do |record|
       alises = []
       record.aliases.each do | alis |
-        alises.push(" " + alis.name)
+        alises.push(" " + alis.name.titleize)
       end
       [
-        link_to(record.name, item_path(record)),
+        link_to(record.name.titleize, item_path(record)),
         record.description,
         alises
         # comma separated list of the values for each cell of a table row

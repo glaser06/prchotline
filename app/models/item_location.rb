@@ -5,6 +5,7 @@ class ItemLocation < ApplicationRecord
   belongs_to :location, required: false
 
   # Scopes
+
   scope :active, -> {where(active: true)}
   scope :by_days_since, -> {order('verified')}
   scope :for_item, -> (item){where("item_id=?",item)}

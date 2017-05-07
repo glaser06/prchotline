@@ -1,4 +1,5 @@
 <%= simple_form_for @county do |f| %>
+
     <% if county.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(county.errors.count, "error") %>
@@ -19,4 +20,5 @@
     <%= f.input :website %>
     <%= link_to 'Back', counties_path, class: "button" %>
     <%= f.button :submit%>
+
 <% end %>

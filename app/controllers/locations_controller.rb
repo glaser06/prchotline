@@ -8,17 +8,18 @@ class LocationsController < ApplicationController
     # @locations = Location.all.paginate(:page => params[:page]).per_page(20)
     # @item_locations = ItemLocation.by_item.all
     @errors = ""
-    @l = Location.all.to_a
-    @locations = Location.all.paginate(:page => params[:page]).per_page(20)
-    @item_locations = ItemLocation.by_item.all
+    # @l = Location.all.to_a
+    # @locations = Location.all.paginate(:page => params[:page]).per_page(20)
+    # @item_locations = ItemLocation.by_item.all
 
     if params[:validate] && params[:validate] != ""
       puts "stuff"
     end
     # @locations = []
     @countyName = ""
-    @items = Item.all
-    @counties = County.all
+    allLocations = Location.all
+    # @items = Item.all
+    # @counties = County.all
     @item_locations = ItemLocation.all
     locations = []
     if params[:county] && params[:county] != ""
@@ -27,18 +28,22 @@ class LocationsController < ApplicationController
       if not @county.nil?
         @countyName = @county.name
         @countyId = @county.id
-        locations = Location.all.for_county(@countyId).distinct
+        locations = allLocations.for_county(@countyId)
+        unless locations.blank?
+          locations = allLocations.for_county(@countyId).distinct
+        end
+
         puts @countyName
       else
-        locations = Location.all
+        locations = allLocations
         @errors = "#{params[:county]} does not exist"
-        @locations = []
+        # @locations = []
 
         return
       end
     else
 
-      locations = Location.all
+      locations = allLocations
     end
     if params[:sortby] && params[:sortby] != ""
       sort = params[:sortby]
@@ -106,7 +111,7 @@ class LocationsController < ApplicationController
   # PATCH/PUT /locations/1.json
   def update
     respond_to do |format|
-      
+
       if @location.update(location_params)
         if params[:redirect] == "true"
           format.html { redirect_to :back, notice: 'Location was successfully validated.' }
