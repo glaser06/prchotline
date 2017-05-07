@@ -1,23 +1,84 @@
 # README
 
-This is a rails app that streamlines PRC's recycling hotline. 
+# PRC Hotline Web App
 
-Things you may want to cover:
+This is the Pennsylvania Resources Council hotline web app, made with Ruby on Rails.
 
-* Ruby version
 
-* System dependencies
 
-* Configuration
+### Prerequisites
 
-* Database creation
+To run this application, you need a Dropbox API key. The easiest way to obtain an access token is to get it from the Dropbox website. Visit https://www.dropbox.com/developers
 
-* Database initialization
+After you log in, go to My Apps and select your application, or create one if you haven't done so yet.
+DO NOT SHARE THIS KEY WITH ANYONE ELSE
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+### Installing
 
-* Deployment instructions
+To install, download and unzip the repository onto a local folder.
 
-* ...
+In terminal, do
+
+```
+cd path/to/local/folder
+```
+And run
+```
+bundle install
+```
+
+Before running the application, you need to set the Dropbox API key. In the same window/tab, run
+
+```
+export DROPBOX_OAUTH_BEARER="YOUR_API_KEY_HERE"
+```
+and then optionally, run
+
+```
+source ~/.bashrc
+```
+
+To run the server, do
+```
+rails server
+```
+
+
+## Deployment
+
+To deploy, use Heroku. Register for Heroku, and install Heroku command line here: https://devcenter.heroku.com/articles/getting-started-with-ruby#set-up
+
+In the folder with your app, run
+```
+heroku login
+```
+
+After logging in, if you already created the app in Heroku, do
+
+```
+git push heroku master
+```
+
+Otherwise, follow instructions here: https://devcenter.heroku.com/articles/getting-started-with-ruby#deploy-the-app
+
+
+
+
+## Built With
+
+* [Foundation](http://foundation.zurb.com/sites/docs/) - The design framework used
+* [Datatables](https://datatables.net/) - Used for displaying Rails ActiveRecord tables
+
+
+
+## Authors
+
+* **Rebecca Kern** - [RebeccaKern](https://github.com/RebeccaKern)
+* **Sai Dhulipalla** - [dsai96](https://github.com/dsai96)
+* **Rebecca Kern** - [glaser06](https://github.com/glaser06)
+
+
+## Acknowledgments
+
+* Something here?
