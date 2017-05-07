@@ -166,7 +166,7 @@ class MainController < ApplicationController
 
 
       if @locations.blank?
-        @errors = "#{@county.name} has no locations"
+        @errors = "There are no locations for this search"
         return
       else
         if params[:sortby]
