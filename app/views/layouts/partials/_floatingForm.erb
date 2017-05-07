@@ -1,5 +1,6 @@
 <h3>New Call</h3>
 <%= form_tag("/submit_form", method: "post") do %>
+<!-- All of the form inputs take @val value if available, otherwise take default value -->
 County
 <%= select_tag 'county', options_for_select(County.all.alphabetical.map { |a| [a.name, a.id]}, @vals[0]), prompt:"Select a county", :required => true %>
 
@@ -12,11 +13,13 @@ Caller Name
 How did you find out about the hotline?
 <script type="text/javascript">
   function showfield2(name) {
+    // Each of these showfield methods is used to add the Other option text field when chosen
     if (name == 'other2')
       document.getElementById('div2').innerHTML = 'Other method: <input type="text" name="altOther2" />';
     else
       document.getElementById('div2').innerHTML = '';
     }
+    // This fuction is used to identify the selected value in the possible options for Method
   $(function () {
     var mySelect = document.getElementById('method');
     for (var i, j = 0; i = mySelect.options[j]; j++) {

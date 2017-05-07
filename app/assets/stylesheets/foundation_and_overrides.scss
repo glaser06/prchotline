@@ -1,11 +1,6 @@
 @charset 'utf-8';
-
 @import 'settings';
 @import 'foundation';
-
-// If you'd like to include motion-ui, you need to install the motion-ui sass package.
-//
-// @import 'motion-ui/motion-ui';
 
 // We include everything by default.  To slim your CSS, remove components you don't use.
 
@@ -46,49 +41,5 @@
 @include foundation-top-bar;
 
 // If you'd like to include motion-ui, you need to install the motion-ui sass package.
-//
 // @include motion-ui-transitions;
 // @include motion-ui-animations;
-.filter input{
-  float:left;
-  clear:left;
-}
-
-
-.medium-3 {
-    width: 20%;
-}
-
-.medium-2 {
-  float: right;
-}
-
-h2 {
-  color: #1d9650;
-}
-
-.pagination a {
-    display: inline;
-}
-
-.form {
-  max-width: 50%;
-
-}
-.row a:hover, a:focus {
-    color: black;
-}
-
-// color no longer changes when clicked
-a:visited{
-  color:#1d9650;
-}
-
-// color for button needs to remain the same to be readable
-a.button:visited{
-  color:#fff;
-}
-
-.best_in_place:hover {
-    background:#1d9650;
-}
