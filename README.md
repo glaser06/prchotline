@@ -68,9 +68,3 @@ rails server
 * **Rebecca Kern** - [RebeccaKern](https://github.com/RebeccaKern)
 * **Sai Dhulipalla** - [dsai96](https://github.com/dsai96)
 * **Gerry Zhou** - [glaser06](https://github.com/glaser06)
-
-
-
-## Acknowledgments
-
-* Something here?
