@@ -43,12 +43,12 @@
 
 // 1. Global
 // ---------
-
+$row-width: rem-calc(1600);
 $global-font-size: 100%;
 $global-width: rem-calc(1200);
 $global-lineheight: 1.5;
-$primary-color: #2199e8;
-$secondary-color: #777;
+$primary-color: #27783D;
+$secondary-color: #767676;
 $success-color: #3adb76;
 $warning-color: #ffae00;
 $alert-color: #ec5840;
@@ -543,6 +543,6 @@ $tooltip-radius: $global-radius;
 // -----------
 
 $topbar-padding: 0.5rem;
-$topbar-background: $light-gray;
-$topbar-title-spacing: 1rem;
-$topbar-input-width: 200px;
+$topbar-background: #2c332f;
+$topbar-title-spacing: 0.2rem;
+$topbar-input-width: 150px;

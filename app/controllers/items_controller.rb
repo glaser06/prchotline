@@ -4,9 +4,28 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    @items = Item.alphabetical.all
-
-
+    # This search is used for all item autocompletes
+    if params[:term]
+      # Tries to string match all the items with the search term
+      # Limit here is 10 so as to not overflow the page with autocomplete
+      @items = Item.where("name ilike ?", "%#{params[:term]}%").limit(10)
+      arr = []
+      # adds possible counties into an array of options to select
+      @items_autocomplete = @items.map do |i|
+        arr.push(i.name)
+      end
+      respond_to do |format|
+        format.json { render :json => @items_autocomplete[0]}
+      end
+      return
+    else
+      @items = Item.alphabetical.all.paginate(:page => params[:page]).per_page(20)
+      respond_to do |format|
+        format.html
+        format.json { render json: ItemDatatable.new(view_context) }
+      end
+      return
+    end
 
   end
 
@@ -18,6 +37,8 @@ class ItemsController < ApplicationController
   # GET /items/new
   def new
     @item = Item.new
+    # Accepts aliases as a nested form
+    @item.aliases.build
   end
 
   # GET /items/1/edit
@@ -28,7 +49,6 @@ class ItemsController < ApplicationController
   # POST /items.json
   def create
     @item = Item.new(item_params)
-
     respond_to do |format|
       if @item.save
         format.html { redirect_to @item, notice: 'Item was successfully created.' }
@@ -72,6 +92,6 @@ class ItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
-      params.require(:item).permit(:name, :description, :active)
+      params.require(:item).permit(:name, :description, :active, aliases_attributes: [:id, :name, :_destroy])
     end
 end

@@ -1,6 +1,6 @@
-<h1>Editing County</h1>
-
-<%= render 'form', county: @county %>
-
-<%= link_to 'Show', @county %> |
-<%= link_to 'Back', counties_path %>
+<div class="large-12 columns">
+  <div class="panel callout radius">
+    <h2><%= "Editing #{@county.name} County"%></h2>
+    <%= render 'form', county: @county %>
+  </div>
+</div>

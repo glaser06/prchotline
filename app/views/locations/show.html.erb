@@ -1,54 +1,69 @@
-<div class='row'>
+<div class="large-8 large-centered columns">
+  <div class="panel callout radius">
+    <p id="notice"><%= notice %></p>
+    <h3><%= @location.name %></h3>
+    <p>
+      <strong>Addresses:</strong>
+      <% @addresses = @location.addresses %>
+      <ol>
+        <% count = 0 %>
+        <% @addresses.each do |a| %>
+        <% count += 1 %>
+        <% if count != @addresses.size %>
+        <li><%= link_to a.full_address, "http://maps.google.com/?q=#{a.full_address}", target: :_blank %>
+          <br></br>
+        </li>
+      <% else %>
+        <li><%= link_to a.full_address, "http://maps.google.com/?q=#{a.full_address}", target: :_blank %>
+        </li>
+        <% end %>
+        <%end%>
+      </ol>
+    </p>
 
-<h3><%= @location.name %></h3>
+    <p>
+      <strong>Phone:</strong>
+      <%= number_to_phone(@location.phone, area_code: true) %>
+    </p>
 
-<p>
-  <strong>Address:</strong>
-  <br></br>
-  <%= @location.addresses.first.address %>
-  <div>
-  <%= @location.addresses.first.city %>
-  <%= @location.addresses.first.zipcode %>
-  </div>
-</p>
+    <p>
+      <strong>Website:</strong>
+      <%= link_to @location.website, "#{@location.link_to_website}", target: :_blank %>
+    </p>
 
-<p>
-  <strong>City:</strong>
-  <%= @location.addresses.first.city %>
-</p>
+    <p>
+      <strong>Active:</strong>
+      <%= @location.active ? "Yes" : "No" %>
+    </p>
 
-<p>
-  <strong>Zipcode:</strong>
-  <%= @location.addresses.first.zipcode %>
-</p>
+    <p>
+      <strong>Details:</strong>
+      <%= @location.details %>
+    </p>
 
-<p>
-  <strong>Phone:</strong>
-  <%= @location.phone %>
-</p>
-
-<p>
-  <strong>Website:</strong>
-  <%= @location.website %>
-</p>
-
-
-
-<p>
-  <strong>Active:</strong>
-  <%= @location.active %>
-</p>
-
- <p>
-  <b>Items:</b>
-    <ul>
+    <br>
+    <h5>Items</h5>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Active</th>
+      </tr>
       <% for il in @item_locations %>
-        <li><%= il.item.name %> </li>
+      <tr>
+        <td><%= il.item.name.titleize%></td>
+        <td><%=il.description.nil? ? "None" : il.description %></td>
+        <td><%= il.active ? "Active" : "Inactive" %></td>
+      </tr>
       <% end %>
-    </ul>
+    </table>
   </p>
 
-<%= link_to 'Edit', edit_location_path(@location) %> |
-<%= link_to 'Back', locations_path %>
+  <div class="row">
+    <%= link_to "Edit #{@location.name}", edit_location_path(@location), class: "button" %>
+    <%= link_to 'See All Locations', locations_path, class: "button" %>
+    <%= link_to 'Delete', location_path(@location), method: 'delete', class: "alert button" %>
+  </div>
 
+</div>
 </div>

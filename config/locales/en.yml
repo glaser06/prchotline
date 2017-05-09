@@ -21,3 +21,7 @@
 
 en:
   hello: "Hello world"
+  exception_handler:
+    not_found: "This page does not exist..."
+    unauthorized: "You need to login to continue"
+    internal_server_error: "Oh no! The server has crashed with error code %{status}! "

@@ -1,9 +1,28 @@
-<p id="notice"><%= notice %></p>
+<div class="large-8 large-centered columns">
+  <div class="panel callout radius">
 
-<p>
-  <strong>Name:</strong>
-  <%= @county.name %>
-</p>
+    <p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_county_path(@county) %> |
-<%= link_to 'Back', counties_path %>
+    <h3><%= @county.name %></h3>
+
+    <p>
+      <strong>County Coordinator:</strong>
+      <%= @county.coordinator %>
+    </p>
+    <p>
+      <strong>Phone:</strong>
+      <%= @county.phone %>
+    </p>
+    <p>
+      <strong>Website:</strong>
+      <%= link_to "#{@county.website}", "#{@county.website}", :target => "_blank" %>
+    </p>
+
+    <div class="row">
+      <%= link_to 'Edit', edit_county_path(@county), class: "button" %>
+      <%= link_to 'See All', counties_path, class: "button" %>
+      <%= link_to 'Delete', county_path(@county), method: 'delete',  class: "alert button" %>
+    </div>
+
+  </div>
+</div>

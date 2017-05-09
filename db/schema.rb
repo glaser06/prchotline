@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170323212603) do
+ActiveRecord::Schema.define(version: 20170428173404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,19 +42,23 @@ ActiveRecord::Schema.define(version: 20170323212603) do
     t.index ["item_id"], name: "index_aliases_on_item_id", using: :btree
   end
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "counties", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "coordinator"
+    t.string   "phone"
+    t.string   "website"
   end
 
   create_table "item_counties", force: :cascade do |t|
     t.string   "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "item_id"
+    t.integer  "county_id"
+    t.index ["county_id"], name: "index_item_counties_on_county_id", using: :btree
+    t.index ["item_id"], name: "index_item_counties_on_item_id", using: :btree
   end
 
   create_table "item_locations", force: :cascade do |t|
@@ -86,10 +90,13 @@ ActiveRecord::Schema.define(version: 20170323212603) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean  "active"
-
+    t.date     "verified"
+    t.string   "details"
   end
 
   add_foreign_key "addresses", "counties"
   add_foreign_key "addresses", "locations"
   add_foreign_key "aliases", "items"
+  add_foreign_key "item_counties", "counties"
+  add_foreign_key "item_counties", "items"
 end

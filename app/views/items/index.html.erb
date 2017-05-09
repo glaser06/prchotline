@@ -1,39 +1,62 @@
 <p id="notice"><%= notice %></p>
+<script>
+  items_table = null
+  $(document).on('turbolinks:load', function () {
+    items_table = $('#items-table').DataTable({
+      "destroy": true,
+      "processing": true,
+      "serverSide": true,
+      "ajax": $('#items-table').data('source'),
+      "pagingType": "full_numbers",
+      "iDisplayLength": 75,
+      "bLengthChange": false,
+      //Check dataTables documentation to learn more about available options such as optional pagination controls.
+    });
 
-<h1>Items</h1>
+  })
+  $(document).on('turbolinks:before-cache', function () {
+    if ($.fn.dataTable.isDataTable('#items-table')) {
+      items_table.destroy();
+    }
+  })
+</script>
+
 
 <div class="row">
-<div class="large-12 columns">
-<div class="panel">
-<% if @items.blank? %>
-  <h4> No item available.</h4>
-<% else %>
-  <table border= "1px solid black">
 
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Active</th>
 
-        <th colspan="3"></th>
-      </tr>
-    </thead>
+    <div class="large-2 columns">
+      <h1>Items</h1>
+    </div>
 
-    <tbody>
-      <% @items.each do |item| %>
-        <tr>
-          <td><%= item.name %></td>
-          <td><%= item.description %></td>
-          <td><%= item.active %></td>
+    <div class="large-2 columns">
+      <br/>
+    <%= link_to 'Add Item', new_item_path, :class => "button" %>
+    </div>
 
-        </tr>
+
+</div>
+
+<div class="column row">
+  <div class="large-12 columns">
+    <div class="panel">
+      <% if @items.blank? %>
+
+        <h4>No item available.</h4>
+      <% else %>
+        <table id="items-table" data-source="<%= items_path(format: :json) %>">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th data-sortable="false">Description</th>
+              <th data-sortable="false">Aliases</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
       <% end %>
-    </tbody>
+      <br>
 
-  </table>
-<% end %>
-<br>
-<%= link_to 'New Item', new_item_path %>
-
-</div></div></div>
+    </div>
+  </div>
+</div>

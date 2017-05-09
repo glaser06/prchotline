@@ -10,6 +10,7 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
+*= require jquery-ui
  *= require_tree .
  *= require_self
 //= require foundation_and_overrides
@@ -18,76 +19,134 @@
  *= require foundation_and_overrides
 
  */
+/*
+ *= require font-awesome
+ */
 @import "foundation_and_overrides";
 
+#notice {
+  background-color: #D3D3D3;
+}
 
+.filter input {
+  float: left;
+  clear: left;
+}
 
- .floating-form { /*contact form wrapper*/
-     max-width: 300px;
-     padding: 10px 10px 10px 10px;
-     border: 1px solid #ddd;
-     /*right: 10px;*/
-     position: fixed; /*Form position fixed*/
-     background-color: inherit;
-     }
- .contact-opener { /*opener button*/
-     position: absolute;
-     left: -88px;
-     transform: rotate(-90deg); /* rotate button -90deg */
-     top: 100px;
-     padding: 9px;
-     color: #fff;
-     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.43);
-     cursor: pointer;
-     border-radius: 5px 5px 0px 0px;
- }
+.medium-3 {
+  width: 20%;
+}
 
- .header {
+.medium-2 {
+  float: right;
+}
+
+h2 {
+  color: #1d9650;
+}
+
+.pagination a {
+  display: inline;
+}
+
+.form {
+  max-width: 50%;
+}
+
+.row a:hover,
+a:focus {
+  color: black;
+}
+// color no longer changes when clicked
+a:visited {
+  color: #1d9650;
+}
+// color for button needs to remain the same to be readable
+a.button:visited {
+  color: #fff;
+}
+
+.best_in_place:hover {
+  background: #1d9650;
+}
+
+.floating-form {
+  /*contact form wrapper*/
+  max-width: 300px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  /*right: 10px;*/
+  position: fixed;
+  /*Form position fixed*/
+  background-color: inherit;
+}
+
+.contact-opener {
+  /*opener button*/
+  position: absolute;
+  left: -88px;
+  transform: rotate(-90deg);
+  /* rotate button -90deg */
+  top: 100px;
+  padding: 9px;
+  color: #fff;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.43);
+  cursor: pointer;
+  border-radius: 5px 5px 0 0;
+}
+
+.header {
   text-align: center;
   background: url('cover.jpg') no-repeat center center;
   background-size: cover;
-  padding: 4rem; }
-  .header .main-header {
-    color: #008000;
-    padding: 0.9rem 1rem 0.75rem;
-    font-size: 5rem;
-    text-transform: uppercase;
-    display: block;
-    letter-spacing: 1px;
+  padding: 4rem;
+}
 
-    font-family: "Century Gothic", sans-serif;
+.header .main-header {
+  color: #008000;
+  padding: 0.9rem 1rem 0.75rem;
+  font-size: 5rem;
+  text-transform: uppercase;
+  display: block;
+  letter-spacing: 1px;
+  font-family: "Century Gothic", sans-serif;
+}
 
- }
-
- h1, h3 {
-   text-align:center;
- }
-
- .top-bar {
-   padding: 0rem;
- }
+h1,
+h3 {
+  text-align: center;
+}
 
 .header-subnav {
   float: none;
   position: relative;
   top: 4rem;
   text-align: center;
-  margin-bottom: 0; }
-  .header-subnav li {
-    float: none;
-    display: inline-block; }
-    .header-subnav li a {
-      padding: 0.9rem 1rem 0.75rem;
-      font-size: 0.875rem;
-      color: black;
-      text-transform: uppercase;
-      display: block;
-      font-weight: bold;
-      letter-spacing: 1px; }
-      .header-subnav li a.is-active {
-        background: rgba(250, 250, 250, 0.7);
-        color: #333; }
-      .header-subnav li a:hover {
-        background: rgba(250, 250, 250, 0.7);
-        color: #333;
-        transition: all .25s ease-in-out; }
+  margin-bottom: 0;
+}
+
+.header-subnav li {
+  float: none;
+  display: inline-block;
+}
+
+.header-subnav li a {
+  padding: 0.9rem 1rem 0.75rem;
+  font-size: 0.875rem;
+  color: black;
+  text-transform: uppercase;
+  display: block;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.header-subnav li a.is-active {
+  background: rgba(250, 250, 250, 0.7);
+  color: #333;
+}
+
+.header-subnav li a:hover {
+  background: rgba(250, 250, 250, 0.7);
+  color: #333;
+  transition: all 0.25s ease-in-out;
+}

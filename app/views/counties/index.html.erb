@@ -1,32 +1,58 @@
 <p id="notice"><%= notice %></p>
+<script>
+  counties_table = null
+  $(document).on('turbolinks:load', function () {
+    counties_table = $('#counties-table').DataTable({
+      "destroy": true,
+      "processing": true,
+      "serverSide": true,
+      "ajax": $('#counties-table').data('source'),
+      "paging": false,
+      "columnDefs": [
+        {
+          "render": function (data, type, row) {
+            return "<br/>" + data[0] + "<br/><br/>" + data[1] + "<br/><br/>";
+          },
+          "targets": 2
+        }
+      ]
+    });
 
-<h1>Counties</h1>
+  })
+  $(document).on('turbolinks:before-cache', function () {
+    if ($.fn.dataTable.isDataTable('#counties-table')) {
+      counties_table.destroy();
+    }
+  })
+</script>
 
 <div class="row">
-<div class="large-12 columns">
-<div class="panel">
+  <div class="large-12 columns">
 
-<table border= "1px solid black">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+    <div class="left">
+      <h1>Counties</h1>
+    </div>
 
-  <tbody>
-    <% @counties.each do |county| %>
-      <tr>
-        <td><%= link_to county.name, county %></td>
-        <td><%= link_to 'Edit', edit_county_path(county) %></td>
-        <td><%= link_to 'Delete', county, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<%= link_to 'New County', new_county_path %>
-
-</div></div>
+  </div>
 </div>
 
-<br>
+<div class="row">
+  <div class="large-12 columns">
+
+    <div class="panel">
+      <table id="counties-table" data-source="<%= counties_path(format: :json) %>">
+        <thead>
+          <tr>
+            <th>County</th>
+            <th>County Coordinator</th>
+            <th data-sortable="false">Contact Information</th>
+
+            <th data-sortable="false">Edit</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

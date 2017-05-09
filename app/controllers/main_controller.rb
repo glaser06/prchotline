@@ -1,102 +1,205 @@
 require 'csv'
 
+
 class MainController < ApplicationController
 
+  #Clears New Call form on clear button pressed
   def clear_form
-    reset_session
+    session.delete(:value)
+    redirect_to :back
   end
 
-  def newCall
-      if session[:visit_count].nil?
-        session[:visit_count] = 1
-      else
-        session[:visit_count] += 1
-      end
-      @visit_count = session[:visit_count]
-      puts @visit_count
-
-      callerName = params[:callerName]
-      method = params[:method]
+  #Adds form content to appropriate CSV file on DropBox, or saves the form
+  def submit_form
+    county = params[:county]
+    item = params[:item]
+    callerName = params[:callerName]
+    #Caller Name on form was set to be optional, in which case name is recorded as Anonymous
+    if callerName == "" then callerName = "Anonymous" end
+    method = params[:method]
+    #Retrieving the content if "Other" button was chosen in form
+    if method == "other2" then method = params[:altOther2] end
       disposition = params[:disposition]
-      county = params[:county]
-      item = params[:item]
-      method = params[:method]
-      purpose = params[:purpose]
-      type = params[:type]
-
-      session[:value] = [callerName, method, disposition, county, item, method, purpose, type]
-      @vals = session[:value]
-      puts @vals
-
-      if params[:callerName] && params[:method] && params[:disposition] && params[:county]&& params[:method] && params[:purpose] && params[:type]
-      CSV.open('call_stats.csv', "at") do |csv|
-        csv << [callerName, method, county, item, disposition, purpose, type]
+    if disposition == "other3" then disposition = params[:altOther3] end
+    if disposition == "directly" then disposition = params[:directly] end
+      callType = params[:callType]
+    if callType == "Other" then callType = params[:altOther] end
+    callFor = params[:callFor]
+    #Storing form data as session variable
+    session[:value] = [county, item, callerName, method, disposition, callType, callFor]
+    @vals = session[:value]
+    #Submit button was clicked, else save button was clicked
+    if params[:submit_clicked]
+      client = DropboxApi::Client.new
+      ifInTmpFolder = false
+      currentYear = Time.now.year
+      currentMonth = Time.now.month
+      prcFileName = ""
+      if callFor == "PRC"
+        prcFileName = "PRCHotlineStatsMonth#{currentMonth}.csv"
+      else
+        prcFileName = "DEPHotlineStatsMonth#{currentMonth}.csv"
       end
-      redirect_to "/"
+      path = "/#{currentYear}/#{prcFileName}"
+      tmpPath = Rails.root.join("tmp/#{prcFileName}")
+      #Checks if file with correct month and PRC/DEP already exists
+      unless File.exist?(tmpPath) || File.symlink?(tmpPath)
+        results = client.search(prcFileName,"/#{currentYear}")
+        if results.matches.count > 0
+          path = results.matches.first.resource.path_lower
+          monthCSV = ""
+          file = client.download(path) do |chunk|
+            monthCSV << chunk
+          end
+          CSV.open(tmpPath, "at") do |csv|
+            csv << monthCSV
+          end
+        end
+      end
+      #Adding to CSV file and uploading back to DropBox with override
+      CSV.open(tmpPath, "at") do |csv|
+        csv << [County.find(county).name.titleize, Item.find(item).name.titleize, callerName, method, disposition, callType, callFor]
+      end
+      file_content = IO.read tmpPath
+      client.upload path, file_content, :mode => :overwrite
+      session.delete(:value)
+      redirect_to "/", notice: "#{callerName} was added to #{callFor}'s call stats."
+    #Save button clicked
+    else
+        redirect_to :back
+    end
+
+  end
+
+#Checks if caller name has been inputted into form
+  def newCall
+    if params.has_key?([:callerName])
+      callerName = params[:callerName]
+      session[:value] = [params[:callerName]]
     end
   end
 
   def index
-    @items = Item.all
+    if not session[:value].nil?
+      @vals = session[:value]
+    else
+      @vals = [County.all.first, Item.all.first, "","Flyer", "Referred to Verizon", "Where to recycle", "PRC"]
+    end
+
     @locations = []
     @errors = " "
-    if params[:county] && params[:item]
+    if params[:county]
       @errors = ""
       qCounty = params[:county]
       qItem = params[:item]
       county = County.for_name(qCounty.capitalize)
 
-      item = Item.find(Alias.for_name(qItem.downcase).first.item_id)
-
-      if item.blank?
-        @errors += "Could not find #{params[:item]}"
-        return
-      end
-      @item = item
       if county.blank?
-        @errors += "#{params[:county]} does not exist"
+
+        if params[:county] == ""
+          @errors += "Please enter a county"
+        else
+          @errors += "#{params[:county]} county does not exist"
+        end
+
         return
       end
-      @county = county[0]
-      if params[:zip] != ""
+
+      # find the item, if it exists
+      if params[:item] != ""
+        # item query is not empty
+
+        # search for query in Item names
+        item = Item.for_name(qItem.downcase)
+        # search for query in Alias names
+        aliasItem = Alias.for_name(qItem.downcase)
+
+        # if both have not been found, fuzzymatch through both tables and
+        # return a correction
+        if item.blank? and aliasItem.blank?
+          item_match = FuzzyMatch.new(Item.all, :read => :name)
+          alias_match = FuzzyMatch.new(Alias.all, :read => :name)
+          items = item_match.find(params[:item])
+          aliases = alias_match.find(params[:item])
+          if !items.nil?
+            @errors = "ERROR_MATCH_FOUND"
+            @item = items
+          elsif !aliases.nil?
+            @errors = "ERROR_MATCH_FOUND"
+            @item = aliases.item
+          else
+            @errors += "Could not find #{params[:item]}"
+
+          end
+          return
+        elsif aliasItem.blank?
+          @item = item.first
+        elsif item.blank?
+          @item = Item.find(aliasItem.first.item_id)
+        end
+      else
+        # If item is empty, redirect to the location page filtered by county
+        redirect_to controller: 'locations', action: 'index', county: county[0].name
+        return
+      end
+
+      @county = county.first
+      if params[:zip] && params[:zip] != ""
         qZip = params[:zip]
-        # i,l,c = search(qItem, qCounty, qZip)
+
 
         coords = Geocoder.coordinates(qZip)
-        @locations1 = Address.near(coords,50)
+
 
         @locations = @item.addresses.near(coords,50)
-        # @locations = @item.locations.active.addresses.active.for_zipcode(qZip).alphabetical
+
+
 
 
       else
 
 
-        # @locations = @item.locations.active.for_county(@county.id).alphabetical
+
+        @locations = @item.addresses.for_county(@county)
 
 
       end
-      contexts = []
-      @locations.each do |loc|
-        context = ItemLocation.active.for_item(@item.id).for_location(loc.id).first
-        contexts.push(context)
+
+
+      if @locations.blank?
+        
+        return
+      else
+        if params[:sortby]
+          sort = params[:sortby]
+          loc = @locations
+          if sort == "name"
+
+            @locations = loc.by_name
+          elsif sort == "verified"
+            @locations = loc.by_verified
+          elsif sort == "zipcode"
+            @locations = loc.by_zipcode
+          elsif sort == "city"
+            @locations = loc.by_city
+          end
+
+        else
+          @locations = @locations.by_name
+        end
+        @locations = @locations.paginate(:page => params[:page]).per_page(10)
       end
-      @contexts = contexts
+
     end
+
+
+
+
+
+
+
   end
 
-  def validations
-    @locations = []
-    @countyName = ""
-    @items = Item.all
-    @counties = County.all
-    @item_locations = ItemLocation.all
 
-    if params[:county]
-      countyId = params[:county]
-      @countyName = County.find(countyId).name
-      @locations = Location.all.for_county(countyId).alphabetical
-    end
-  end
 
 end

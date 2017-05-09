@@ -1,11 +1,36 @@
 class CountiesController < ApplicationController
+
   before_action :set_county, only: [:show, :edit, :update, :destroy]
 
   # GET /counties
   # GET /counties.json
   def index
-    @counties = County.all
+    # This search is used for all county autocompletes
+    if params[:term]
+      # Tries to string match all the counties with the search term
+      # Limit here is 10 so as to not overflow the page with autocomplete
+      @counties = County.where("name ilike ?", "%#{params[:term]}%").limit(10).alphabetical
+      arr = []
+      # Adds possible counties into an array of options to select
+      @counties_autocomplete = @counties.map do |c|
+        arr.push(c.name)
+      end
+      respond_to do |format|
+        format.html
+        # The first index in the array countains the filtered counties
+        format.json { render :json => @counties_autocomplete[0]}
+      end
+      return
+    else
+      @counties = County.all.alphabetical
+      respond_to do |format|
+        format.html
+        format.json { render :json => CountyDatatable.new(view_context)}
+      end
+      return
   end
+
+end
 
   # GET /counties/1
   # GET /counties/1.json
@@ -25,7 +50,6 @@ class CountiesController < ApplicationController
   # POST /counties.json
   def create
     @county = County.new(county_params)
-
     respond_to do |format|
       if @county.save
         format.html { redirect_to @county, notice: 'County was successfully created.' }
@@ -69,6 +93,6 @@ class CountiesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def county_params
-      params.require(:county).permit(:name)
+      params.require(:county).permit(:name, :coordinator, :phone, :website)
     end
 end

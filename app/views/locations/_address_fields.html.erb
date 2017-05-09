@@ -1,4 +1,20 @@
-<%= l.input :address %>
-<%= l.input :city %>
-<%= l.input :zipcode %>
-<%= l.collection_select(:county_id, County.all, :id, :name, :prompt => "Choose a county...") %>
+<div class="fields">
+  <%= l.input :address %>
+  <div class="row">
+    <div class="large-4 columns">
+      <%= l.input :city %>
+
+    </div>
+    <div class="large-3 columns">
+      <%= l.input :zipcode %>
+    </div>
+    <div class="large-4 columns">
+      County
+      <%= l.collection_select(:county_id, County.all.alphabetical, :id, :name, :prompt => "Choose a county...") %>
+    </div>
+    <div class="large-1 columns">
+      <%= l.link_to_remove("x") %>
+    </div>
+
+  </div>
+</div>

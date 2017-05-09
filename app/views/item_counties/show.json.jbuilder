@@ -1,1 +1,1 @@
-json.partial! "item_counties/item_county", item_county: @item_county
+json.partial! "item_counties/item_county", item_county: @item_county 
