@@ -30,7 +30,7 @@ class LocationsController < ApplicationController
         @countyId = @county.id
         locations = allLocations.for_county(@countyId)
         unless locations.blank?
-          locations = allLocations.for_county(@countyId).distinct
+          locations = allLocations.for_county(@countyId)
         end
 
         puts @countyName
