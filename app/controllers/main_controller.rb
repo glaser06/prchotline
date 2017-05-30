@@ -36,7 +36,7 @@ class MainController < ApplicationController
       currentMonth = Time.now.month
       prcFileName = ""
       if callFor == "PRC"
-        prcFileName = "PRCHotlineStatsMonth#{currentMonth}test.csv"
+        prcFileName = "PRCHotlineStatsMonth#{currentMonth}.csv"
       else
         prcFileName = "DEPHotlineStatsMonth#{currentMonth}.csv"
       end
@@ -53,8 +53,7 @@ class MainController < ApplicationController
           end
           lines = monthCSV.split("\n")
 
-          print monthCSV
-          print "asdfasdfasdfasdf"
+
           CSV.open(tmpPath, "at") do |csv|
             lines.each do |line|
               csv << line.split(",")
