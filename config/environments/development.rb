@@ -1,7 +1,7 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   config.exception_handler = {
-    dev: true,
+    dev: false,
     layouts: {
       500 => nil,
       501 => nil,

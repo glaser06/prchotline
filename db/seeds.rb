@@ -186,8 +186,14 @@ end
 locations.each do |addr, items|
   row1 = items["Addr"][0]
   @loc1 = Location.new(name: row1[2], phone: row1[3], website: row1[4], active: true)
+  if @loc1.nil?
+    print "loc nil"
+  end
   items["Addr"].each do |row|
     c = County.for_name(row[6]).first
+    if c.nil?
+      print "#{row[6]} nil"
+    end
     flag = false
     @loc1.addresses.each do |addr_rows|
       addr1 = addr_rows.address
@@ -223,10 +229,17 @@ locations.each do |addr, items|
         if a.nil?
           puts "#{item} is nil"
         else
+          if a.item.nil?
+            puts "#{item} is alias"
+          end
+
           @loc1.item_locations.build(item_id: a.item.id, location_id: @loc1.id, context: emp ,active: true)
         end
 
       else
+        if i.nil?
+          puts "#{item} is alias"
+        end
         @loc1.item_locations.build(item_id: i.id, location_id: @loc1.id, context: emp ,active: true)
       end
 

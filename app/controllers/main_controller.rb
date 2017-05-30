@@ -36,7 +36,7 @@ class MainController < ApplicationController
       currentMonth = Time.now.month
       prcFileName = ""
       if callFor == "PRC"
-        prcFileName = "PRCHotlineStatsMonth#{currentMonth}.csv"
+        prcFileName = "PRCHotlineStatsMonth#{currentMonth}test.csv"
       else
         prcFileName = "DEPHotlineStatsMonth#{currentMonth}.csv"
       end
@@ -51,8 +51,15 @@ class MainController < ApplicationController
           file = client.download(path) do |chunk|
             monthCSV << chunk
           end
+          lines = monthCSV.split("\n")
+
+          print monthCSV
+          print "asdfasdfasdfasdf"
           CSV.open(tmpPath, "at") do |csv|
-            csv << monthCSV
+            lines.each do |line|
+              csv << line.split(",")
+            end
+            # csv << monthCSV
           end
         end
       end
@@ -167,7 +174,7 @@ class MainController < ApplicationController
 
 
       if @locations.blank?
-        
+
         return
       else
         if params[:sortby]
