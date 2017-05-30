@@ -28,7 +28,7 @@ class Address < ApplicationRecord
   # updates the lat and long field after validation
   # DO NO ENABLE DURING SEEDING
   # - google maps api limit is 50 requests/second
-  # after_validation :geocode
+  after_validation :geocode
 
   def full_address
     "#{self.address}, #{self.city}, PA #{self.zipcode}"
